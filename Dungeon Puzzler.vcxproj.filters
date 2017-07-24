@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\libs\libwebsockets\win32port\win32helpers\getopt.c" />
+    <ClCompile Include="D:\libs\libwebsockets\win32port\win32helpers\getopt_long.c" />
+    <ClCompile Include="D:\libs\libwebsockets\win32port\win32helpers\gettimeofday.c" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="gameplayer.cpp" />
+    <ClCompile Include="gamemob.cpp" />
+    <ClCompile Include="gamestate.cpp" />
+    <ClCompile Include="gameclient.cpp" />
+    <ClCompile Include="gamemanager.cpp" />
+    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="gameunit.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\libs\libwebsockets\win32port\win32helpers\getopt.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\libs\libwebsockets\win32port\win32helpers\gettimeofday.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="server.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gamestate.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gamemob.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="eventmanager.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gameplayer.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gameclient.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gamemanager.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gameunit.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="headers">
+      <UniqueIdentifier>{063c5771-d45a-4291-bf50-419508eb92f4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
