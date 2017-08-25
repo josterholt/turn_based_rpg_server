@@ -334,7 +334,7 @@ void updateGameStates(bool update_loop) {
 		double time_elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - start_time).count();
 
 		if (time_elapsed > 300) {
-			std::cout << "Time Elapsed: " << time_elapsed << "\n";
+			//std::cout << "Time Elapsed: " << time_elapsed << "\n";
 			manager.update(time_elapsed);
 			start_time = current_time;
 		}

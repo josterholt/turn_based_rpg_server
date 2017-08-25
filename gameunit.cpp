@@ -29,7 +29,6 @@ GameUnit::GameUnit() {
 
 void GameUnit::updatePosition(float x, float y, FacingDirection facing) {
 	boost::upgrade_lock<boost::shared_mutex> lock(this->positionMutex);
-	boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(lock);
 
 	if (fabsf(this->positionX - x) > this->maxSpeed) {
 		return;
@@ -40,15 +39,17 @@ void GameUnit::updatePosition(float x, float y, FacingDirection facing) {
 		return;
 	}
 
+	boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(lock);
 	this->positionX = x;
 	this->positionY = y;
 	this->facing = (FacingDirection)facing;
-	std::cout << "Position: " << this->positionX << ", " << this->positionY << "\n";
+	//std::cout << "Position: " << this->positionX << ", " << this->positionY << "\n";
 }
 
 void GameUnit::moveToSpawn(float x, float y, FacingDirection facing) {
-	boost::upgrade_lock<boost::shared_mutex> lock(this->positionMutex);
-	boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(lock);
+	//boost::upgrade_lock<boost::shared_mutex> lock(this->positionMutex);
+	//boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(lock);
+	boost::lock_guard<boost::shared_mutex> lock(this->positionMutex);
 
 	this->positionX = x;
 	this->positionY = y;

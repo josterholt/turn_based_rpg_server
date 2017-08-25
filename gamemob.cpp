@@ -18,6 +18,33 @@ void GameMob::processScriptedState(double elapsed_time) {
 
 	EventNode node = this->eventNodes[this->eventNodeIndex];
 
+	// Determine if character should move onto next action
+	bool next_action = false;
+	int tileX = 32;
+	int tileY = 32;
+
+	std::cout << this->positionX - (this->eventOriginalX + node.velocityX * tileX) << "\n";
+	std::cout << this->positionY - (this->eventOriginalY + node.velocityY * tileY) << "\n";
+	std::cout << "DIFF: " << fabsf(this->positionX - (this->eventOriginalX + node.velocityX * tileX)) << ", " << fabsf(this->positionY - (this->eventOriginalY + node.velocityY * tileY)) << "\n";
+
+	// @todo calculate distance in between points and interpolate
+	if (fabsf(this->positionX - (this->eventOriginalX + node.velocityX * tileX)) < 10
+		&& fabsf(this->positionY - (this->eventOriginalY + node.velocityY * tileY)) < 10) {
+		next_action = true;
+	}
+
+	if (next_action) {
+		this->velocityX = 0;
+		this->velocityY = 0;
+
+		this->eventOriginalX = this->positionX;
+		this->eventOriginalY = this->positionY;
+		this->eventNodeIndex++;
+		if (this->eventNodeIndex >= this->eventNodes.size()) {
+			this->eventNodeIndex = 0;
+		}
+		node = this->eventNodes[this->eventNodeIndex];
+	}
 	// @todo Look into improving performance of velocity, maybe caching
 	
 	// Calculate velocity and run some sanity checks
@@ -46,29 +73,6 @@ void GameMob::processScriptedState(double elapsed_time) {
 	}
 	else if (floorf(this->velocityY) > 0) {
 		this->facing = FacingDirection::DOWN;
-	}
-
-	// Determine if character should move onto next action
-	bool next_action = false;
-	int tileX = 32;
-	int tileY = 32;
-
-	std::cout << this->positionX - (this->eventOriginalX + node.velocityX * tileX) << "\n";
-	std::cout << this->positionY - (this->eventOriginalY + node.velocityY * tileY) << "\n";
-
-	// @todo calculate distance in between points and interpolate
-	if (fabsf(this->positionX - (this->eventOriginalX + node.velocityX * tileX)) < 10
-		&& fabsf(this->positionY - (this->eventOriginalY + node.velocityY * tileY)) < 10) {
-		next_action = true;
-	}
-
-	if (next_action) {
-		this->eventOriginalX = this->positionX;
-		this->eventOriginalY = this->positionY;
-		this->eventNodeIndex++;
-		if (this->eventNodeIndex >= this->eventNodes.size()) {
-			this->eventNodeIndex = 0;
-		}
 	}
 }
 
