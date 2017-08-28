@@ -23,9 +23,9 @@ void GameMob::processScriptedState(double elapsed_time) {
 	int tileX = 32;
 	int tileY = 32;
 
-	std::cout << this->positionX - (this->eventOriginalX + node.velocityX * tileX) << "\n";
-	std::cout << this->positionY - (this->eventOriginalY + node.velocityY * tileY) << "\n";
-	std::cout << "DIFF: " << fabsf(this->positionX - (this->eventOriginalX + node.velocityX * tileX)) << ", " << fabsf(this->positionY - (this->eventOriginalY + node.velocityY * tileY)) << "\n";
+	//std::cout << this->positionX - (this->eventOriginalX + node.velocityX * tileX) << "\n";
+	//std::cout << this->positionY - (this->eventOriginalY + node.velocityY * tileY) << "\n";
+	//std::cout << "DIFF: " << fabsf(this->positionX - (this->eventOriginalX + node.velocityX * tileX)) << ", " << fabsf(this->positionY - (this->eventOriginalY + node.velocityY * tileY)) << "\n";
 
 	// @todo calculate distance in between points and interpolate
 	if (fabsf(this->positionX - (this->eventOriginalX + node.velocityX * tileX)) < 10
@@ -79,7 +79,7 @@ void GameMob::processScriptedState(double elapsed_time) {
 void GameMob::update(double elapsed_time) {
 	this->processScriptedState(elapsed_time);
 
-	std::cout << "Mob: " << this->positionX << ", " << this->positionY << "\n";
+	//std::cout << "Mob: " << this->positionX << ", " << this->positionY << "\n";
 
 	this->positionX += this->velocityX;
 	this->positionY += this->velocityY;

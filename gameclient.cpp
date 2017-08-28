@@ -3,6 +3,7 @@
 #include "rapidjson/document.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
+#include <math.h>
 
 
 GameClient::GameClient() : player(*this) {
@@ -102,6 +103,9 @@ void GameClient::processRequest(char* message, size_t len) {
 			else if (action.compare("updatePlayer") == 0) {
 				this->updatePlayerState(action, actions[i]);
 			}
+			else if (action.compare("playerAttack") == 0) {
+				this->attackTarget(actions[i]);
+			}
 		}
 	}
 	catch (const std::exception& e) {
@@ -143,6 +147,24 @@ bool GameClient::updatePlayerState(std::string &action, rapidjson::Value &doc) {
 	//this->player.updatePosition();
 
 	//std::cout << "Player " << this->player.userID << ": " << this->player.position.first << ", " << this->player.position.second << "\n";
+	return true;
+}
+
+bool GameClient::attackTarget(rapidjson::Value &doc) {
+	float player_x = doc["player"]["x"].GetFloat();
+	float player_y = doc["player"]["y"].GetFloat();
+	int player_facing = doc["player"]["facing"].GetInt();
+
+	float hitbox_x = doc["hitbox"]["x"].GetFloat();
+	float hitbox_y = doc["hitbox"]["y"].GetFloat();
+	float hitbox_rotation = doc["hitbox"]["rotation"].GetFloat();
+	std::cout << hitbox_x << ", " << hitbox_y << ", " << hitbox_rotation << "\n";
+
+	float new_x = hitbox_x * cos(hitbox_rotation) - hitbox_y * sin(hitbox_rotation);
+	float new_y = hitbox_y * cos(hitbox_rotation) + hitbox_x * sin(hitbox_rotation);
+	std::cout << "Rotated coords: " << new_x << ", " << new_y << "\n";
+
+	std::cout << "Absolute coords: " << player_x + new_x << ", " << player_y + new_y << "\n";
 	return true;
 }
 

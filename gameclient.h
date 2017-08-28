@@ -37,7 +37,7 @@ public:
 	void onClose(); // Remove instance from client pool
 
 	void initPlayer(int user_id);
-	bool GameClient::instantiateGameInstance(std::string &action, rapidjson::Value &doc);
+	bool instantiateGameInstance(std::string &action, rapidjson::Value &doc);
 	void processRequest(char* message, size_t len); // processes request
 
 	GameState* createGame(); // Return token
@@ -46,6 +46,7 @@ public:
 	GameState* getGame(); // Return game
 
 	bool updatePlayerState(std::string &action, rapidjson::Value &doc);
+	bool GameClient::attackTarget(rapidjson::Value &doc);
 
 	std::string generatePositionUpdate();
 	std::string generateInit();

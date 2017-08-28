@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dungeon Puzzler", "Dungeon Puzzler.vcxproj", "{34709BE8-DB64-451D-9D8A-9040C4938483}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests", "Tests\Tests.vcxproj", "{9C60437D-1A1C-4C52-8E62-458F7F48B5A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{34709BE8-DB64-451D-9D8A-9040C4938483}.Release|x64.Build.0 = Release|x64
 		{34709BE8-DB64-451D-9D8A-9040C4938483}.Release|x86.ActiveCfg = Release|Win32
 		{34709BE8-DB64-451D-9D8A-9040C4938483}.Release|x86.Build.0 = Release|Win32
+		{9C60437D-1A1C-4C52-8E62-458F7F48B5A8}.Debug|x64.ActiveCfg = Debug|x64
+		{9C60437D-1A1C-4C52-8E62-458F7F48B5A8}.Debug|x64.Build.0 = Debug|x64
+		{9C60437D-1A1C-4C52-8E62-458F7F48B5A8}.Debug|x86.ActiveCfg = Debug|Win32
+		{9C60437D-1A1C-4C52-8E62-458F7F48B5A8}.Debug|x86.Build.0 = Debug|Win32
+		{9C60437D-1A1C-4C52-8E62-458F7F48B5A8}.Release|x64.ActiveCfg = Release|x64
+		{9C60437D-1A1C-4C52-8E62-458F7F48B5A8}.Release|x64.Build.0 = Release|x64
+		{9C60437D-1A1C-4C52-8E62-458F7F48B5A8}.Release|x86.ActiveCfg = Release|Win32
+		{9C60437D-1A1C-4C52-8E62-458F7F48B5A8}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
