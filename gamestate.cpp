@@ -211,6 +211,49 @@ void GameState::updatePosition(int player_index, float x, float y, float velocit
 	}
 }
 
+/**
+ * As of current coding, collision detection assumes no angular boxes (everything is 90 degrees)
+ */
+void GameState::attackTarget(int player_index, float player_x, float player_y, float hitbox_x, float hitbox_y, float hitbox_rotation) {
+	// Get current weapon
+	int weapon_width = 10;
+	int weapon_height = 10;
+
+	float new_x = hitbox_x * cos(hitbox_rotation) - hitbox_y * sin(hitbox_rotation);
+	float new_y = hitbox_y * cos(hitbox_rotation) + hitbox_x * sin(hitbox_rotation);
+
+	// Collision box points
+	// 1------2
+	// |      |
+	// |      |
+	// 4------3
+	xy_points_t hitbox_points = { {
+		{ new_x, new_y },
+		{ new_x + weapon_width, new_y },
+		{ new_x + weapon_width, new_y + weapon_height },
+		{ new_x, new_y + weapon_height }
+	} };
+
+	for (std::vector<GameMob*>::iterator it = this->mobs.begin(); it != this->mobs.end(); it++) {
+		float mob_x = (*it)->positionX;
+		float mob_y = (*it)->positionY;
+		int width = (*it)->width;
+		int height = (*it)->height;
+
+		xy_points_t mob_points = { {
+			{ mob_x, mob_y },
+			{ mob_x + weapon_width , mob_y },
+			{ mob_x + weapon_width, mob_y + weapon_height },
+			{ mob_x, mob_y + weapon_height }
+		} };
+
+		intersects(mob_points, hitbox_points);
+
+	}
+}
+
+
+
 void GameState::update(double elapsed_time) {
 	std::cout << "GameState update\n";
 	if (this->mobs.size() == 0) {

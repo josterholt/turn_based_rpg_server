@@ -63,3 +63,59 @@ std::string base64_decode(std::string &encoded_string) {
 
 	return ret;
 }
+
+bool intersects(xy_points_t points1, xy_points_t points2) {
+	for (xy_points_t::iterator points1_it = points1.begin(); points1_it != points1.end(); points1_it++) {
+		float mob1_x = (*points1_it)[0];
+		float mob1_y = (*points1_it)[1];
+
+		for (xy_points_t::iterator points2_it = points2.begin(); points2_it != points2.end(); points2_it++) {
+			float hitbox1_x = (*points2_it)[0];
+			float hitbox1_y = (*points2_it)[1];
+
+			float hitbox2_x;
+			float hitbox2_y;
+
+			if (points2_it + 1 == points2.end()) {
+				hitbox2_x = (*points2.begin())[0];
+				hitbox2_y = (*points2.begin())[1];
+			}
+			else {
+				hitbox2_x = (*(points2_it + 1))[0];
+				hitbox2_y = (*(points2_it + 1))[1];
+			}
+
+			bool x_intersects = false;
+			bool y_intersects = false;
+
+			if (hitbox1_x < hitbox2_x) {
+				if (mob1_x >= hitbox1_x && mob1_x <= hitbox2_x) {
+					x_intersects = true;
+				}
+
+			}
+			else {
+				if (mob1_x <= hitbox1_x && mob1_x >= hitbox2_x) {
+					x_intersects = true;
+				}
+			}
+
+			if (hitbox1_y < hitbox2_y) {
+				if (mob1_y >= hitbox1_y && mob1_y <= hitbox2_y) {
+					y_intersects = true;
+				}
+			}
+			else {
+				if (mob1_y <= hitbox1_y && mob1_y >= hitbox2_y) {
+					y_intersects = true;
+				}
+			}
+
+			if (x_intersects && y_intersects) {
+				return true;
+			}
+
+		}
+	}
+	return false;
+}

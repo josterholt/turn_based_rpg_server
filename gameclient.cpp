@@ -158,13 +158,9 @@ bool GameClient::attackTarget(rapidjson::Value &doc) {
 	float hitbox_x = doc["hitbox"]["x"].GetFloat();
 	float hitbox_y = doc["hitbox"]["y"].GetFloat();
 	float hitbox_rotation = doc["hitbox"]["rotation"].GetFloat();
-	std::cout << hitbox_x << ", " << hitbox_y << ", " << hitbox_rotation << "\n";
+	//std::cout << hitbox_x << ", " << hitbox_y << ", " << hitbox_rotation << "\n";
 
-	float new_x = hitbox_x * cos(hitbox_rotation) - hitbox_y * sin(hitbox_rotation);
-	float new_y = hitbox_y * cos(hitbox_rotation) + hitbox_x * sin(hitbox_rotation);
-	std::cout << "Rotated coords: " << new_x << ", " << new_y << "\n";
-
-	std::cout << "Absolute coords: " << player_x + new_x << ", " << player_y + new_y << "\n";
+	this->currentGameInstance->attackTarget(this->player.playerIndex, player_x, player_y, hitbox_x, hitbox_y, hitbox_rotation);
 	return true;
 }
 
