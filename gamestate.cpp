@@ -219,8 +219,8 @@ void GameState::attackTarget(int player_index, float player_x, float player_y, f
 	int weapon_width = 10;
 	int weapon_height = 10;
 
-	float new_x = hitbox_x * cos(hitbox_rotation) - hitbox_y * sin(hitbox_rotation);
-	float new_y = hitbox_y * cos(hitbox_rotation) + hitbox_x * sin(hitbox_rotation);
+	float new_x = player_x + (hitbox_x * cos(hitbox_rotation) - hitbox_y * sin(hitbox_rotation));
+	float new_y = player_y + (hitbox_y * cos(hitbox_rotation) + hitbox_x * sin(hitbox_rotation));
 
 	// Collision box points
 	// 1------2
@@ -233,6 +233,8 @@ void GameState::attackTarget(int player_index, float player_x, float player_y, f
 		{ new_x + weapon_width, new_y + weapon_height },
 		{ new_x, new_y + weapon_height }
 	} };
+
+	hitboxes.push_back(hitbox_points);
 
 	for (std::vector<GameMob*>::iterator it = this->mobs.begin(); it != this->mobs.end(); it++) {
 		float mob_x = (*it)->positionX;
@@ -247,8 +249,12 @@ void GameState::attackTarget(int player_index, float player_x, float player_y, f
 			{ mob_x, mob_y + weapon_height }
 		} };
 
-		intersects(mob_points, hitbox_points);
+		bool intersects_mob = intersects(mob_points, hitbox_points);
 
+		if (intersects_mob) {
+			std::cout << "#### SETTING MOB TO 0 ####\n";
+			(*it)->health = 0;
+		}
 	}
 }
 

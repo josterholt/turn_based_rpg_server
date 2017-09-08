@@ -330,6 +330,32 @@ std::string GameClient::generatePositionUpdate() {
 			 */
 			data.AddMember("players", players_array, root.GetAllocator());
 
+			/*
+			* Hitbox debugging (if exists)
+			*/
+			rapidjson::Value hitboxes;
+			hitboxes.SetArray();
+
+			auto boxes = this->currentGameInstance->hitboxes;
+			for (auto hitbox : boxes) {
+				rapidjson::Value json_hitbox;
+				json_hitbox.SetArray();
+				for (auto point : hitbox) {
+					rapidjson::Value json_box;
+					json_box.SetArray();
+					json_box.PushBack(point[0], root.GetAllocator());
+					json_box.PushBack(point[1], root.GetAllocator());
+					json_hitbox.PushBack(json_box, root.GetAllocator());
+				}
+				hitboxes.PushBack(json_hitbox, root.GetAllocator());
+			}
+			data.AddMember("hitboxes", hitboxes, root.GetAllocator());
+
+			this->currentGameInstance->hitboxes.clear();
+			/*
+			 * End Hitbox debugging
+			 /
+
 			/**
 			 * Begin loop through mobs
 			 */

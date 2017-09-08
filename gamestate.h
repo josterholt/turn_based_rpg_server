@@ -41,6 +41,8 @@ public:
 	std::vector<GameMob*> mobs;
 	std::vector<std::vector<EventNode>> eventNodes;
 
+	std::vector<xy_points_t> hitboxes;
+
 	char token[25];
 	const int gameID = 0;
 	const char* status;
