@@ -34,6 +34,7 @@ GameState::~GameState() {
 }
 
 void GameState::loadLevel(std::string level) {
+	std::cout << "Loading level...\n";
 	std::string filename = "C:/Users/Justin/Misc Code/DungeonPuzzler/tilesets_json/" + level + ".json";
 	std::ifstream file(filename.c_str());
 	rapidjson::Document doc;
@@ -60,6 +61,7 @@ void GameState::loadLevel(std::string level) {
 		this->mobs.push_back(mob);
 		//std::cout << (*it)["x"].GetInt() << ", " << (*it)["y"].GetInt() << "\n";
 	}
+	std::cout << "Level loaded\n";
 }
 
 int GameState::getLayerIndex(rapidjson::Value &layers, std::string name) {
