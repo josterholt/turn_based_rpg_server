@@ -82,29 +82,31 @@ void GameClient::processRequest(char* message, size_t len) {
 	try {
 		rapidjson::Document d;
 		d.Parse(message, len);
+		if (!d.HasParseError()) {
 
-		rapidjson::Value& actions = d["actions"];
-		std::string action;
+			rapidjson::Value& actions = d["actions"];
+			std::string action;
 
-		rapidjson::Value::ConstMemberIterator it;
-		it = d.FindMember("action");
-		
+			rapidjson::Value::ConstMemberIterator it;
+			it = d.FindMember("action");
 
-		for (rapidjson::SizeType i = 0; i < actions.Size(); i++) {
-			action = actions[i]["action"].GetString();
-			rapidjson::Value& val = actions[i];
 
-			if (action.compare("createGame") == 0) {
-				this->instantiateGameInstance(action, actions[i]);
-			}
-			else if (action.compare("joinGame") == 0) {
+			for (rapidjson::SizeType i = 0; i < actions.Size(); i++) {
+				action = actions[i]["action"].GetString();
+				rapidjson::Value& val = actions[i];
 
-			}
-			else if (action.compare("updatePlayer") == 0) {
-				this->updatePlayerState(action, actions[i]);
-			}
-			else if (action.compare("playerAttack") == 0) {
-				this->attackTarget(actions[i]);
+				if (action.compare("createGame") == 0) {
+					this->instantiateGameInstance(action, actions[i]);
+				}
+				else if (action.compare("joinGame") == 0) {
+
+				}
+				else if (action.compare("updatePlayer") == 0) {
+					this->updatePlayerState(action, actions[i]);
+				}
+				else if (action.compare("playerAttack") == 0) {
+					this->attackTarget(actions[i]);
+				}
 			}
 		}
 	}
@@ -160,7 +162,7 @@ bool GameClient::attackTarget(rapidjson::Value &doc) {
 	float hitbox_rotation = doc["hitbox"]["rotation"].GetFloat();
 	//std::cout << hitbox_x << ", " << hitbox_y << ", " << hitbox_rotation << "\n";
 
-	this->currentGameInstance->attackTarget(this->player.playerIndex, player_x, player_y, hitbox_x, hitbox_y, hitbox_rotation);
+	this->currentGameInstance->attackTarget(this->player.playerIndex, player_x, player_y, hitbox_x, hitbox_y, player_facing);
 	return true;
 }
 
@@ -355,6 +357,46 @@ std::string GameClient::generatePositionUpdate() {
 			/*
 			 * End Hitbox debugging
 			 /
+
+			 /*
+			  * Enemy mobs
+			  */
+			rapidjson::Value mobs;
+			mobs.SetArray();
+			int mob_width = 32;
+			int mob_height = 32;
+			for (auto mob : this->currentGameInstance->mobs) {
+				rapidjson::Value json_points;
+				json_points.SetArray();
+
+				rapidjson::Value json_point1;
+				json_point1.SetArray();
+
+				json_point1.PushBack(mob->positionX, root.GetAllocator());
+				json_point1.PushBack(mob->positionY, root.GetAllocator());
+				json_points.PushBack(json_point1, root.GetAllocator());
+
+				rapidjson::Value json_point2;
+				json_point2.SetArray();
+				json_point2.PushBack(mob->positionX + mob_width, root.GetAllocator());
+				json_point2.PushBack(mob->positionY, root.GetAllocator());
+				json_points.PushBack(json_point2, root.GetAllocator());
+
+				rapidjson::Value json_point3;
+				json_point3.SetArray();
+				json_point3.PushBack(mob->positionX + mob_width, root.GetAllocator());
+				json_point3.PushBack(mob->positionY + mob_height, root.GetAllocator());
+				json_points.PushBack(json_point3, root.GetAllocator());
+
+				rapidjson::Value json_point4;
+				json_point4.SetArray();
+				json_point4.PushBack(mob->positionX, root.GetAllocator());
+				json_point4.PushBack(mob->positionY + mob_height, root.GetAllocator());
+				json_points.PushBack(json_point4, root.GetAllocator());
+				
+				mobs.PushBack(json_points, root.GetAllocator());
+			}
+			data.AddMember("mob_hitboxes", mobs, root.GetAllocator());
 
 			/**
 			 * Begin loop through mobs

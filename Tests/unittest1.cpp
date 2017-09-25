@@ -55,5 +55,18 @@ namespace Tests
 			Assert::IsFalse(intersects(points1, points2), L"Points do not intersect");
 		}
 
+		TEST_METHOD(PointRotation1)
+		{
+			point_t p = rotatePoint(1.0f, 0.0f, 90.0f);
+
+			Assert::AreEqual(0.0f, p[0]);
+			Assert::AreEqual(1.0f, p[1]);
+
+			p = rotatePoint(1.0f, 0.0f, 180.0f);
+			Assert::AreEqual(1.0f, p[0]);
+			Assert::AreEqual(0.0f, p[1]);
+
+		}
+
 	};
 }

@@ -1,5 +1,7 @@
 #include "utils.h"
 #include <random>
+#include "math.h"
+#include <iostream>
 
 void gen_random(char *s, const int len) {
 	static const char alphanum[] =
@@ -65,57 +67,83 @@ std::string base64_decode(std::string &encoded_string) {
 }
 
 bool intersects(xy_points_t points1, xy_points_t points2) {
+	std::cout << "<======================================>\n";
 	for (xy_points_t::iterator points1_it = points1.begin(); points1_it != points1.end(); points1_it++) {
-		float mob1_x = (*points1_it)[0];
-		float mob1_y = (*points1_it)[1];
+		point_t mob_point = (*points1_it);
+		float mob1_x = mob_point[0];
+		float mob1_y = mob_point[1];
 
+		std::cout << "///////////////// New Point /////////////////\n";
 		for (xy_points_t::iterator points2_it = points2.begin(); points2_it != points2.end(); points2_it++) {
-			float hitbox1_x = (*points2_it)[0];
-			float hitbox1_y = (*points2_it)[1];
+			point_t hitbox_point = *points2_it;
+			float hitbox1_x = hitbox_point[0];
+			float hitbox1_y = hitbox_point[1];
 
 			float hitbox2_x;
 			float hitbox2_y;
 
-			if (points2_it + 1 == points2.end()) {
+			xy_points_t::iterator points2_it2 = std::next(points2_it);
+
+			if (points2_it2 == points2.end()) {
 				hitbox2_x = (*points2.begin())[0];
 				hitbox2_y = (*points2.begin())[1];
 			}
 			else {
-				hitbox2_x = (*(points2_it + 1))[0];
-				hitbox2_y = (*(points2_it + 1))[1];
+				hitbox2_x = (*points2_it2)[0];
+				hitbox2_y = (*points2_it2)[1];
 			}
 
 			bool x_intersects = false;
 			bool y_intersects = false;
 
 			if (hitbox1_x < hitbox2_x) {
+				std::cout << mob1_x << ">= " << hitbox1_x << " && " << mob1_x << " <= " << hitbox2_x << "\n";
 				if (mob1_x >= hitbox1_x && mob1_x <= hitbox2_x) {
 					x_intersects = true;
 				}
 
 			}
 			else {
+				std::cout << mob1_x << " <= " << hitbox1_x << " && " << mob1_x << " >= " << hitbox2_x << "\n";
 				if (mob1_x <= hitbox1_x && mob1_x >= hitbox2_x) {
 					x_intersects = true;
 				}
 			}
 
 			if (hitbox1_y < hitbox2_y) {
+				std::cout << mob1_y << " >= " << hitbox1_y << " && " << mob1_y << " <= " << hitbox2_y << "\n";
 				if (mob1_y >= hitbox1_y && mob1_y <= hitbox2_y) {
 					y_intersects = true;
 				}
 			}
 			else {
+				std::cout << mob1_y << " >= " << hitbox1_y << " && " << mob1_y << " <= " << hitbox2_y << "\n";
 				if (mob1_y <= hitbox1_y && mob1_y >= hitbox2_y) {
 					y_intersects = true;
 				}
 			}
 
 			if (x_intersects && y_intersects) {
+				std::cout << "<===================INTERSECTS===================>\n";
 				return true;
 			}
 
 		}
 	}
+	std::cout << "<======================================>\n";
 	return false;
+}
+
+point_t rotatePoint(point_t point, float rotation) {
+	point_t new_point;
+	new_point[0] = round(point[0] * cos(rotation) - point[1] * sin(rotation));
+	new_point[1] = round(point[1] * cos(rotation) + point[0] * sin(rotation));
+	return new_point;
+}
+
+point_t rotatePoint(float x, float y, float rotation) {
+	point_t new_point;
+	new_point[0] = round(x * cos(rotation) - y * sin(rotation));
+	new_point[1] = round(y * cos(rotation) + x * sin(rotation));
+	return new_point;
 }

@@ -32,7 +32,7 @@
 #else
 #include <process.h>
 #endif
-#include <uv.h>
+//#include <uv.h>
 #include <chrono>
 #include <sstream>
 
@@ -110,6 +110,7 @@ struct per_session_data__echo {
 	GameClient* client;
 	char message[MAX_ECHO_PAYLOAD];
 	int message_len;
+	size_t remaining;
 };
 
 
@@ -121,6 +122,8 @@ callback_echo(struct lws *wsi, enum lws_callback_reasons reason, void *user,
 		(struct per_session_data__echo *)user;
 	std::string message;
 	int n;
+	size_t remaining;
+	char tmp_message[MAX_ECHO_PAYLOAD];
 
 	switch (reason) {
 	case LWS_CALLBACK_SERVER_WRITEABLE:
@@ -183,22 +186,43 @@ callback_echo(struct lws *wsi, enum lws_callback_reasons reason, void *user,
 		break;
 
 	case LWS_CALLBACK_RECEIVE:
-		do_rx:
 			pss->final = lws_is_final_fragment(wsi);
-			memcpy(&pss->message[pss->message_len], in, len);
-			pss->message_len += len;
+			
 
-			if (pss->final) {
+			
+			memcpy(&tmp_message, in, len);
+			//std::cout << "Data: " << tmp_message << "\n";
+			memset(&tmp_message, '\0', sizeof(char)*(MAX_ECHO_PAYLOAD));
+
+			//std::cout << "Remaining: " << pss->remaining << "\n";
+			
+			//std::cout << "Pre-Append state: " << pss->message << "\n";
+			if (!pss->remaining) {
+				memcpy(&pss->message[pss->message_len], in, len);
+				pss->message_len += len;
+			}
+			else {
+				memcpy(&pss->message[pss->message_len], in, pss->remaining);
+				pss->message_len += pss->remaining;
+				pss->remaining = 0;
+			}
+			//std::cout << "Post-Append state: " << pss->message << "\n";
+
+			pss->remaining = lws_remaining_packet_payload(wsi);
+
+			if (!pss->remaining && pss->final) {
 				/*
 				* Process payload when it has all been received
 				* Clear out payload buffer for next payload
 				*/
+				//std::cout << "Final state: " << pss->message << "\n";
+
 				pss->client->processRequest(pss->message, pss->message_len);
 				memset(&pss->message, '\0', sizeof(char)*(MAX_ECHO_PAYLOAD));
 				pss->message_len = 0;
 			}
 
-			lws_rx_flow_control(wsi, 1);
+			//lws_rx_flow_control(wsi, 1);
 			break;
 	case LWS_CALLBACK_CLIENT_CONFIRM_EXTENSION_SUPPORTED:
 		/* reject everything else except permessage-deflate */
@@ -206,6 +230,8 @@ callback_echo(struct lws *wsi, enum lws_callback_reasons reason, void *user,
 			return 1;
 		break;
 	case LWS_CALLBACK_ESTABLISHED:
+		lws_set_extension_option(wsi, "permessage-deflate",
+			"rx_buf_size", "12");
 		pss->client = new GameClient();
 		break;
 	case LWS_CALLBACK_WSI_DESTROY:
@@ -232,26 +258,6 @@ static struct lws_protocols protocols[] = {
         },
         { NULL, NULL, 0, 0 } /* terminator */
 };
-
-
-/* this shows how to override the lws file operations.	You don't need
- * to do any of this unless you have a reason (eg, want to serve
- * compressed files without decompressing the whole archive)
- */
-static lws_filefd_type
-test_server_fops_open(struct lws *wsi, const char *filename,
-                      unsigned long *filelen, int flags)
-{
-    lws_filefd_type n;
-
-    /* call through to original platform implementation */
-    n = fops_plat.open(wsi, filename, filelen, flags);
-
-    lwsl_info("%s: opening %s, ret %ld, len %lu\n", __func__, filename,
-              (long)n, *filelen);
-
-    return n;
-}
 
 void sighandler(int sig)
 {
@@ -300,6 +306,7 @@ static struct option options[] = {
         { NULL, 0, 0, 0 }
 };
 
+/*
 void signal_cb(uv_signal_t *watcher, int signum)
 {
     lwsl_err("Signal %d caught, exiting...\n", watcher->signum);
@@ -314,7 +321,8 @@ void signal_cb(uv_signal_t *watcher, int signum)
     }
     lws_libuv_stop(context);
 }
-
+*/
+/*
 LWS_VISIBLE int
 init_main(struct lws_context *context, struct lws_plugin_capability *c) {
 	c->protocols = protocols;
@@ -323,6 +331,7 @@ init_main(struct lws_context *context, struct lws_plugin_capability *c) {
 	c->count_extensions = 0;
 	return 0;
 }
+*/
 
 void updateGameStates(bool update_loop) {
 	GameManager& manager = GameManager::getInstance();

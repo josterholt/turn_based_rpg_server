@@ -55,7 +55,7 @@ public:
 	const char * getToken();
 	int getLayerIndex(rapidjson::Value &layers, std::string name);
 	void updatePosition(int player_index, float x, float y, float velocity_x, float velocity_y, FacingDirection facing);
-	void attackTarget(int player_index, float player_x, float player_y, float hitbox_x, float hitbox_y, float hitbox_rotation);
+	void attackTarget(int player_index, float player_x, float player_y, float hitbox_x, float hitbox_y, int player_facing);
 	bool canMove(GamePlayer* player, float x, float y);
 	int getTileIndex(float x, float y);
 	bool GameState::boxCheck(GamePlayer* player, float x, float y);

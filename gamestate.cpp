@@ -214,27 +214,72 @@ void GameState::updatePosition(int player_index, float x, float y, float velocit
 /**
  * As of current coding, collision detection assumes no angular boxes (everything is 90 degrees)
  */
-void GameState::attackTarget(int player_index, float player_x, float player_y, float hitbox_x, float hitbox_y, float hitbox_rotation) {
+void GameState::attackTarget(int player_index, float player_x, float player_y, float hitbox_x, float hitbox_y, int player_facing) {
 	// Get current weapon
 	int weapon_width = 10;
-	int weapon_height = 10;
+	int weapon_height = 30;
 
-	float new_x = player_x + (hitbox_x * cos(hitbox_rotation) - hitbox_y * sin(hitbox_rotation));
-	float new_y = player_y + (hitbox_y * cos(hitbox_rotation) + hitbox_x * sin(hitbox_rotation));
+	//float new_x = player_x + (hitbox_x * cos(hitbox_rotation) - hitbox_y * sin(hitbox_rotation));
+	//float new_y = player_y + (hitbox_y * cos(hitbox_rotation) + hitbox_x * sin(hitbox_rotation));
 
 	// Collision box points
 	// 1------2
 	// |      |
 	// |      |
 	// 4------3
-	xy_points_t hitbox_points = { {
-		{ new_x, new_y },
-		{ new_x + weapon_width, new_y },
-		{ new_x + weapon_width, new_y + weapon_height },
-		{ new_x, new_y + weapon_height }
-	} };
+
+	point_t p1, p2, p3, p4;
+
+	if(player_facing == 3) { // Facing UP
+		float x_offset = 0.0f;
+		float y_offset = 0.0f;
+		p1 = { player_x, player_y - weapon_width };
+		p2 = { player_x + weapon_height, player_y - weapon_width };
+		p3 = { player_x + weapon_height, player_y };
+		p4 = { player_x, player_y };
+	}
+	else if (player_facing == 1) { // Facing LEFT
+		p1 = { player_x - weapon_width, player_y };
+		p2 = { player_x, player_y };
+		p3 = { player_x, player_y + weapon_height };
+		p4 = { player_x - weapon_width, player_y + weapon_height };
+	}
+	else if (player_facing == 4) { // Facing DOWN
+		float x_offset = 0.0f;
+		float y_offset = 48.0f;
+		p1 = { player_x, player_y + y_offset };
+		p2 = { player_x + weapon_height, player_y + y_offset };
+		p3 = { player_x + weapon_height, player_y + y_offset + weapon_width };
+		p4 = { player_x, player_y + y_offset + weapon_width };
+	}
+	else { // Facing RIGHT
+		float x_offset = 32.0f;
+		float y_offset = 0.0f;
+		p1 = { player_x + x_offset, player_y };
+		p2 = { player_x + x_offset + weapon_width, player_y };
+		p3 = { player_x + x_offset + weapon_width, player_y + weapon_height };
+		p4 = { player_x + x_offset, player_y + weapon_height };
+	}
+
+	xy_points_t hitbox_points = {
+		{ p1[0], p1[1] },
+		{ p2[0], p2[1] },
+		{ p3[0], p3[1] },
+		{ p4[0], p4[1] }
+	};
 
 	hitboxes.push_back(hitbox_points);
+	int mob_width = 32; // temporary
+	int mob_height = 32; // temporary
+
+	/*
+	if (rect1.x < rect2.x + rect2.width &&
+	   rect1.x + rect1.width > rect2.x &&
+	   rect1.y < rect2.y + rect2.height &&
+	   rect1.height + rect1.y > rect2.y) {
+		// collision detected!
+	}
+	*/
 
 	for (std::vector<GameMob*>::iterator it = this->mobs.begin(); it != this->mobs.end(); it++) {
 		float mob_x = (*it)->positionX;
@@ -242,14 +287,45 @@ void GameState::attackTarget(int player_index, float player_x, float player_y, f
 		int width = (*it)->width;
 		int height = (*it)->height;
 
+
 		xy_points_t mob_points = { {
 			{ mob_x, mob_y },
-			{ mob_x + weapon_width , mob_y },
-			{ mob_x + weapon_width, mob_y + weapon_height },
-			{ mob_x, mob_y + weapon_height }
+			{ mob_x + mob_width , mob_y },
+			{ mob_x + mob_width, mob_y + mob_height },
+			{ mob_x, mob_y + mob_height }
 		} };
 
-		bool intersects_mob = intersects(mob_points, hitbox_points);
+		bool intersects_mob = false; // = intersects(mob_points, hitbox_points);
+
+		//if (!intersects_mob) {
+//			intersects_mob = intersects(hitbox_points, mob_points);
+		//}
+
+		if (hitbox_points[0][0] < mob_x + mob_width &&
+			hitbox_points[1][0] > mob_x &&
+			hitbox_points[0][1] < mob_y + mob_height &&
+			hitbox_points[3][1] > mob_y) {
+			intersects_mob = true;
+		}
+
+		if (!intersects_mob) {
+			/*
+			if (hitbox_points[0][0] < mob_x + width &&
+				hitbox_points[1][0] > mob_x &&
+				hitbox_points[0][1] < mob_y + mob_height &&
+				hitbox_points[3][1] > mob_y) {
+				intersects_mob = true;
+			}
+			*/
+
+			if (mob_x < hitbox_points[1][0] &&
+				mob_x + mob_width > hitbox_points[0][0] &&
+				mob_y < hitbox_points[2][1] &&
+				mob_y + mob_height > hitbox_points[0][1]) {
+				intersects_mob = true;
+			}
+		}
+
 
 		if (intersects_mob) {
 			std::cout << "#### SETTING MOB TO 0 ####\n";
@@ -260,8 +336,10 @@ void GameState::attackTarget(int player_index, float player_x, float player_y, f
 
 
 
+
+
 void GameState::update(double elapsed_time) {
-	std::cout << "GameState update\n";
+	//std::cout << "GameState update\n";
 	if (this->mobs.size() == 0) {
 		return;
 	}
