@@ -19,10 +19,12 @@ public:
 		static GameManager instance;
 		return instance;
 	}
-	GameState* createGame();
-	GameState* joinGame(std::string key);
+	//GameState* createGame();
+	//GameState* joinGame(std::string key);
+
 	GameState* getGame(std::string key);
 	void addGame(std::string key, GameState * gamestate);
 	void update(double time_elapsed);
+	void destroyGame(char* token);
 };
 #endif

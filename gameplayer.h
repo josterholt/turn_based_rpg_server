@@ -16,5 +16,6 @@ public:
 	GameState* game;
 	EventManager eventMgr;
 	int playerIndex = 0;
+	int damage = 5;
 };
 #endif

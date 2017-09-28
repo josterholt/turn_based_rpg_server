@@ -77,12 +77,11 @@ void GameMob::processScriptedState(double elapsed_time) {
 }
 
 void GameMob::update(double elapsed_time) {
-	this->processScriptedState(elapsed_time);
-
-	//std::cout << "Mob: " << this->positionX << ", " << this->positionY << "\n";
-
-	this->positionX += this->velocityX;
-	this->positionY += this->velocityY;
+	if (this->health > 0) {
+		this->processScriptedState(elapsed_time);
+		this->positionX += this->velocityX;
+		this->positionY += this->velocityY;
+	}
 }
 
 void GameMob::setPosition(float x, float y) {

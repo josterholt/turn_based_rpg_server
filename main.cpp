@@ -89,16 +89,6 @@ char crl_path[1024] = "";
 
 std::chrono::steady_clock::time_point start_frame_time = std::chrono::steady_clock::now();
 
-/* singlethreaded version --> no locks */
-
-void test_server_lock(int care)
-{
-}
-void test_server_unlock(int care)
-{
-}
-
-#define TOTAL 993840
 struct per_session_data__echo {
 	//size_t rx, tx;
 	//unsigned char buf[LWS_PRE + MAX_ECHO_PAYLOAD];
@@ -207,6 +197,7 @@ callback_echo(struct lws *wsi, enum lws_callback_reasons reason, void *user,
 				pss->remaining = 0;
 			}
 			//std::cout << "Post-Append state: " << pss->message << "\n";
+			//std::cout << "Message Len " << pss->message_len << " / " << MAX_ECHO_PAYLOAD << "\n";
 
 			pss->remaining = lws_remaining_packet_payload(wsi);
 

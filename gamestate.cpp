@@ -56,12 +56,14 @@ void GameState::loadLevel(std::string level) {
 	rapidjson::Value mob_objects = doc["layers"][mob_index]["objects"].GetArray();
 	for (rapidjson::Value::ValueIterator it = mob_objects.Begin(); it != mob_objects.End(); ++it) {
 		GameMob* mob = new GameMob();
+		mob->health = 20;
 		mob->setPosition((*it)["x"].GetInt(), (*it)["y"].GetInt());
 		mob->loadScript(this->eventNodes[0]);
 		this->mobs.push_back(mob);
 		//std::cout << (*it)["x"].GetInt() << ", " << (*it)["y"].GetInt() << "\n";
 	}
 	std::cout << "Level loaded\n";
+	std::cout << "Num mobs: " << this->mobs.size() << "\n";
 }
 
 int GameState::getLayerIndex(rapidjson::Value &layers, std::string name) {
@@ -164,7 +166,7 @@ bool GameState::canMove(GamePlayer* player, float x, float y) {
 
 float GameState::getDistance(GamePlayer* player, float x, float y) {
 	GameClient& c = player->gameClient;
-	std::cout << std::to_string(player->gameClient.lastUpdateTime) << "\n";
+	std::cout << "Distance: " << std::to_string(player->gameClient.lastUpdateTime) << "\n";
 
 	return 0;
 }
@@ -274,15 +276,6 @@ void GameState::attackTarget(int player_index, float player_x, float player_y, f
 	int mob_width = 32; // temporary
 	int mob_height = 32; // temporary
 
-	/*
-	if (rect1.x < rect2.x + rect2.width &&
-	   rect1.x + rect1.width > rect2.x &&
-	   rect1.y < rect2.y + rect2.height &&
-	   rect1.height + rect1.y > rect2.y) {
-		// collision detected!
-	}
-	*/
-
 	for (std::vector<GameMob*>::iterator it = this->mobs.begin(); it != this->mobs.end(); it++) {
 		float mob_x = (*it)->positionX;
 		float mob_y = (*it)->positionY;
@@ -297,11 +290,7 @@ void GameState::attackTarget(int player_index, float player_x, float player_y, f
 			{ mob_x, mob_y + mob_height }
 		} };
 
-		bool intersects_mob = false; // = intersects(mob_points, hitbox_points);
-
-		//if (!intersects_mob) {
-//			intersects_mob = intersects(hitbox_points, mob_points);
-		//}
+		bool intersects_mob = false;
 
 		if (hitbox_points[0][0] < mob_x + mob_width &&
 			hitbox_points[1][0] > mob_x &&
@@ -311,15 +300,6 @@ void GameState::attackTarget(int player_index, float player_x, float player_y, f
 		}
 
 		if (!intersects_mob) {
-			/*
-			if (hitbox_points[0][0] < mob_x + width &&
-				hitbox_points[1][0] > mob_x &&
-				hitbox_points[0][1] < mob_y + mob_height &&
-				hitbox_points[3][1] > mob_y) {
-				intersects_mob = true;
-			}
-			*/
-
 			if (mob_x < hitbox_points[1][0] &&
 				mob_x + mob_width > hitbox_points[0][0] &&
 				mob_y < hitbox_points[2][1] &&
@@ -330,8 +310,8 @@ void GameState::attackTarget(int player_index, float player_x, float player_y, f
 
 
 		if (intersects_mob) {
-			std::cout << "#### SETTING MOB TO 0 ####\n";
-			(*it)->health = 0;
+			std::cout << "#### MOB hit ####\n";
+			(*it)->health -= players[player_index]->damage;
 		}
 	}
 }
@@ -342,6 +322,7 @@ void GameState::attackTarget(int player_index, float player_x, float player_y, f
 
 void GameState::update(double elapsed_time) {
 	//std::cout << "GameState update\n";
+	//std::cout << "Update mobs " << this->mobs.size() << "\n";
 	if (this->mobs.size() == 0) {
 		return;
 	}

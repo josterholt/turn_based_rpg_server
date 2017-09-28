@@ -24,7 +24,7 @@ void GameClient::initPlayer(int user_id) {
 
 GameState* GameClient::createGame() {
 	GameState* game_state = new GameState();
-	GameManager::getInstance().addGame("TMP_KEY", game_state);
+	GameManager::getInstance().addGame(game_state->token, game_state);
 	this->currentGameInstance = game_state;
 	this->currentGameInstance->addPlayer(&this->player);
 	return game_state;
@@ -45,29 +45,18 @@ GameState* GameClient::joinGame(std::string key) {
 void GameClient::leaveGame() {
 	GamePlayer* player = &this->player;
 	std::cout << "Remove: " << player << "\n";
+	char* game_token = this->currentGameInstance->token;
+
 	if (this->currentGameInstance != nullptr) {
 		int existing_players = 0;
-		for (int i = 0; i < this->currentGameInstance->players.size(); i++) {
-			if (this->currentGameInstance->players[i] == player) {
-				this->currentGameInstance->players[i] = nullptr;
-			}
-			else if (this->currentGameInstance->players[i] != nullptr) {
-				existing_players += 1;
-			}
+		std::vector<GamePlayer*>::iterator p_it = std::find(this->currentGameInstance->players.begin(), this->currentGameInstance->players.end(), player);
+		if (p_it != this->currentGameInstance->players.end()) {
+			this->currentGameInstance->players.erase(p_it);
 		}
 
-		if (existing_players == 0) {
-			delete this->currentGameInstance;
-		}
+		GameManager::getInstance().destroyGame(game_token);
 	}
-	/*
-	for (std::array<GamePlayer*, 2>::iterator it = this->currentGameInstance->players.begin(); it != this->currentGameInstance->players.end(); ++it) {
-		if (player == *it) {
-			std::cout << "Foo\n";
-			*it = nullptr;
-		}
-	}
-	*/
+
 }
 
 GameState* GameClient::getGame() {
@@ -414,6 +403,7 @@ std::string GameClient::generatePositionUpdate() {
 
 				mob.AddMember("token", rapidjson::Value(game_mob->token, strlen(game_mob->token)), root.GetAllocator());
 				mob.AddMember("position", position, root.GetAllocator());
+				mob.AddMember("health", game_mob->health, root.GetAllocator());
 				mob_array.PushBack(mob, root.GetAllocator());
 			}
 			data.AddMember("mobs", mob_array, root.GetAllocator());
