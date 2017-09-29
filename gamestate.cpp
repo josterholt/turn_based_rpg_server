@@ -85,6 +85,10 @@ void GameState::addPlayer(GamePlayer* player) {
 	this->players.push_back(player);
 }
 
+void GameState::addMOB(GameMob* mob) {
+	this->mobs.push_back(mob);
+}
+
 GameStatus GameState::getStateUpdates() {
 	GameStatus g;
 	g.players = this->getPlayerPositions();
@@ -200,6 +204,14 @@ int GameState::getTileIndex(float x, float y) {
 }
 
 bool GameState::isWalkableTile(int tile_index) {
+	if (tile_index < 0) {
+		return false;
+	}
+
+	if (tile_index > this->tiles.size()) {
+		return false;
+	}
+
 	if (this->tiles[tile_index] > 0) {
 		return true;
 	}
@@ -316,15 +328,45 @@ void GameState::attackTarget(int player_index, float player_x, float player_y, f
 	}
 }
 
-
-
-
-
 void GameState::update(double elapsed_time) {
 	//std::cout << "GameState update\n";
 	//std::cout << "Update mobs " << this->mobs.size() << "\n";
-	if (this->mobs.size() == 0) {
-		return;
+
+	int alive_mob_count = 0;
+	for(std::vector<GameMob*>::iterator it = this->mobs.begin(); it != this->mobs.end(); it++) {
+		if ((*it)->health > 0) {
+			alive_mob_count += 1;
+		}
+	}
+
+	if (alive_mob_count == 0) {
+		GameMob* mob = new GameMob();
+		mob->health = 20;
+		// Get player position
+		int player_x = this->players[0]->positionX;
+		int player_y = this->players[0]->positionY;
+
+		// Spawn within x pixels
+		// Make sure spawn point is on a tile
+		int offset_x = rand() % 50 + 1,
+			offset_y = rand() % 50 + 1;;
+
+		int mob_x = player_x + 10,
+			mob_y = player_y + 10;
+
+		srand(time(NULL));
+		// Brute force spawn generation
+		while (!this->isWalkableTile(this->getTileIndex(mob_x, mob_y))) {
+			offset_x = rand() % 50 + 1;
+			offset_y = rand() % 50 + 1;
+
+		}
+		std::cout << "Setting position " << mob_x << ", " << mob_y << "\n";
+		mob->setPosition(mob_x, mob_y);
+
+		mob->loadScript(this->eventNodes[0]);
+		std::cout << "Adding mob " << mob->token << " at " << mob->positionX << ", " << mob->positionY << "\n";
+		this->addMOB(mob);
 	}
 
 	for (std::vector<GameMob*>::iterator it = this->mobs.begin(); it != this->mobs.end(); ++it) {

@@ -50,6 +50,7 @@ public:
 	boost::shared_mutex positionMutex;
 
 	void addPlayer(GamePlayer* player);
+	void addMOB(GameMob* mob);
 	GameStatus getStateUpdates();
 	std::vector<GamePlayer*> getPlayerPositions();
 	const char * getToken();
