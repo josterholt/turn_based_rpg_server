@@ -353,7 +353,7 @@ std::string GameClient::generatePositionUpdate() {
 			rapidjson::Value mobs;
 			mobs.SetArray();
 			int mob_width = 32;
-			int mob_height = 32;
+			int mob_height = 48;
 			for (auto mob : this->currentGameInstance->mobs) {
 				rapidjson::Value json_points;
 				json_points.SetArray();

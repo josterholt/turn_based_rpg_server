@@ -5,6 +5,7 @@
 #include <iostream>
 #include "utils.h"
 #include <math.h>
+#include "npcs.hpp"
 
 #define PI 3.14159265
 
@@ -55,12 +56,20 @@ void GameState::loadLevel(std::string level) {
 
 	rapidjson::Value mob_objects = doc["layers"][mob_index]["objects"].GetArray();
 	for (rapidjson::Value::ValueIterator it = mob_objects.Begin(); it != mob_objects.End(); ++it) {
-		GameMob* mob = new GameMob();
-		mob->health = 20;
-		mob->setPosition((*it)["x"].GetInt(), (*it)["y"].GetInt());
-		mob->loadScript(this->eventNodes[0]);
-		this->mobs.push_back(mob);
-		//std::cout << (*it)["x"].GetInt() << ", " << (*it)["y"].GetInt() << "\n";
+		std::string mob_name = (*it)["properties"]["type"].GetString();
+		if (std::find(NPC_LIST.begin(), NPC_LIST.end(), mob_name) != NPC_LIST.end()) {
+			if ("mob_name" == "skeleton") {
+				GameMob* mob = new GameMob();
+				mob->health = skeleton.health;
+				
+				mob->width = skeleton.width;
+				mob->height = skeleton.height;
+				mob->setPosition((*it)["x"].GetInt(), (*it)["y"].GetInt());
+				mob->loadScript(this->eventNodes[0]);
+				this->mobs.push_back(mob);
+				//std::cout << (*it)["x"].GetInt() << ", " << (*it)["y"].GetInt() << "\n";
+			}
+		}		
 	}
 	std::cout << "Level loaded\n";
 	std::cout << "Num mobs: " << this->mobs.size() << "\n";
@@ -286,7 +295,7 @@ void GameState::attackTarget(int player_index, float player_x, float player_y, f
 
 	hitboxes.push_back(hitbox_points);
 	int mob_width = 32; // temporary
-	int mob_height = 32; // temporary
+	int mob_height = 48; // temporary
 
 	for (std::vector<GameMob*>::iterator it = this->mobs.begin(); it != this->mobs.end(); it++) {
 		float mob_x = (*it)->positionX;
