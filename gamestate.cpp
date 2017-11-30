@@ -293,7 +293,7 @@ void GameState::attackTarget(int player_index, float player_x, float player_y, f
 		{ p4[0], p4[1] }
 	};
 
-	hitboxes.push_back(hitbox_points);
+	//hitboxes.push_back(hitbox_points);
 	int mob_width = 32; // temporary
 	int mob_height = 48; // temporary
 
@@ -340,6 +340,22 @@ void GameState::attackTarget(int player_index, float player_x, float player_y, f
 void GameState::update(double elapsed_time) {
 	//std::cout << "GameState update\n";
 	//std::cout << "Update mobs " << this->mobs.size() << "\n";
+	this->cleanupTimer += elapsed_time;
+	if (this->cleanupTimer > this->cleanupInterval) {
+		this->cleanupTimer = 0;
+
+		std::cout << "Cleaning up mobs...\n";
+		
+		for (std::vector<GameMob*>::iterator it = this->mobs.begin(); it != this->mobs.end(); ) {
+			if ((*it)->health == 0) {
+				std::cout << "Cleaning up mob\n";
+				it = this->mobs.erase(it);
+			}
+			else {
+				++it;
+			}
+		}
+	}
 
 	int alive_mob_count = 0;
 	for(std::vector<GameMob*>::iterator it = this->mobs.begin(); it != this->mobs.end(); it++) {

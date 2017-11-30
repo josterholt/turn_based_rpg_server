@@ -33,6 +33,9 @@ class GameState {
 	int tileHeight = 32;
 	int tilesPerRow = 100;
 
+	int cleanupInterval = 5000; // Every 5 seconds
+	float cleanupTimer = 0;
+
 	float getDistance(GamePlayer* player, float x, float y);
 public:
 	GameState();
