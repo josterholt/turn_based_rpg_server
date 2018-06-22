@@ -30,6 +30,23 @@ GameUnit::GameUnit(std::string name, int x, int y, int width, int height) : name
 
 }
 
+int GameUnit::getMaxHealth() {
+	return floor(this->baseHealth + this->getStamina() * this->staminaToHealthMultiplier);
+}
+
+int GameUnit::getStamina() {
+	int stamina_multiplier = 1 + (this->level - 1) * this->staminaPerLevelMultiplier;
+	return this->baseStamina * stamina_multiplier;
+}
+
+bool GameUnit::setTarget(GameUnit *target) {
+	this->target = target;
+}
+
+GameUnit* GameUnit::getTarget() {
+	return this->target;
+}
+
 void GameUnit::updatePosition(float x, float y, FacingDirection facing) {
 	boost::upgrade_lock<boost::shared_mutex> lock(this->positionMutex);
 

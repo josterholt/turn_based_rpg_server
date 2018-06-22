@@ -6,10 +6,10 @@
 #include "string"
 
 class Goblin : public GameUnit {
-	int bufferedY;
+	int bufferedY = 0;
 
 public:
 	Goblin(std::string name, int x, int y, int width, int height);
-	int getFacingVelocity;
+	std::pair<int, int> getFacingVelocity();
 };
 #endif
