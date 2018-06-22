@@ -1,6 +1,7 @@
 #ifndef _GAMEUNIT_H_
 #define _GAMEUNIT_H_
 #include "boost/thread.hpp"
+#include <string>
 
 enum FacingDirection {
 	LEFT,
@@ -20,6 +21,7 @@ struct UnitState {
 class GameUnit {
 	virtual void update(double elapsed_time);
 public:
+	std::string name;
 	float positionX;
 	float positionY;
 	float velocityX;
@@ -37,6 +39,7 @@ public:
 	boost::shared_mutex positionMutex;
 
 	GameUnit();
+	GameUnit(std::string name, int x, int y, int width, int height);
 	void updatePosition(float x, float y, FacingDirection facing);
 	void moveToSpawn(float x, float y, FacingDirection facing);
 	UnitState getFullState();

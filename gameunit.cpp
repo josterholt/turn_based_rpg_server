@@ -2,7 +2,6 @@
 #include "utils.h"
 #include <math.h>
 
-
 UnitState GameUnit::getFullState() {
 	boost::shared_lock<boost::shared_mutex> lock(this->positionMutex);
 
@@ -25,6 +24,10 @@ GameUnit::GameUnit() {
 	this->positionY = 2000;
 
 	std::cout << "Max Speed: " << this->maxSpeed << "\n";
+}
+
+GameUnit::GameUnit(std::string name, int x, int y, int width, int height) : name(name), positionX(x), positionY(y), width(width), height(height) {
+
 }
 
 void GameUnit::updatePosition(float x, float y, FacingDirection facing) {

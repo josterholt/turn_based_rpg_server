@@ -345,7 +345,7 @@ void updateGameStates(bool update_loop) {
 
 int main(int argc, char **argv)
 {
-	bool update_loop_active = true;
+	bool update_loop_active = true; // @todo does this need to be atomic?
 	std::thread update_loop(updateGameStates, update_loop_active);
 	update_loop.detach();
 
