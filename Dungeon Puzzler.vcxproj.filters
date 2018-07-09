@@ -12,6 +12,8 @@
     <ClCompile Include="gamemanager.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="gameunit.cpp" />
+    <ClCompile Include="src\mobs\goblin.cpp" />
+    <ClCompile Include="src\protobuf\messages.pb.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="D:\libs\libwebsockets\win32port\win32helpers\getopt.h">
@@ -47,10 +49,23 @@
     <ClInclude Include="gameunit.h">
       <Filter>headers</Filter>
     </ClInclude>
+    <ClInclude Include="npcs.hpp" />
+    <ClInclude Include="src\mobs\goblin.h">
+      <Filter>headers\mobs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\protobuf\messages.pb.h">
+      <Filter>headers\protobuf</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="headers">
       <UniqueIdentifier>{063c5771-d45a-4291-bf50-419508eb92f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers\mobs">
+      <UniqueIdentifier>{998386cb-c96d-4e48-8c4e-ef54843972f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers\protobuf">
+      <UniqueIdentifier>{e45f58ac-225d-49d2-86a7-25e739906973}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

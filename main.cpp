@@ -130,6 +130,7 @@ callback_echo(struct lws *wsi, enum lws_callback_reasons reason, void *user,
 				start_frame_time = current_frame_time;
 
 				std::string json_string = pss->client->generatePositionUpdate();
+				std::cout << json_string << "\n";
 				if (json_string.compare("") != 0) {
 					n = lws_write(wsi, (unsigned char*)json_string.c_str(), json_string.size(), (lws_write_protocol)n);
 					if (n < 0) {
@@ -149,6 +150,7 @@ callback_echo(struct lws *wsi, enum lws_callback_reasons reason, void *user,
 					if (pss->client->routineQueue.pop(routine)) {
 						if (routine == GameClient::routines::INIT) {
 							std::string json_string = pss->client->generateInit();
+							std::cout << json_string << "\n";
 							if (json_string.compare("") != 0) {
 								n = lws_write(wsi, (unsigned char*)json_string.c_str(), json_string.size(), (lws_write_protocol)n);
 								if (n < 0) {

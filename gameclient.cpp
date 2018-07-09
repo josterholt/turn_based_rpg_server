@@ -4,6 +4,9 @@
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
 #include <math.h>
+#include <iostream>
+#include <istream>
+#include "src\protobuf\messages.pb.h"
 
 
 GameClient::GameClient() : player(*this) {
@@ -67,8 +70,46 @@ void GameClient::onMessage() {
 	// Writes message
 }
 
+/*
+std::istream& operator>>(std::istream& is, char* input) {
+	std::istream::sentry s(is);
+	if (s) while (is.good()) {
+		char c = is.get();
+		if (!std::isdigit(c, is.getloc())) {
+			std::cout << c << "\n";
+		}
+	}
+	return is;
+}
+*/
+
 void GameClient::processRequest(char* message, size_t len) {
 	try {
+		/*
+		char* tempBuffer = new char[256];
+		memcpy(tempBuffer, "", sizeof(tempBuffer));
+
+		std::istringstream iss(message);
+		int i;
+		char a[3];
+		char b[5];
+		
+		iss >> i;
+		iss >> a;
+		iss >> b;
+	
+		//iss.read(i, sizeof(i));
+		//iss.read(a, sizeof(a));
+		//iss.read(b, sizeof(b));
+		std::cout << "(" << sizeof(i) << ") " << i << "\n";
+		std::cout << "(" << sizeof(a) << ") " << a << "\n";
+		std::cout << "(" << sizeof(b) << ") " << b << "\n";
+		*/
+
+		gamemessages::PositionUpdate proto_message;
+		proto_message.set_x(10);
+		proto_message.set_x(22);
+
 		rapidjson::Document d;
 		d.Parse(message, len);
 		if (!d.HasParseError()) {
@@ -110,6 +151,7 @@ void GameClient::processRequest(char* message, size_t len) {
 }
 
 bool GameClient::instantiateGameInstance(std::string &action, rapidjson::Value &doc) {
+	std::cout << "Creating new game with player...\n";
 	rapidjson::Value::ConstMemberIterator it;
 	it = doc.FindMember("gameId");
 	if (it == doc.MemberEnd()) {

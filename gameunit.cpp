@@ -41,6 +41,7 @@ int GameUnit::getStamina() {
 
 bool GameUnit::setTarget(GameUnit *target) {
 	this->target = target;
+	return true; // will return false on wrong target
 }
 
 GameUnit* GameUnit::getTarget() {

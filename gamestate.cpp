@@ -36,22 +36,37 @@ GameState::~GameState() {
 
 void GameState::loadLevel(std::string level) {
 	std::cout << "Loading level...\n";
-	std::string filename = "C:/Users/Justin/Misc Code/DungeonPuzzler/tilesets_json/" + level + ".json";
+	std::string filename = "C:/Users/Justin/Misc Code/Game/combat_system/src/assets/tiled_map/" + level + ".json";
 	std::ifstream file(filename.c_str());
+
+	if ((file.rdstate() & std::ifstream::failbit) != 0) {
+		std::cout << "Error opening file\n";
+		return;
+	}
+
 	rapidjson::Document doc;
 	rapidjson::IStreamWrapper isw(file);
 	doc.ParseStream(isw);
 	file.close();
+
+	std::cout << doc.GetParseError() << "\n";
 	
 	std::string decoded_string;
-	
-	decoded_string = base64_decode(std::string(doc["layers"][0]["data"].GetString()));
-	for (int i = 0; i < decoded_string.size(); i = i + 4) {
-		this->tiles.push_back((unsigned char) decoded_string[i]);
+	rapidjson::Value tiles = doc["layers"][0]["data"].GetArray();
+	for (rapidjson::Value::ValueIterator it = tiles.Begin(); it != tiles.End(); ++it) {
+		this->tiles.push_back(it->GetInt());
 	}
 
-	this->spawnPoint = std::make_pair(doc["layers"][5]["objects"][0]["x"].GetFloat(), doc["layers"][5]["objects"][0]["y"].GetFloat());
+	/*
+	//decoded_string = std::string(doc["layers"][0]["data"].GetString());
+	for (int i = 0; i < tiles.size(); i = i + 4) {
+		this->tiles.push_back((unsigned char) decoded_string[i]);
+	}
+	*/
+
+	//this->spawnPoint = std::make_pair(doc["layers"][5]["objects"][0]["x"].GetFloat(), doc["layers"][5]["objects"][0]["y"].GetFloat());
 	
+	/*
 	int mob_index = getLayerIndex(doc["layers"], "mobs");
 
 	rapidjson::Value mob_objects = doc["layers"][mob_index]["objects"].GetArray();
@@ -71,6 +86,7 @@ void GameState::loadLevel(std::string level) {
 			}
 		}		
 	}
+	*/
 	std::cout << "Level loaded\n";
 	std::cout << "Num mobs: " << this->mobs.size() << "\n";
 }

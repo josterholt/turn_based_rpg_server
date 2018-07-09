@@ -72,12 +72,12 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\OpenSSL\include;C:\libs\boost_1_59_0;D:\libs\libwebsockets2.3\win32port\zlib;D:\libs\libwebsockets2.3\win32port\win32helpers;D:\libs\libwebsockets2.3\lib;D:\libs\libwebsockets2.3\build;D:\libs\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\vcpkg\installed\x64-windows\include;D:\OpenSSL\include;C:\libs\boost_1_59_0;D:\libs\libwebsockets2.3\win32port\zlib;D:\libs\libwebsockets2.3\win32port\win32helpers;D:\libs\libwebsockets2.3\lib;D:\libs\libwebsockets2.3\build;D:\libs\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;INSTALL_DATADIR="C:/Program Files/libwebsockets/share";_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;CMAKE_INTDIR="Debug";_ENABLE_ATOMIC_ALIGNMENT_FIX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>D:\OpenSSL\lib;C:\libs\boost_1_59_0\stage\lib;D:\libs\libwebsockets2.3\build\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;websockets_static.lib;zlib_internal.lib;D:\libs\libuv\Debug\lib\libuv.lib;ws2_32.lib;libboost_thread-vc140-mt-gd-1_59.lib;libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\vcpkg\installed\x64-windows\debug\lib;D:\OpenSSL\lib;C:\libs\boost_1_59_0\stage\lib;D:\libs\libwebsockets2.3\build\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;websockets_static.lib;zlib_internal.lib;D:\libs\libuv\Debug\lib\libuv.lib;ws2_32.lib;libboost_thread-vc140-mt-gd-1_59.lib;libeay32.lib;ssleay32.lib;libprotobufd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -91,6 +91,8 @@
     <ClCompile Include="gamestate.cpp" />
     <ClCompile Include="gameunit.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\mobs\goblin.cpp" />
+    <ClCompile Include="src\protobuf\messages.pb.cc" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +107,8 @@
     <ClInclude Include="gameunit.h" />
     <ClInclude Include="npcs.hpp" />
     <ClInclude Include="server.h" />
+    <ClInclude Include="src\mobs\goblin.h" />
+    <ClInclude Include="src\protobuf\messages.pb.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
