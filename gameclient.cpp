@@ -6,7 +6,6 @@
 #include <math.h>
 #include <iostream>
 #include <istream>
-#include "src\protobuf\messages.pb.h"
 
 
 GameClient::GameClient() : player(*this) {
@@ -15,6 +14,12 @@ GameClient::GameClient() : player(*this) {
 	player.maxSpeed = 100;
 
 	time(&lastUpdateTime);
+
+	// Placing player in a single isolated game for now
+	this->initPlayer(1);
+	this->currentGameInstance = this->createGame();
+	this->player.moveToSpawn(this->currentGameInstance->spawnPoint.first, this->currentGameInstance->spawnPoint.second, FacingDirection::UP);
+
 }
 
 void GameClient::open() {
@@ -105,10 +110,6 @@ void GameClient::processRequest(char* message, size_t len) {
 		std::cout << "(" << sizeof(a) << ") " << a << "\n";
 		std::cout << "(" << sizeof(b) << ") " << b << "\n";
 		*/
-
-		gamemessages::PositionUpdate proto_message;
-		proto_message.set_x(10);
-		proto_message.set_x(22);
 
 		rapidjson::Document d;
 		d.Parse(message, len);
@@ -315,153 +316,19 @@ std::string GameClient::generateInit() {
  * Returns:
  * std::string or "" (empty string)
  */
-std::string GameClient::generatePositionUpdate() {
-	if (this->currentGameInstance != nullptr) {
-		std::vector<GamePlayer*> players = this->currentGameInstance->getPlayerPositions();
-		size_t f = players.size();
+gamemessages::PositionUpdate GameClient::generatePositionUpdate() {
+	std::vector<GamePlayer*> players = this->currentGameInstance->getPlayerPositions();
 
-		if (players[0] != nullptr) {
-			rapidjson::Document root;
-			root.SetObject();
+	gamemessages::PositionUpdate proto_message;
+	
+	
+	gamemessages::Unit *unit = proto_message.add_players();
+	std::cout << "Player X " << players[0]->positionX << "\n";
+	unit->mutable_position()->set_x(players[0]->positionX);
+	unit->mutable_position()->set_y(players[0]->positionY);
+	unit->mutable_velocity()->set_x(players[0]->velocityX);
+	unit->mutable_velocity()->set_y(players[0]->velocityY);
+	unit->set_facing(players[0]->facing);
 
-			root.AddMember("status", "OK", root.GetAllocator());
-
-			rapidjson::Value data;
-			data.SetObject();
-
-			rapidjson::Value update_value("UPDATE");
-			data.AddMember("action", update_value, root.GetAllocator());
-
-
-			rapidjson::Value players_array;
-			players_array.SetArray();
-
-			/*
-			 * Begin loop through players
-			 */
-			rapidjson::Value player;
-			player.SetObject();
-			//player_value.SetObject();
-			//player_value.AddMember("x", rapidjson::Value(players[0]->position.first), root.GetAllocator());
-			//player_value.AddMember("y", rapidjson::Value(players[0]->position.second), root.GetAllocator());
-
-			rapidjson::Value position;
-			position.SetArray();
-			position.PushBack(players[0]->positionX, root.GetAllocator());
-			position.PushBack(players[0]->positionY, root.GetAllocator());
-			player.AddMember("position", position, root.GetAllocator());
-
-			rapidjson::Value velocity;
-			velocity.SetArray();
-			velocity.PushBack(players[0]->velocityX, root.GetAllocator());
-			velocity.PushBack(players[0]->velocityY, root.GetAllocator());
-			player.AddMember("velocity", velocity, root.GetAllocator());
-
-			players_array.PushBack(player, root.GetAllocator());
-			/*
-			 * End Loop through players
-			 */
-			data.AddMember("players", players_array, root.GetAllocator());
-
-			/*
-			* Hitbox debugging (if exists)
-			*/
-			rapidjson::Value hitboxes;
-			hitboxes.SetArray();
-
-			auto boxes = this->currentGameInstance->hitboxes;
-			for (auto hitbox : boxes) {
-				rapidjson::Value json_hitbox;
-				json_hitbox.SetArray();
-				for (auto point : hitbox) {
-					rapidjson::Value json_box;
-					json_box.SetArray();
-					json_box.PushBack(point[0], root.GetAllocator());
-					json_box.PushBack(point[1], root.GetAllocator());
-					json_hitbox.PushBack(json_box, root.GetAllocator());
-				}
-				hitboxes.PushBack(json_hitbox, root.GetAllocator());
-			}
-			data.AddMember("hitboxes", hitboxes, root.GetAllocator());
-
-			this->currentGameInstance->hitboxes.clear();
-			/*
-			 * End Hitbox debugging
-			 /
-
-			 /*
-			  * Enemy mobs
-			  */
-			rapidjson::Value mobs;
-			mobs.SetArray();
-			int mob_width = 32;
-			int mob_height = 48;
-			for (auto mob : this->currentGameInstance->mobs) {
-				rapidjson::Value json_points;
-				json_points.SetArray();
-
-				rapidjson::Value json_point1;
-				json_point1.SetArray();
-
-				json_point1.PushBack(mob->positionX, root.GetAllocator());
-				json_point1.PushBack(mob->positionY, root.GetAllocator());
-				json_points.PushBack(json_point1, root.GetAllocator());
-
-				rapidjson::Value json_point2;
-				json_point2.SetArray();
-				json_point2.PushBack(mob->positionX + mob_width, root.GetAllocator());
-				json_point2.PushBack(mob->positionY, root.GetAllocator());
-				json_points.PushBack(json_point2, root.GetAllocator());
-
-				rapidjson::Value json_point3;
-				json_point3.SetArray();
-				json_point3.PushBack(mob->positionX + mob_width, root.GetAllocator());
-				json_point3.PushBack(mob->positionY + mob_height, root.GetAllocator());
-				json_points.PushBack(json_point3, root.GetAllocator());
-
-				rapidjson::Value json_point4;
-				json_point4.SetArray();
-				json_point4.PushBack(mob->positionX, root.GetAllocator());
-				json_point4.PushBack(mob->positionY + mob_height, root.GetAllocator());
-				json_points.PushBack(json_point4, root.GetAllocator());
-				
-				mobs.PushBack(json_points, root.GetAllocator());
-			}
-			data.AddMember("mob_hitboxes", mobs, root.GetAllocator());
-
-			/**
-			 * Begin loop through mobs
-			 */
-			rapidjson::Value mob_array;
-			mob_array.SetArray();
-			for (GameMob* game_mob : this->currentGameInstance->mobs) {
-				rapidjson::Value mob;
-				mob.SetObject();
-
-				rapidjson::Value position;
-				position.SetArray();
-				position.PushBack(game_mob->positionX, root.GetAllocator());
-				position.PushBack(game_mob->positionY, root.GetAllocator());
-
-				mob.AddMember("token", rapidjson::Value(game_mob->token, strlen(game_mob->token)), root.GetAllocator());
-				mob.AddMember("position", position, root.GetAllocator());
-				mob.AddMember("health", game_mob->health, root.GetAllocator());
-				mob_array.PushBack(mob, root.GetAllocator());
-			}
-			data.AddMember("mobs", mob_array, root.GetAllocator());
-			/**
-			 * End loop through mobs
-			 */
-
-			root.AddMember("data", data, root.GetAllocator());
-
-			rapidjson::StringBuffer buffer;
-			buffer.Clear();
-			rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-			root.Accept(writer);
-			return std::string(buffer.GetString());
-		}
-	}
-
-	return "";
+	return proto_message;
 }

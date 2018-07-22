@@ -8,6 +8,7 @@
 #include "gamestate.h"
 #include "gamemanager.h"
 #include "gameplayer.h"
+#include "src\protobuf\playerUpdate.pb.h"
 
 #include <time.h>
 
@@ -48,7 +49,8 @@ public:
 	bool updatePlayerState(std::string &action, rapidjson::Value &doc);
 	bool GameClient::attackTarget(rapidjson::Value &doc);
 
-	std::string generatePositionUpdate();
+	
+	gamemessages::PositionUpdate generatePositionUpdate();
 	std::string generateInit();
 
 	std::string getNextOutgoingMessage(); // @todo optimization of moving and deleting the string
