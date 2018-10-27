@@ -22,7 +22,7 @@
     <ProjectGuid>{9C60437D-1A1C-4C52-8E62-458F7F48B5A8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Tests</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -43,7 +43,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
@@ -104,14 +104,14 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>D:\libs\rapidjson\include;C:\libs\boost_1_59_0;C:\Users\Justin\Misc Code\Game\combat_system\web-server;$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\libs\rapidjson\include;C:\libs\boost_1_59_0;C:\Users\Justin\MiscCode\Game\combat_system\web-server;$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>C:\Users\Justin\Misc Code\Game\combat_system\web-server\x64\Debug;C:\libs\boost_1_59_0\stage\lib;$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gamestate.obj;gameclient.obj;gamemob.obj;gamemanager.obj;gameunit.obj;gameplayer.obj;utils.obj;goblin.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Justin\MiscCode\Game\combat_system\web-server\x64\Debug;C:\libs\boost_1_59_0\stage\lib;$(VCInstallDir)UnitTest\lib;C:\vcpkg\packages\protobuf_x64-windows\debug\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>gamestate.obj;gameclient.obj;gamemob.obj;gamemanager.obj;gameunit.obj;gameplayer.obj;utils.obj;goblin.obj;playerUpdate.pb.obj;connect.pb.obj;libprotobufd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

@@ -20,6 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{34709BE8-DB64-451D-9D8A-9040C4938483}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <ProjectName>Dungeon_Puzzler</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -35,7 +37,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -72,12 +74,12 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\vcpkg\installed\x64-windows\include;D:\OpenSSL\include;C:\libs\boost_1_59_0;D:\libs\libwebsockets2.3\win32port\zlib;D:\libs\libwebsockets2.3\win32port\win32helpers;D:\libs\libwebsockets2.3\lib;D:\libs\libwebsockets2.3\build;D:\libs\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;INSTALL_DATADIR="C:/Program Files/libwebsockets/share";_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;CMAKE_INTDIR="Debug";_ENABLE_ATOMIC_ALIGNMENT_FIX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\vcpkg\installed\x64-windows\include;D:\OpenSSL\include;C:\libs\boost_1_59_0;C:\vcpkg\packages\libwebsockets_x64-windows\include;D:\libs\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_CONSOLE;LWS_WITH_PLUGINS;_ENABLE_ATOMIC_ALIGNMENT_FIX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\vcpkg\installed\x64-windows\debug\lib;D:\OpenSSL\lib;C:\libs\boost_1_59_0\stage\lib;D:\libs\libwebsockets2.3\build\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;websockets_static.lib;zlib_internal.lib;D:\libs\libuv\Debug\lib\libuv.lib;ws2_32.lib;libboost_thread-vc140-mt-gd-1_59.lib;libeay32.lib;ssleay32.lib;libprotobufd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;zlib_internal.lib;D:\libs\libuv\Debug\lib\libuv.lib;ws2_32.lib;libboost_thread-vc140-mt-gd-1_59.lib;websockets.lib;libeay32.lib;ssleay32.lib;libprotobufd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -91,8 +93,10 @@
     <ClCompile Include="gamestate.cpp" />
     <ClCompile Include="gameunit.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\game_server_protocol.cpp" />
     <ClCompile Include="src\mobs\goblin.cpp" />
-    <ClCompile Include="src\protobuf\messages.pb.cc" />
+    <ClCompile Include="src\protobuf\connect.pb.cc" />
+    <ClCompile Include="src\protobuf\playerUpdate.pb.cc" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -108,7 +112,8 @@
     <ClInclude Include="npcs.hpp" />
     <ClInclude Include="server.h" />
     <ClInclude Include="src\mobs\goblin.h" />
-    <ClInclude Include="src\protobuf\messages.pb.h" />
+    <ClInclude Include="src\protobuf\connect.pb.h" />
+    <ClInclude Include="src\protobuf\playerUpdate.pb.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

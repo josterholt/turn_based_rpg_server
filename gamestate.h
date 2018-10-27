@@ -27,7 +27,7 @@ struct GameStatus {
 };
 
 class GameState {
-	void loadLevel(std::string level);
+	bool loadLevel(std::string level);
 	std::vector<unsigned int> tiles;
 	int tileWidth = 32;
 	int tileHeight = 32;

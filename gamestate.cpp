@@ -34,14 +34,14 @@ GameState::~GameState() {
 	}
 }
 
-void GameState::loadLevel(std::string level) {
-	std::cout << "Loading level...\n";
-	std::string filename = "C:/Users/Justin/Misc Code/Game/combat_system/src/assets/tiled_map/" + level + ".json";
+bool GameState::loadLevel(std::string level) {
+	std::cout << "Loading " << level << ".json\n";
+	std::string filename = "C:/Users/Justin/MiscCode/Game/combat_system/src/assets/tiled_map/" + level + ".json";
 	std::ifstream file(filename.c_str());
 
 	if ((file.rdstate() & std::ifstream::failbit) != 0) {
 		std::cout << "Error opening file\n";
-		return;
+		return false;
 	}
 
 	rapidjson::Document doc;
@@ -89,6 +89,7 @@ void GameState::loadLevel(std::string level) {
 	*/
 	std::cout << "Level loaded\n";
 	std::cout << "Num mobs: " << this->mobs.size() << "\n";
+	return true;
 }
 
 int GameState::getLayerIndex(rapidjson::Value &layers, std::string name) {

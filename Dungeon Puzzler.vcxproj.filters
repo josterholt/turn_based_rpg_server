@@ -13,7 +13,13 @@
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="gameunit.cpp" />
     <ClCompile Include="src\mobs\goblin.cpp" />
-    <ClCompile Include="src\protobuf\messages.pb.cc" />
+    <ClCompile Include="src\protobuf\connect.pb.cc">
+      <Filter>protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="src\protobuf\playerUpdate.pb.cc">
+      <Filter>protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_server_protocol.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="D:\libs\libwebsockets\win32port\win32helpers\getopt.h">
@@ -53,7 +59,10 @@
     <ClInclude Include="src\mobs\goblin.h">
       <Filter>headers\mobs</Filter>
     </ClInclude>
-    <ClInclude Include="src\protobuf\messages.pb.h">
+    <ClInclude Include="src\protobuf\connect.pb.h">
+      <Filter>headers\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\protobuf\playerUpdate.pb.h">
       <Filter>headers\protobuf</Filter>
     </ClInclude>
   </ItemGroup>
@@ -66,6 +75,9 @@
     </Filter>
     <Filter Include="headers\protobuf">
       <UniqueIdentifier>{e45f58ac-225d-49d2-86a7-25e739906973}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="protobuf">
+      <UniqueIdentifier>{d7e79160-1c8a-46fb-beb1-61e0b0af2bff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -20,7 +20,7 @@
 #include <libwebsockets.h>
 #include <string.h>
 #include <signal.h>
-#include "game_server_protocol.cpp";
+#include "src/game_server_protocol.cpp";
 
 
 
@@ -50,7 +50,7 @@ static const struct lws_protocol_vhost_options pvo_interrupted = {
 static const struct lws_protocol_vhost_options pvo = {
 	NULL,				/* "next" pvo linked-list */
 	&pvo_interrupted,		/* "child" pvo linked-list */
-	"lws-minimal-server-echo",	/* protocol name we belong to on this vhost */
+	"lws-game-server",	/* protocol name we belong to on this vhost */
 	""				/* ignored */
 };
 static const struct lws_extension extensions[] = {
@@ -69,8 +69,32 @@ void sigint_handler(int sig)
 	interrupted = 1;
 }
 
+void updateGameStates(bool update_loop) {
+	GameManager& manager = GameManager::getInstance();
+	std::chrono::steady_clock::time_point start_time = std::chrono::steady_clock::now();
+
+	std::cout << "Starting update loop\n";
+	while (update_loop) {
+		std::chrono::steady_clock::time_point current_time = std::chrono::steady_clock::now();
+		double time_elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - start_time).count();
+
+		if (time_elapsed > 300) {
+			//std::cout << "Time Elapsed: " << time_elapsed << "\n";
+			manager.update(time_elapsed);
+			start_time = current_time;
+		}
+	}
+
+	std::cout << "Exiting update loop\n";
+}
+
 int main(int argc, const char **argv)
 {
+	bool update_loop_active = true; // @todo does this need to be atomic?
+	std::thread update_loop(updateGameStates, update_loop_active);
+	update_loop.detach();
+	srand(time(NULL));
+
 	struct lws_context_creation_info info;
 	struct lws_context *context;
 	const char *p;
