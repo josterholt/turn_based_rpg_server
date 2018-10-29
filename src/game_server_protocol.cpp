@@ -124,28 +124,39 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 			if (duration >= 0) {
 				start_frame_time = current_frame_time;
 
-				//gamemessages::PositionUpdate message = pss->client->generatePositionUpdate();
-				gamemessages::TestMessage message;
-				message.set_test(100);
+				gamemessages::PositionUpdate message = pss->client->generatePositionUpdate();
+				//gamemessages::TestMessage message;
+				//message.set_test(100);
 				std::string message_str = message.SerializeAsString();
-				std::cout << "Sending message " << message_str << "\n";
 
-				//const unsigned char * tmp_str = (const unsigned char *) message_str.c_str();
-				//std::cout << "Foo foo foo foo 12345\n";
-				//char tmp_str[] = { 't', 'e', '\0'};
-				//int tmp_str_length = strlen(tmp_str);
-
-				//n = lws_write(wsi, (unsigned char *) tmp_str, tmp_str_length + 1, (lws_write_protocol)n);
-				//delete message_str;
-				//std::string json_string;
+				/*
 				std::stringstream json_ss;
 				for (int i = 0; i < LWS_PRE; i++) {
-					json_ss << " ";
+					json_ss << "0";
 				}
 				json_ss << message_str;
 				std::string json_string = json_ss.str();
+				*/
 
-				n = lws_write(wsi, (unsigned char*)json_string.c_str() + LWS_PRE, json_string.size() - LWS_PRE, (lws_write_protocol)n);
+				size_t buffer_size = message_str.size() + LWS_PRE;
+				char *output = new char[buffer_size];
+				memset(output, 0, buffer_size);
+
+				//std::cout << "Size of output: " << (json_string.size()) << "\n";
+				//std::cout << json_string.size() << " - " << LWS_PRE << "\n";
+				strcpy(output + LWS_PRE, message_str.c_str());
+				//const char *c_str = json_string.c_str();
+
+				//std::cout << "c_str len: " << strlen(c_str) << "\n";
+				for (int i = 0; i < buffer_size; i++) {
+					std::cout <<  (int) output[i] << "\n";
+				}
+
+				std::cout << "Sending message (foo) " << output  << "\n";
+
+				n = lws_write(wsi, (unsigned char*)output + LWS_PRE, buffer_size - LWS_PRE, (lws_write_protocol)n);
+				delete[] output;
+
 				if (n < 0) {
 					lwsl_err("ERROR %d writing to socket, hanging up\n", n);
 					return 1;
