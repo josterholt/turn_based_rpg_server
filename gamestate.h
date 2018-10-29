@@ -36,7 +36,7 @@ class GameState {
 	int cleanupInterval = 5000; // Every 5 seconds
 	float cleanupTimer = 0;
 
-	float getDistance(GamePlayer* player, float x, float y);
+	float getDistance(GamePlayer* player, float x, float y) const;
 public:
 	GameState();
 	~GameState();
@@ -54,16 +54,16 @@ public:
 
 	void addPlayer(GamePlayer* player);
 	void addMOB(GameMob* mob);
-	GameStatus getStateUpdates();
-	std::vector<GamePlayer*> getPlayerPositions();
-	const char * getToken();
-	int getLayerIndex(rapidjson::Value &layers, std::string name);
+	GameStatus getStateUpdates() const;
+	std::vector<GamePlayer*> getPlayerPositions() const;
+	const char * getToken() const;
+	int getLayerIndex(rapidjson::Value &layers, std::string name) const;
 	void updatePosition(int player_index, float x, float y, float velocity_x, float velocity_y, FacingDirection facing);
 	void attackTarget(int player_index, float player_x, float player_y, float hitbox_x, float hitbox_y, int player_facing);
-	bool canMove(GamePlayer* player, float x, float y);
-	int getTileIndex(float x, float y);
-	bool GameState::boxCheck(GamePlayer* player, float x, float y);
-	bool isWalkableTile(int tile_index);
+	bool canMove(GamePlayer* player, float x, float y) const;
+	int getTileIndex(float x, float y) const;
+	bool GameState::boxCheck(GamePlayer* player, float x, float y) const;
+	bool isWalkableTile(int tile_index) const;
 	std::pair<float, float> spawnPoint;
 	void update(double elapsed_item);
 };

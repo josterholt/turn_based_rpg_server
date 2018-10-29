@@ -68,14 +68,14 @@ public:
 
 	GameUnit();
 	GameUnit(std::string name, int x, int y, int width, int height);
-	int getMaxHealth();
-	int GameUnit::getStamina();
+	int getMaxHealth() const;
+	int GameUnit::getStamina() const;
 
 	bool setTarget(GameUnit *target);
-	GameUnit* getTarget();
+	GameUnit* getTarget() const;
 
 	void updatePosition(float x, float y, FacingDirection facing);
 	void moveToSpawn(float x, float y, FacingDirection facing);
-	UnitState getFullState();
+	UnitState getFullState(); // @todo Can't make this const because it changes the mutex. Is this the best implementation?
 };
 #endif

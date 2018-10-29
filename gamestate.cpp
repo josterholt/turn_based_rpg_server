@@ -92,7 +92,7 @@ bool GameState::loadLevel(std::string level) {
 	return true;
 }
 
-int GameState::getLayerIndex(rapidjson::Value &layers, std::string name) {
+int GameState::getLayerIndex(rapidjson::Value &layers, std::string name) const {
 	if (!layers.IsArray()) {
 		return -1;
 	}
@@ -115,7 +115,7 @@ void GameState::addMOB(GameMob* mob) {
 	this->mobs.push_back(mob);
 }
 
-GameStatus GameState::getStateUpdates() {
+GameStatus GameState::getStateUpdates() const {
 	GameStatus g;
 	g.players = this->getPlayerPositions();
 	strcpy(g.status, status);
@@ -123,16 +123,16 @@ GameStatus GameState::getStateUpdates() {
 	return g;
 }
 
-std::vector<GamePlayer*> GameState::getPlayerPositions() {
+std::vector<GamePlayer*> GameState::getPlayerPositions() const {
 	return this->players;
 }
 
-const char * GameState::getToken() {
+const char * GameState::getToken() const {
 	return token;
 }
 
 // @todo Should be locking player so that write doesn't occur while checking for collision. Alternatively, pass collision detection into updatePosition?
-bool GameState::canMove(GamePlayer* player, float x, float y) {
+bool GameState::canMove(GamePlayer* player, float x, float y) const {
 	int h_step = 15;
 	double o = 0,
 		a = 0;
@@ -194,14 +194,14 @@ bool GameState::canMove(GamePlayer* player, float x, float y) {
 	return true;
 }
 
-float GameState::getDistance(GamePlayer* player, float x, float y) {
+float GameState::getDistance(GamePlayer* player, float x, float y) const {
 	GameClient& c = player->gameClient;
 	std::cout << "Distance: " << std::to_string(player->gameClient.lastUpdateTime) << "\n";
 
 	return 0;
 }
 
-bool GameState::boxCheck(GamePlayer* player, float x, float y) {
+bool GameState::boxCheck(GamePlayer* player, float x, float y) const {
 	if (!isWalkableTile(getTileIndex(x, y))) {
 		return false;
 	}
@@ -221,7 +221,7 @@ bool GameState::boxCheck(GamePlayer* player, float x, float y) {
 	return true;
 }
 
-int GameState::getTileIndex(float x, float y) {
+int GameState::getTileIndex(float x, float y) const {
 	int row, col;
 	col = floor(x / this->tileWidth);
 	row = floor(y / this->tileHeight);
@@ -229,7 +229,7 @@ int GameState::getTileIndex(float x, float y) {
 	return (row * this->tilesPerRow) + col;
 }
 
-bool GameState::isWalkableTile(int tile_index) {
+bool GameState::isWalkableTile(int tile_index) const {
 	if (tile_index < 0) {
 		return false;
 	}

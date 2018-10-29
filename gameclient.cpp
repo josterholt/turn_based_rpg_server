@@ -67,7 +67,7 @@ void GameClient::leaveGame() {
 
 }
 
-GameState* GameClient::getGame() {
+GameState* GameClient::getGame() const {
 	return this->currentGameInstance;
 }
 
@@ -211,6 +211,9 @@ void GameClient::addOutgoingMessage(std::string message) {
 	//this->outgoingMessages.push(tmp_str);
 }
 
+/**
+ * @todo cleanup; not sure why this is returning an empty string
+ */
 std::string GameClient::getNextOutgoingMessage() {
 	std::string tmp_string;
 	//this->outgoingMessages.pop(tmp_string);

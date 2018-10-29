@@ -30,11 +30,11 @@ GameUnit::GameUnit(std::string name, int x, int y, int width, int height) : name
 
 }
 
-int GameUnit::getMaxHealth() {
+int GameUnit::getMaxHealth() const {
 	return floor(this->baseHealth + this->getStamina() * this->staminaToHealthMultiplier);
 }
 
-int GameUnit::getStamina() {
+int GameUnit::getStamina() const {
 	int stamina_multiplier = 1 + (this->level - 1) * this->staminaPerLevelMultiplier;
 	return this->baseStamina * stamina_multiplier;
 }
@@ -44,7 +44,7 @@ bool GameUnit::setTarget(GameUnit *target) {
 	return true; // will return false on wrong target
 }
 
-GameUnit* GameUnit::getTarget() {
+GameUnit* GameUnit::getTarget() const {
 	return this->target;
 }
 

@@ -44,7 +44,7 @@ public:
 	GameState* createGame(); // Return token
 	GameState* joinGame(std::string key); // Return game
 	void leaveGame();
-	GameState* getGame(); // Return game
+	GameState* getGame() const; // Return game
 
 	bool updatePlayerState(std::string &action, rapidjson::Value &doc);
 	bool GameClient::attackTarget(rapidjson::Value &doc);
