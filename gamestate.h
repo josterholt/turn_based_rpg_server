@@ -46,17 +46,24 @@ public:
 
 	std::vector<xy_points_t> hitboxes;
 
-	char token[25];
+	const std::string token;
 	const int gameID = 0;
 	const char* status;
 
 	boost::shared_mutex positionMutex;
 
+	static const std::string GameState::GenerateToken() {
+		char s[25];
+		gen_random(s, 24);
+		s[24] = '\0';
+		return std::string(s);
+	}
+
 	void addPlayer(GamePlayer* player);
 	void addMOB(GameMob* mob);
 	GameStatus getStateUpdates() const;
 	std::vector<GamePlayer*> getPlayerPositions() const;
-	const char * getToken() const;
+	const std::string& getToken() const;
 	int getLayerIndex(rapidjson::Value &layers, std::string name) const;
 	void updatePosition(int player_index, float x, float y, float velocity_x, float velocity_y, FacingDirection facing);
 	void attackTarget(int player_index, float player_x, float player_y, float hitbox_x, float hitbox_y, int player_facing);

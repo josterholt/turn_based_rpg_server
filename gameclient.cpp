@@ -7,7 +7,9 @@
 #include <iostream>
 #include <istream>
 
-
+/**
+ * @todo Game creation should be moved to gamemanager. gameclient is intended to represent the frontend client interface
+ */
 GameClient::GameClient() : player(*this) {
 	player.width = 32;
 	player.height = 48;
@@ -16,10 +18,27 @@ GameClient::GameClient() : player(*this) {
 	time(&lastUpdateTime);
 
 	// Placing player in a single isolated game for now
-	this->initPlayer(1);
-	this->currentGameInstance = this->createGame();
-	this->player.moveToSpawn(this->currentGameInstance->spawnPoint.first, this->currentGameInstance->spawnPoint.second, FacingDirection::UP);
+	//this->initPlayer(1);
+	//this->currentGameInstance = this->createGame();
+	//this->player.moveToSpawn(this->currentGameInstance->spawnPoint.first, this->currentGameInstance->spawnPoint.second, FacingDirection::UP);
 
+}
+
+bool GameClient::handleConnectionMessage(gamemessages::Connect connect_message) {
+	if (connect_message.gametoken() == "") {
+		const std::string& game_token = GameManager::getInstance().handleGameRequest(connect_message.gametoken());
+		this->currentGameInstance = GameManager::getInstance().getGame(game_token);
+	}
+	else {
+		this->currentGameInstance = GameManager::getInstance().getGame(connect_message.gametoken());
+	}
+
+	// If no game instance was assigned, return false
+	if (this->currentGameInstance == nullptr) {
+		return false;
+	}
+
+	return true;
 }
 
 void GameClient::open() {
@@ -53,7 +72,7 @@ GameState* GameClient::joinGame(std::string key) {
 void GameClient::leaveGame() {
 	GamePlayer* player = &this->player;
 	std::cout << "Remove: " << player << "\n";
-	char* game_token = this->currentGameInstance->token;
+	const std::string& game_token = this->currentGameInstance->token;
 
 	if (this->currentGameInstance != nullptr) {
 		int existing_players = 0;
@@ -237,6 +256,7 @@ std::string GameClient::getNextOutgoingMessage() {
  */
 std::string GameClient::generateInit() {
 	if (this->currentGameInstance != nullptr) {
+		/*
 		rapidjson::Document root;
 		root.SetObject();
 		root.AddMember("status", "OK", root.GetAllocator());
@@ -279,10 +299,11 @@ std::string GameClient::generateInit() {
 			players.PushBack(player, root.GetAllocator());
 		}
 		data.AddMember("players", players, root.GetAllocator());
-
+		*/
 		/**
 		* Begin loop through mobs
 		*/
+		/*
 		rapidjson::Value mob_array;
 		mob_array.SetArray();
 		for (GameMob* game_mob : this->currentGameInstance->mobs) {
@@ -298,10 +319,11 @@ std::string GameClient::generateInit() {
 			mob_array.PushBack(mob, root.GetAllocator());
 		}
 		data.AddMember("mobs", mob_array, root.GetAllocator());
+		*/
 		/**
 		* End loop through mobs
 		*/
-
+		/*
 		data.AddMember("action", rapidjson::Value("INIT"), root.GetAllocator());
 		root.AddMember("data", data, root.GetAllocator());
 
@@ -310,6 +332,7 @@ std::string GameClient::generateInit() {
 		rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
 		root.Accept(writer);
 		return std::string(buffer.GetString());
+		*/
 
 	}
 	return "";

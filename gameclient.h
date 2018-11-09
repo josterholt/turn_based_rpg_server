@@ -9,6 +9,7 @@
 #include "gamemanager.h"
 #include "gameplayer.h"
 #include "src\protobuf\playerUpdate.pb.h"
+#include "src\protobuf\connect.pb.h"
 
 #include <time.h>
 
@@ -25,6 +26,7 @@ class GameClient {
 	void addOutgoingMessage(std::string message);
 public:
 	GameClient();
+
 	int playerIndex;
 	std::stringstream message;
 	time_t lastUpdateTime;
@@ -40,6 +42,7 @@ public:
 	void initPlayer(int user_id);
 	bool instantiateGameInstance(std::string &action, rapidjson::Value &doc);
 	void processRequest(char* message, size_t len); // processes request
+	bool handleConnectionMessage(gamemessages::Connect connect_message);
 
 	GameState* createGame(); // Return token
 	GameState* joinGame(std::string key); // Return game

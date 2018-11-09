@@ -32,5 +32,11 @@
     <ClCompile Include="gamemob.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gameclient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gamemanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

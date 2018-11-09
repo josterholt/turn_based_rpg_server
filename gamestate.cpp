@@ -9,13 +9,7 @@
 
 #define PI 3.14159265
 
-GameState::GameState() {
-	char s[25];
-	gen_random(s, 24);
-	s[24] = '\0';
-	strcpy(this->token, s);
-
-
+GameState::GameState() : token(GameState::GenerateToken()) {
 	// Default scripted nodes
 	std::vector<EventNode> nodes;
 	nodes.push_back(EventNode(0, 2));
@@ -24,7 +18,7 @@ GameState::GameState() {
 	nodes.push_back(EventNode(-3, 0));
 	this->eventNodes.push_back(nodes);
 
-	this->loadLevel("level1");
+	this->loadLevel("level1"); // @todo move level loading into it's own function?
 }
 
 GameState::~GameState() {
@@ -127,7 +121,7 @@ std::vector<GamePlayer*> GameState::getPlayerPositions() const {
 	return this->players;
 }
 
-const char * GameState::getToken() const {
+const std::string& GameState::getToken() const {
 	return token;
 }
 

@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "src/mobs/goblin.h";
 #include "utils.h"
+#include "gamemob.h"
+#include "gameunit.h"
+#include "mobs/goblin.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
