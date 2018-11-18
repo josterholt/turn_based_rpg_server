@@ -11,10 +11,10 @@ enum FacingDirection {
 };
 
 struct UnitState {
-	float positionX;
-	float positionY;
-	float velocityX;
-	float velocityY;
+	float positionX = 0.0f;
+	float positionY = 0.0f;
+	float velocityX = 0.0f;
+	float velocityY = 0.0f;
 	FacingDirection facing;
 };
 
@@ -48,20 +48,20 @@ public:
 	float _agilityDodgePerPoint = 0.8f;
 
 	// Positional / State
-	float positionX;
-	float positionY;
-	float velocityX;
-	float velocityY;
-	int width;
-	int height;
-	float health;
-	float maxSpeed;
-	float speed;
+	float positionX = 0.0f;
+	float positionY = 0.0f;
+	float velocityX = 0.0f;
+	float velocityY = 0.0f;
+	int width = 0;
+	int height = 0;
+	float health = 0.0f;
+	float maxSpeed = 0.0f;
+	float speed = 0.0f;
 	bool isAttacking = false;
 	
 
 	FacingDirection facing;
-	bool stunned;
+	bool stunned = false;
 	bool canMove = true;
 
 	boost::shared_mutex positionMutex;

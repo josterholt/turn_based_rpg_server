@@ -20,10 +20,7 @@ GameUnit::GameUnit() {
 	s[24] = '\0';
 	strcpy(this->token, s);
 
-	this->positionX = 100;
-	this->positionY = 2000;
-
-	std::cout << "Max Speed: " << this->maxSpeed << "\n";
+	//std::cout << "Max Speed: " << this->maxSpeed << "\n";
 }
 
 GameUnit::GameUnit(std::string name, int x, int y, int width, int height) : name(name), positionX(x), positionY(y), width(width), height(height) {
@@ -68,8 +65,6 @@ void GameUnit::updatePosition(float x, float y, FacingDirection facing) {
 }
 
 void GameUnit::moveToSpawn(float x, float y, FacingDirection facing) {
-	//boost::upgrade_lock<boost::shared_mutex> lock(this->positionMutex);
-	//boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(lock);
 	boost::lock_guard<boost::shared_mutex> lock(this->positionMutex);
 
 	this->positionX = x;

@@ -61,6 +61,7 @@ public:
 
 	void addPlayer(GamePlayer* player);
 	void addMOB(GameMob* mob);
+	void GameState::moveToSpawn(GamePlayer* player);
 	GameStatus getStateUpdates() const;
 	std::vector<GamePlayer*> getPlayerPositions() const;
 	const std::string& getToken() const;

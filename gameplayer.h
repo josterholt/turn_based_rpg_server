@@ -11,6 +11,7 @@ class GameState;
 class GamePlayer : public GameUnit {
 public:
 	GamePlayer(GameClient& client);
+
 	GameClient& gameClient;
 	int userID = 0;
 	GameState* game;

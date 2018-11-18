@@ -6,11 +6,14 @@
 #include <math.h>
 #include <iostream>
 #include <istream>
+#include "src/protobuf/connect.pb.h"
+#include "src/protobuf/playerUpdate.pb.h"
 
 /**
  * @todo Game creation should be moved to gamemanager. gameclient is intended to represent the frontend client interface
  */
 GameClient::GameClient() : player(*this) {
+	player.userID = 1;
 	player.width = 32;
 	player.height = 48;
 	player.maxSpeed = 100;
@@ -28,6 +31,7 @@ bool GameClient::handleConnectionMessage(gamemessages::Connect connect_message) 
 	if (connect_message.gametoken() == "") {
 		const std::string& game_token = GameManager::getInstance().handleGameRequest(connect_message.gametoken());
 		this->currentGameInstance = GameManager::getInstance().getGame(game_token);
+		this->currentGameInstance->addPlayer(&this->player);
 	}
 	else {
 		this->currentGameInstance = GameManager::getInstance().getGame(connect_message.gametoken());
@@ -129,7 +133,7 @@ void GameClient::processRequest(char* message, size_t len) {
 		std::cout << "(" << sizeof(a) << ") " << a << "\n";
 		std::cout << "(" << sizeof(b) << ") " << b << "\n";
 		*/
-
+		/*
 		rapidjson::Document d;
 		d.Parse(message, len);
 		if (!d.HasParseError()) {
@@ -159,6 +163,7 @@ void GameClient::processRequest(char* message, size_t len) {
 				}
 			}
 		}
+		*/
 	}
 	catch (const std::exception& e) {
 		std::cout << e.what();
@@ -192,14 +197,9 @@ bool GameClient::instantiateGameInstance(std::string &action, rapidjson::Value &
 	return true;
 }
 
-bool GameClient::updatePlayerState(std::string &action, rapidjson::Value &doc) {
-	//std::pair<float, float> p = std::make_pair(doc["player"]["position"][0].GetFloat(), doc["player"]["position"][1].GetFloat());
-	//this->player.position = p;
+bool GameClient::updatePlayerState(gamemessages::PlayerUpdate update_message) {
 	// @todo facing direction should be updated by client
-	this->currentGameInstance->updatePosition(this->player.playerIndex, doc["player"]["position"][0].GetFloat(), doc["player"]["position"][1].GetFloat(), 0, 0, FacingDirection::UP);
-	//this->player.updatePosition();
-
-	//std::cout << "Player " << this->player.userID << ": " << this->player.position.first << ", " << this->player.position.second << "\n";
+	this->currentGameInstance->updatePosition(this->player.playerIndex, update_message.player().position().x(), update_message.player().position().y(), 0, 0, FacingDirection::UP);
 	return true;
 }
 

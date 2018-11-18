@@ -3,6 +3,7 @@
 #include "gameclient.h"
 #include "utils.h"
 #include "protobuf/connect.pb.h"
+#include "protobuf/playerUpdate.pb.h"
 #include <iostream>
 
 
@@ -17,8 +18,8 @@ namespace Tests
 	TEST_CLASS(ClientConnectTests)
 	{
 	public:
-		[TestInitialize]
-		void InitializeTest() {
+		TEST_METHOD_INITIALIZE(methodName)
+		{
 			GameManager::getInstance().destroyAllGames();
 			Assert::IsTrue(GameManager::getGameCount() == 0, L"Game Count is zero a");
 		}
@@ -72,8 +73,8 @@ namespace Tests
 	TEST_CLASS(PositionUpdateTests)
 	{
 	public:
-		[TestInitialize]
-		void InitializeTest() {
+		TEST_METHOD_INITIALIZE(methodName)
+		{
 			GameManager::getInstance().destroyAllGames();
 			Assert::IsTrue(GameManager::getGameCount() == 0, L"Game Count is zero a");
 		}
@@ -89,6 +90,18 @@ namespace Tests
 			Assert::IsTrue(client->handleConnectionMessage(connect_message), L"handleConnectionMessage");
 			Assert::IsTrue(client->getGame()->getToken() != "", L"Game token is not empty");
 			Assert::IsTrue(GameManager::getGameCount() == 1, L"Game count is 1");
+
+			gamemessages::PlayerUpdate update_message;
+			gamemessages::Unit *unit = update_message.mutable_player();
+			gamemessages::Point *position = unit->mutable_position();
+			position->set_x(20);
+			position->set_y(16);
+
+			gamemessages::Point *velocity = unit->mutable_velocity();
+			velocity->set_x(4);
+			velocity->set_y(0);
+			
+			client->updatePlayerState(update_message);
 
 			delete client;
 		}

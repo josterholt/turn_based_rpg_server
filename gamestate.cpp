@@ -19,6 +19,11 @@ GameState::GameState() : token(GameState::GenerateToken()) {
 	this->eventNodes.push_back(nodes);
 
 	this->loadLevel("level1"); // @todo move level loading into it's own function?
+	
+	//if (!isWalkableTile(getTileIndex(this->spawnPoint.first, this->spawnPoint.second))) {
+//		throw "Spawnpoint is invalid";
+//	}
+
 }
 
 GameState::~GameState() {
@@ -57,8 +62,16 @@ bool GameState::loadLevel(std::string level) {
 		this->tiles.push_back((unsigned char) decoded_string[i]);
 	}
 	*/
-
-	//this->spawnPoint = std::make_pair(doc["layers"][5]["objects"][0]["x"].GetFloat(), doc["layers"][5]["objects"][0]["y"].GetFloat());
+	rapidjson::Value object_layer = doc["layers"][1].GetObject();
+	rapidjson::Value objects = object_layer["objects"].GetArray();
+	if (objects.Size() == 0) {
+		this->spawnPoint = std::make_pair(0, 0);
+	} else {
+		//std::pair<float, float> spawn_point = std::make_pair(objects[0]["x"].GetInt(), objects[0]["y"].GetInt());
+		//this->spawnPoint = spawn_point;
+		this->spawnPoint = std::make_pair(objects[0]["x"].GetInt(), objects[0]["y"].GetInt());
+	}
+	
 	
 	/*
 	int mob_index = getLayerIndex(doc["layers"], "mobs");
@@ -103,10 +116,15 @@ int GameState::getLayerIndex(rapidjson::Value &layers, std::string name) const {
 
 void GameState::addPlayer(GamePlayer* player) {
 	this->players.push_back(player);
+	this->moveToSpawn(player);
 }
 
 void GameState::addMOB(GameMob* mob) {
 	this->mobs.push_back(mob);
+}
+
+void GameState::moveToSpawn(GamePlayer* player) {
+	player->moveToSpawn(this->spawnPoint.first, this->spawnPoint.second, FacingDirection::UP);
 }
 
 GameStatus GameState::getStateUpdates() const {

@@ -16,15 +16,15 @@ namespace Tests
 		{
 			// Connect message with empty token
 			gamemessages::Connect connect;
-			Assert::IsTrue(connect.gametoken() == "");
+			Assert::IsTrue(connect.gametoken() == "", L"Game token is empty string");
 
 			GameManager& game_manager = GameManager::getInstance();
-			Assert::IsTrue(game_manager.getGameCount() == 0);
+			Assert::IsTrue(game_manager.getGameCount() == 0, L"Game count is 0");
 
 			const std::string& game_token = game_manager.handleGameRequest(connect.gametoken());
 			GameState* game_state = game_manager.getGame(game_token);
-			Assert::IsTrue(GameManager::getGameCount() == 1);
-			Assert::AreEqual(game_token, game_state->getToken());
+			Assert::IsTrue(GameManager::getGameCount() == 1, L"Game count is 1");
+			Assert::AreEqual(game_token, game_state->getToken(), L"Game token is same as assigned");
 
 			//GameClient *client = new GameClient();
 
