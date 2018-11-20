@@ -1,6 +1,7 @@
 #include "gameunit.h"
 #include "utils.h"
 #include <math.h>
+#include <iostream>
 
 UnitState GameUnit::getFullState() {
 	boost::shared_lock<boost::shared_mutex> lock(this->positionMutex);

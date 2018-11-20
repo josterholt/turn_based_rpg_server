@@ -1,4 +1,5 @@
 #include "gamemanager.h"
+#include <iostream>
 
 GameManager::~GameManager() {
 	for (std::map<std::string, GameState*>::iterator it = this->games.begin(); it != this->games.end(); it++) {

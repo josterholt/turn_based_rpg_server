@@ -129,8 +129,8 @@ int main(int argc, const char **argv)
 	info.protocols = protocols;
 	info.vhost_name = "wssdev.ostwebdev.com";
 
-	info.ssl_cert_filepath = "C:\\Users\\Justin\\Documents\\ssl_certs\\gameserver.crt";
-	info.ssl_private_key_filepath = "C:\\Users\\Justin\\Documents\\ssl_certs\\gameserver.key";
+	info.ssl_cert_filepath = "C:\\Users\\shrod\\OneDrive\\Documents\\ssl_certs\\gameserver.crt";
+	info.ssl_private_key_filepath = "C:\\Users\\shrod\\OneDrive\\Documents\\ssl_certs\\gameserver.key";
 	info.pvo = &pvo;
 	if (!lws_cmdline_option(argc, argv, "-n"))
 		info.extensions = extensions;

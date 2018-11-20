@@ -74,19 +74,16 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\vcpkg\installed\x64-windows\include;D:\OpenSSL\include;C:\libs\boost_1_59_0;C:\vcpkg\packages\libwebsockets_x64-windows\include;D:\libs\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\vcpkg\installed\x64-windows\include;C:\OpenSSL\include;C:\libs\boost_1_67_0;C:\vcpkg\packages\libwebsockets_x64-windows\include;C:\libs\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_CONSOLE;LWS_WITH_PLUGINS;_ENABLE_ATOMIC_ALIGNMENT_FIX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\vcpkg\installed\x64-windows\debug\lib;D:\OpenSSL\lib;C:\libs\boost_1_59_0\stage\lib;D:\libs\libwebsockets2.3\build\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;zlib_internal.lib;D:\libs\libuv\Debug\lib\libuv.lib;ws2_32.lib;libboost_thread-vc140-mt-gd-1_59.lib;websockets.lib;libeay32.lib;ssleay32.lib;libprotobufd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\vcpkg\installed\x64-windows\debug\lib;C:\OpenSSL\lib;C:\libs\boost_1_67_0\stage\lib;C:\libs\libwebsockets2.3\build\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;zlib_internal.lib;C:\libs\libuv\Debug\lib\libuv.lib;ws2_32.lib;libboost_thread-vc141-mt-gd-x64-1_67.lib;websockets.lib;libeay32.lib;ssleay32.lib;libprotobufd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="gamemanager.cpp" />
-    <ClCompile Include="D:\libs\libwebsockets\win32port\win32helpers\getopt.c" />
-    <ClCompile Include="D:\libs\libwebsockets\win32port\win32helpers\getopt_long.c" />
-    <ClCompile Include="D:\libs\libwebsockets\win32port\win32helpers\gettimeofday.c" />
     <ClCompile Include="gameclient.cpp" />
     <ClCompile Include="gamemob.cpp" />
     <ClCompile Include="gameplayer.cpp" />
