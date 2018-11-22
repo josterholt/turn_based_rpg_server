@@ -79,5 +79,13 @@
     <Filter Include="protobuf">
       <UniqueIdentifier>{d7e79160-1c8a-46fb-beb1-61e0b0af2bff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="json">
+      <UniqueIdentifier>{2536f259-c120-4635-af2c-40ccf2cf9c50}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\src\assets\tiled_map\level1.json">
+      <Filter>json</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>
