@@ -11,6 +11,11 @@ namespace Tests
 	TEST_CLASS(GameManagerTests)
 	{
 	public:
+		TEST_METHOD_INITIALIZE(methodName)
+		{
+			GameManager::getInstance().destroyAllGames();
+			Assert::IsTrue(GameManager::getGameCount() == 0, L"Game Count is zero a");
+		}
 
 		TEST_METHOD(ConnectRequestNoToken)
 		{

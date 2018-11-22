@@ -14,6 +14,12 @@ namespace Tests
 	TEST_CLASS(GameStateTests)
 	{
 	public:
+		TEST_METHOD_INITIALIZE(methodName)
+		{
+			GameManager::getInstance().destroyAllGames();
+			Assert::IsTrue(GameManager::getGameCount() == 0, L"Game Count is zero a");
+		}
+
 
 		TEST_METHOD(NewGameState)
 		{

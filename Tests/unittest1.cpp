@@ -3,6 +3,10 @@
 #include "gamestate.h"
 #include "utils.h"
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace Tests
@@ -57,14 +61,14 @@ namespace Tests
 
 		TEST_METHOD(PointRotation1)
 		{
-			point_t p = rotatePoint(1.0f, 0.0f, 90.0f);
+			point_t p = rotatePoint(1.0f, 0.0f, 90.0f * M_PI / 180.0f);
 
-			Assert::AreEqual(0.0f, p[0]);
-			Assert::AreEqual(1.0f, p[1]);
+			Assert::AreEqual(0.0f, p[0], L"p[0] is 0.0f");
+			Assert::AreEqual(1.0f, p[1], L"p[1] is 1.0f");
 
-			p = rotatePoint(1.0f, 0.0f, 180.0f);
-			Assert::AreEqual(1.0f, p[0]);
-			Assert::AreEqual(0.0f, p[1]);
+			p = rotatePoint(1.0f, 0.0f, 180.0f * M_PI / 180.0f);
+			Assert::AreEqual(-1.0f, p[0], L"p[0] is -1.0f");
+			Assert::AreEqual(0.0f, p[1], L"p[1] is 0.0f");
 
 		}
 
