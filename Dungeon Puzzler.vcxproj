@@ -97,6 +97,7 @@
     <ClCompile Include="src\mobs\goblin.cpp" />
     <ClCompile Include="src\protobuf\connect.pb.cc" />
     <ClCompile Include="src\protobuf\playerUpdate.pb.cc" />
+    <ClCompile Include="src\protobuf\protocol.pb.cc" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -114,7 +115,15 @@
     <ClInclude Include="src\mobs\goblin.h" />
     <ClInclude Include="src\protobuf\connect.pb.h" />
     <ClInclude Include="src\protobuf\playerUpdate.pb.h" />
+    <ClInclude Include="src\protobuf\protocol.pb.h" />
     <ClInclude Include="utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\src\assets\tiled_map\level1.json">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Text</FileType>
+    </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

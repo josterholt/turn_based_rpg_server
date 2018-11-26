@@ -22,7 +22,7 @@ GameState* GameManager::getGame(const std::string& key) const {
 
 const std::string& GameManager::handleGameRequest(const std::string& key) {
 	GameState* game_state;
-	if (key == "") {
+	if (key == "" || key == "NEW_GAME") {
 		game_state = new GameState();
 		this->addGame(game_state->token, game_state);
 	}

@@ -70,7 +70,7 @@ namespace Tests
 
 	};
 
-	TEST_CLASS(PositionUpdateTests)
+	TEST_CLASS(ClientUpdatePlayerTests)
 	{
 	public:
 		TEST_METHOD_INITIALIZE(methodName)
@@ -79,7 +79,7 @@ namespace Tests
 			Assert::IsTrue(GameManager::getGameCount() == 0, L"Game Count is zero a");
 		}
 
-		TEST_METHOD(PositionUpdate)
+		TEST_METHOD(UpdatePlayerState)
 		{
 			gamemessages::Connect connect_message; // connect message with no token
 			Assert::IsTrue(connect_message.gametoken() == "", L"Game token is empty");
@@ -105,5 +105,50 @@ namespace Tests
 
 			delete client;
 		}
+	};
+
+
+	TEST_CLASS(ClientGetPlayerUpdateTests)
+	{
+	public:
+		TEST_METHOD_INITIALIZE(methodName)
+		{
+			GameManager::getInstance().destroyAllGames();
+			Assert::IsTrue(GameManager::getGameCount() == 0, L"Game Count is zero a");
+		}
+
+		TEST_METHOD(GetPlayerUpdateTests)
+		{
+			/**
+			 * TEST SETUP
+			 */
+			gamemessages::Connect connect_message; // connect message with no token
+			Assert::IsTrue(connect_message.gametoken() == "", L"Game token is empty");
+
+			GameClient *client = new GameClient();
+			Assert::IsTrue(GameManager::getGameCount() == 0, L"Game Count is zero b");
+
+			Assert::IsTrue(client->handleConnectionMessage(connect_message), L"handleConnectionMessage");
+			Assert::IsTrue(client->getGame()->getToken() != "", L"Game token is not empty");
+			Assert::IsTrue(GameManager::getGameCount() == 1, L"Game count is 1");
+
+			int spawn_x = 20;
+			int spawn_y = 16;
+
+			gamemessages::PlayerUpdate update_message;
+			gamemessages::Unit *unit = update_message.mutable_player();
+			gamemessages::Point *position = unit->mutable_position();
+			position->set_x(spawn_x);
+			position->set_y(spawn_y);
+			client->updatePlayerState(update_message);
+			/**
+			 * END SETUP
+			 */
+
+			gamemessages::PositionUpdate position_update = client->generatePositionUpdate();
+			Assert::AreEqual(spawn_x, position_update.players().Get(0).position().x(), L"update player position x assert");
+			Assert::AreEqual(spawn_y, position_update.players().Get(0).position().y(), L"update player position y assert");
+		}
+
 	};
 }

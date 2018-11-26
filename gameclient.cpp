@@ -28,7 +28,8 @@ GameClient::GameClient() : player(*this) {
 }
 
 bool GameClient::handleConnectionMessage(gamemessages::Connect connect_message) {
-	if (connect_message.gametoken() == "") {
+	// @todo hanleGameRequest shouldn't be in if block
+	if (connect_message.gametoken() == "" || connect_message.gametoken() == "NEW_GAME") {
 		const std::string& game_token = GameManager::getInstance().handleGameRequest(connect_message.gametoken());
 		this->currentGameInstance = GameManager::getInstance().getGame(game_token);
 		this->currentGameInstance->addPlayer(&this->player);
@@ -343,6 +344,9 @@ std::string GameClient::generateInit() {
  * std::string or "" (empty string)
  */
 gamemessages::PositionUpdate GameClient::generatePositionUpdate() {
+	if (this->currentGameInstance == nullptr) {
+		throw "Game instance does not exist";
+	}
 	std::vector<GamePlayer*> players = this->currentGameInstance->getPlayerPositions();
 
 	gamemessages::PositionUpdate proto_message;

@@ -20,6 +20,9 @@
       <Filter>protobuf</Filter>
     </ClCompile>
     <ClCompile Include="src\game_server_protocol.cpp" />
+    <ClCompile Include="src\protobuf\protocol.pb.cc">
+      <Filter>protobuf</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="D:\libs\libwebsockets\win32port\win32helpers\getopt.h">
@@ -63,6 +66,9 @@
       <Filter>headers\protobuf</Filter>
     </ClInclude>
     <ClInclude Include="src\protobuf\playerUpdate.pb.h">
+      <Filter>headers\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\protobuf\protocol.pb.h">
       <Filter>headers\protobuf</Filter>
     </ClInclude>
   </ItemGroup>

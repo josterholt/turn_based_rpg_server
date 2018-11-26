@@ -17,6 +17,7 @@
 
 #include "protobuf\connect.pb.h"
 #include "protobuf\playerUpdate.pb.h"
+#include "protobuf\protocol.pb.h"
 
 #define MAX_ECHO_PAYLOAD 1024
 
@@ -92,6 +93,7 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 	char tmp_message[MAX_ECHO_PAYLOAD]; // Custom
 
 	std::chrono::steady_clock::time_point start_frame_time = std::chrono::steady_clock::now();
+	gamemessages::ProtocolWrapper wrapper;
 
 	switch (reason) {
 	case LWS_CALLBACK_PROTOCOL_INIT:
@@ -123,43 +125,35 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 
 			if (duration >= 0) {
 				start_frame_time = current_frame_time;
+				if (pss->client->getGame() == nullptr) {
+					std::cout << "Game client does not exist for " << pss->client->playerIndex << "\n"; // This should be token
+				} else {
+					std::cout << "Heartbeat" << "\n";
+					gamemessages::PositionUpdate message = pss->client->generatePositionUpdate();
+					gamemessages::ProtocolWrapper wrapper;
+					wrapper.set_protocolversion(1);
+					wrapper.set_messagetype(gamemessages::ProtocolWrapper::messageTypes::ProtocolWrapper_messageTypes_playerUpdate);
+					wrapper.set_data(message.SerializeAsString());
 
-				gamemessages::PositionUpdate message = pss->client->generatePositionUpdate();
-				//gamemessages::TestMessage message;
-				//message.set_test(100);
-				std::string message_str = message.SerializeAsString();
+					//std::string message_str = message.SerializeAsString();
+					std::string message_str = wrapper.SerializeAsString();
 
-				/*
-				std::stringstream json_ss;
-				for (int i = 0; i < LWS_PRE; i++) {
-					json_ss << "0";
-				}
-				json_ss << message_str;
-				std::string json_string = json_ss.str();
-				*/
 
-				size_t buffer_size = message_str.size() + LWS_PRE;
-				char *output = new char[buffer_size];
-				memset(output, 0, buffer_size);
+					size_t buffer_size = message_str.size() + LWS_PRE;
+					char *output = new char[buffer_size];
+					memset(output, 0, buffer_size);
 
-				//std::cout << "Size of output: " << (json_string.size()) << "\n";
-				//std::cout << json_string.size() << " - " << LWS_PRE << "\n";
-				strcpy(output + LWS_PRE, message_str.c_str());
-				//const char *c_str = json_string.c_str();
+					strcpy(output + LWS_PRE, message_str.c_str());
 
-				//std::cout << "c_str len: " << strlen(c_str) << "\n";
-				for (int i = 0; i < buffer_size; i++) {
-					std::cout <<  (int) output[i] << "\n";
-				}
+					std::cout << "Sending message (foo) " << output << "\n";
 
-				std::cout << "Sending message (foo) " << output  << "\n";
+					n = lws_write(wsi, (unsigned char*)output + LWS_PRE, buffer_size - LWS_PRE, (lws_write_protocol)n);
+					delete[] output;
 
-				n = lws_write(wsi, (unsigned char*)output + LWS_PRE, buffer_size - LWS_PRE, (lws_write_protocol)n);
-				delete[] output;
-
-				if (n < 0) {
-					lwsl_err("ERROR %d writing to socket, hanging up\n", n);
-					return 1;
+					if (n < 0) {
+						lwsl_err("ERROR %d writing to socket, hanging up\n", n);
+						return 1;
+					}
 				}
 			}
 			else {
@@ -186,7 +180,7 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 					}
 				}
 				catch (const std::exception& e) {
-					std::cout << e.what();
+					std::cout << "Exception raised " << e.what();
 				}
 				catch (...) {
 					// Don't want the server to crash due to a ill-formed request
@@ -223,18 +217,33 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 		memcpy((char *)vhd->amsg.payload + LWS_PRE, in, len);
 		vhd->current++;
 
-		if (pss->type == 0) {
+		{
 			std::cout << "Connecting...\n";
 			char *message = new char[len];
 			memcpy(message, in, len);
-			gamemessages::Connect connect;
-			connect.ParseFromString(message);
-			delete message;
 
-			std::cout << "Game Token: " << connect.gametoken() << "\n";
-			// Right now we just add them to the same game pool. There is no join game
-			std::cout << "Processing connect request\n";
-			pss->client = new GameClient();
+			wrapper.ParseFromString(message);
+
+			if (wrapper.messagetype() == gamemessages::ProtocolWrapper::messageTypes::ProtocolWrapper_messageTypes_connect) {
+				gamemessages::Connect connect;
+				connect.ParseFromString(wrapper.data());
+				delete[] message;
+
+				std::cout << "Game Token: " << connect.gametoken() << "\n";
+				// Right now we just add them to the same game pool. There is no join game
+				std::cout << "Processing connect request\n";
+				pss->client = new GameClient();
+				pss->client->handleConnectionMessage(connect);
+			}
+			else if (wrapper.messagetype() == gamemessages::ProtocolWrapper::messageTypes::ProtocolWrapper_messageTypes_playerUpdate) {
+				std::cout << "Player update\n";
+			}
+		}
+
+		/*
+		if (pss->type == 0) {
+
+
 		}
 		else if (pss->type == 1) {
 			std::cout << "Processing position\n";
@@ -243,6 +252,7 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 			//std::cout << player_update.player().position_x() << ", " << player_update.player().position_x() << "\n";
 			std::cout << "Done\n";
 		}
+		*/
 
 		/*
 		* let everybody know we want to write something on them
