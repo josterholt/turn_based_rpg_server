@@ -35,7 +35,7 @@ GameState::~GameState() {
 
 bool GameState::loadLevel(std::string level) {
 	std::cout << "Loading " << level << ".json\n";
-	std::string filename = "C:/Users/Justin/MiscCode/Game/combat_system/src/assets/tiled_map/" + level + ".json";
+	std::string filename = level + ".json";
 	std::ifstream file(filename.c_str());
 
 	if ((file.rdstate() & std::ifstream::failbit) != 0) {

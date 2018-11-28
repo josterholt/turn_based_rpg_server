@@ -106,6 +106,46 @@ namespace Tests
 			GameClient *client = new GameClient();
 			Assert::IsTrue(GameManager::getGameCount() == 0, L"Game Count is zero b");
 
+			/*
+			 * Create game and then perform sanity check
+			 */
+			Assert::IsTrue(client->handleConnectionMessage(connect_message), L"handleConnectionMessage");
+			Assert::IsTrue(client->getGame()->getToken() != "", L"Game token is not empty");
+			Assert::IsTrue(GameManager::getGameCount() == 1, L"Game count is 1");
+
+			float spawn_x = client->getGame()->spawnPoint.first;
+			float spawn_y = client->getGame()->spawnPoint.second;
+
+			gamemessages::PlayerUpdate update_message;
+			gamemessages::Unit *unit = update_message.mutable_player();
+			gamemessages::Point *position = unit->mutable_position();
+			position->set_x(spawn_x + 4);
+			position->set_y(spawn_y);
+
+			gamemessages::Point *velocity = unit->mutable_velocity();
+			velocity->set_x(0);
+			velocity->set_y(0);
+			
+			client->updatePlayerState(update_message);
+
+			std::vector<GamePlayer *> players = client->getGame()->getPlayerPositions();
+			Assert::IsTrue(players[0]->positionX == spawn_x + 4, L"positionX equals 4");
+			Assert::IsTrue(players[0]->positionY == spawn_y, L"positionY equals 0");
+			Assert::IsTrue(players[0]->velocityX == 0, L"velocityX equals 0");
+			Assert::IsTrue(players[0]->velocityY == 0, L"velocityY equals 0");
+
+
+			delete client;
+		}
+
+		TEST_METHOD(InvalidPositionUpdate)
+		{
+			gamemessages::Connect connect_message; // connect message with no token
+			Assert::IsTrue(connect_message.gametoken() == "", L"Game token is empty");
+
+			GameClient *client = new GameClient();
+			Assert::IsTrue(GameManager::getGameCount() == 0, L"Game Count is zero b");
+
 			Assert::IsTrue(client->handleConnectionMessage(connect_message), L"handleConnectionMessage");
 			Assert::IsTrue(client->getGame()->getToken() != "", L"Game token is not empty");
 			Assert::IsTrue(GameManager::getGameCount() == 1, L"Game count is 1");
@@ -117,10 +157,16 @@ namespace Tests
 			position->set_y(16);
 
 			gamemessages::Point *velocity = unit->mutable_velocity();
-			velocity->set_x(4);
+			velocity->set_x(1000);
 			velocity->set_y(0);
-			
+
 			client->updatePlayerState(update_message);
+
+			std::vector<GamePlayer *> players = client->getGame()->getPlayerPositions();
+			Assert::IsTrue(players[0]->positionX == 1000);
+			Assert::IsTrue(players[0]->positionY == 0);
+			Assert::IsTrue(players[0]->velocityX == 0);
+			Assert::IsTrue(players[0]->velocityY == 0);
 
 			delete client;
 		}
