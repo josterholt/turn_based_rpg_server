@@ -39,6 +39,25 @@ namespace Tests
 			delete client;
 		}
 
+		/**
+		 * Had trouble with an empty token, so needed to use NEW_GAME
+		 */
+		TEST_METHOD(ConnectNewGameToken)
+		{
+			gamemessages::Connect connect_message;
+			connect_message.set_gametoken("NEW_GAME");
+			Assert::IsTrue(connect_message.gametoken() == "NEW_GAME", L"Game token is empty");
+
+			GameClient *client = new GameClient();
+			Assert::IsTrue(GameManager::getGameCount() == 0, L"Game Count is zero b");
+
+			Assert::IsTrue(client->handleConnectionMessage(connect_message), L"handleConnectionMessage");
+			Assert::IsTrue(client->getGame()->getToken() != "", L"Game token is not empty");
+			Assert::IsTrue(GameManager::getGameCount() == 1, L"Game count is 1");
+
+			delete client;
+		}
+
 		TEST_METHOD(ConnectWithToken)
 		{
 			/**
