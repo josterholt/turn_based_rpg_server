@@ -108,12 +108,14 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 		break;
 
 	case LWS_CALLBACK_SERVER_WRITEABLE:
+		std::cout << "Writable\n";
+		/*
 		if (!vhd->amsg.payload)
 			break;
 
 		if (pss->last == vhd->current)
 			break;
-
+		*/
 		/* notice we allowed for LWS_PRE in the payload already */
 		if (pss->client != nullptr) {
 			/**
@@ -156,38 +158,6 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 					}
 				}
 			}
-			else {
-				/**
-				* This is a new client, run initialization
-				* @todo Clean up routineQueue if it is unused
-				*/
-				int routine;
-
-				try {
-					if (pss->client->routineQueue.pop(routine)) {
-						if (routine == GameClient::routines::INIT) {
-							std::string json_string = pss->client->generateInit();
-							std::cout << json_string << "\n";
-							if (json_string.compare("") != 0) {
-								n = lws_write(wsi, (unsigned char*)json_string.c_str(), json_string.size(), (lws_write_protocol)n);
-								if (n < 0) {
-									lwsl_err("ERROR %d writing to socket, hanging up\n", n);
-									return 1;
-								}
-							}
-
-						}
-					}
-				}
-				catch (const std::exception& e) {
-					std::cout << "Exception raised " << e.what();
-				}
-				catch (...) {
-					// Don't want the server to crash due to a ill-formed request
-					std::cout << "An error occurred while process request\n";
-					std::cout << message << "\n";
-				}
-			}
 		}
 
 		/*
@@ -221,11 +191,14 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 			std::cout << "Connecting...\n";
 			char *message = new char[len];
 			memcpy(message, in, len);
-
-			wrapper.ParseFromString(message);
+			
+			std::cout << "==== testing ====\n";
+			wrapper.ParseFromArray(message, len);
+			//wrapper.ParseFromString(message);
 
 			if (wrapper.messagetype() == gamemessages::ProtocolWrapper::messageTypes::ProtocolWrapper_messageTypes_connect) {
 				gamemessages::Connect connect;
+				const std::string test = wrapper.data();
 				connect.ParseFromString(wrapper.data());
 				delete[] message;
 

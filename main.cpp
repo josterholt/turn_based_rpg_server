@@ -23,6 +23,7 @@
 #include "src/game_server_protocol.cpp";
 
 
+struct lws_context *context;
 
 static struct lws_protocols protocols[] = {
 	LWS_PLUGIN_PROTOCOL_GAME_SERVER,
@@ -81,6 +82,8 @@ void updateGameStates(bool update_loop) {
 		if (time_elapsed > 300) {
 			//std::cout << "Time Elapsed: " << time_elapsed << "\n";
 			manager.update(time_elapsed);
+			lws_callback_on_writable_all_protocol(context, protocols);
+			
 			start_time = current_time;
 		}
 	}
@@ -96,7 +99,6 @@ int main(int argc, const char **argv)
 	srand(time(NULL));
 
 	struct lws_context_creation_info info;
-	struct lws_context *context;
 	const char *p;
 	int n = 0, logs = LLL_USER | LLL_ERR | LLL_WARN | LLL_NOTICE
 		/* for LLL_ verbosity above NOTICE to be built into lws,

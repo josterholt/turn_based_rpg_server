@@ -385,6 +385,7 @@ void GameState::update(double elapsed_time) {
 			}
 		}
 	}
+	this->players[0]->positionX += 0.5f;
 
 	int alive_mob_count = 0;
 	for(std::vector<GameMob*>::iterator it = this->mobs.begin(); it != this->mobs.end(); it++) {
