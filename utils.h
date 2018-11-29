@@ -1,3 +1,5 @@
+#ifndef _UTILS_H_
+#define _UTILS_H_
 #include <string>
 #include <array>
 #include <vector>
@@ -10,3 +12,11 @@ std::string base64_decode(std::string &ifstream);
 bool intersects(xy_points_t points1, xy_points_t points2);
 point_t rotatePoint(point_t point, float rotation);
 point_t rotatePoint(float x, float y, float rotation);
+
+template<typename T>
+void iterate_array(T* arr, size_t size) {
+	for (int i = 0; i < size; ++i) {
+		std::cout << arr[i] << "\n";
+	}
+}
+#endif

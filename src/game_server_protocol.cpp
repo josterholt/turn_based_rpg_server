@@ -6,6 +6,7 @@
 #include "../gameclient.h"
 #include "../gamemanager.h"
 #include "../gameplayer.h"
+#include "../utils.h"
 #include <vector>
 #include "boost/lockfree/queue.hpp"
 
@@ -137,6 +138,11 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 					wrapper.set_data(message.SerializeAsString());
 
 					std::string message_str = wrapper.SerializeAsString();
+
+					if (message.players()[0].position().x() == 128) {
+						iterate_array(&message_str[0], message_str.size());
+					}
+
 
 
 					size_t buffer_size = message_str.size() + LWS_PRE;
