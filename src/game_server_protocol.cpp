@@ -108,7 +108,6 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 		break;
 
 	case LWS_CALLBACK_SERVER_WRITEABLE:
-		std::cout << "Writable\n";
 		/*
 		if (!vhd->amsg.payload)
 			break;
@@ -130,14 +129,13 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 				if (pss->client->getGame() == nullptr) {
 					std::cout << "Game client does not exist for " << pss->client->playerIndex << "\n"; // This should be token
 				} else {
-					std::cout << "Heartbeat" << "\n";
+					//std::cout << "Heartbeat" << "\n";
 					gamemessages::PositionUpdate message = pss->client->generatePositionUpdate();
 					gamemessages::ProtocolWrapper wrapper;
 					wrapper.set_protocolversion(1);
 					wrapper.set_messagetype(gamemessages::ProtocolWrapper::messageTypes::ProtocolWrapper_messageTypes_playerUpdate);
 					wrapper.set_data(message.SerializeAsString());
 
-					//std::string message_str = message.SerializeAsString();
 					std::string message_str = wrapper.SerializeAsString();
 
 
@@ -146,8 +144,6 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 					memset(output, 0, buffer_size);
 
 					strcpy(output + LWS_PRE, message_str.c_str());
-
-					std::cout << "Sending message (foo) " << output << "\n";
 
 					n = lws_write(wsi, (unsigned char*)output + LWS_PRE, buffer_size - LWS_PRE, (lws_write_protocol)n);
 					delete[] output;
@@ -188,19 +184,16 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 		vhd->current++;
 
 		{
-			std::cout << "Connecting...\n";
+			//std::cout << "Receiving...\n";
 			char *message = new char[len];
 			memcpy(message, in, len);
-			
-			std::cout << "==== testing ====\n";
+
 			wrapper.ParseFromArray(message, len);
-			//wrapper.ParseFromString(message);
+			delete[] message;
 
 			if (wrapper.messagetype() == gamemessages::ProtocolWrapper::messageTypes::ProtocolWrapper_messageTypes_connect) {
 				gamemessages::Connect connect;
-				const std::string test = wrapper.data();
 				connect.ParseFromString(wrapper.data());
-				delete[] message;
 
 				std::cout << "Game Token: " << connect.gametoken() << "\n";
 				// Right now we just add them to the same game pool. There is no join game
@@ -209,7 +202,15 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 				pss->client->handleConnectionMessage(connect);
 			}
 			else if (wrapper.messagetype() == gamemessages::ProtocolWrapper::messageTypes::ProtocolWrapper_messageTypes_playerUpdate) {
-				std::cout << "Player update\n";
+				if (pss->client == nullptr) {
+					std::cout << "No client!\n";
+				}
+				else {
+					gamemessages::PlayerUpdate player_update_message;
+					player_update_message.ParseFromString(wrapper.data());
+					
+					pss->client->updatePlayerState(player_update_message);
+				}
 			}
 		}
 

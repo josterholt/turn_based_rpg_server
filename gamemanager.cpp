@@ -32,7 +32,7 @@ const std::string& GameManager::handleGameRequest(const std::string& key) {
 
 		// Can't find game_state, return empty string
 		if (!game_state) {
-			return std::string("");
+			return "";
 		}
 	}
 	return game_state->token;

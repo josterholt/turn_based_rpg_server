@@ -353,7 +353,7 @@ gamemessages::PositionUpdate GameClient::generatePositionUpdate() {
 	
 	
 	gamemessages::Unit *unit = proto_message.add_players();
-	std::cout << "Player X " << players[0]->positionX << "\n";
+
 	unit->mutable_position()->set_x(players[0]->positionX);
 	unit->mutable_position()->set_y(players[0]->positionY);
 	unit->mutable_velocity()->set_x(players[0]->velocityX);
