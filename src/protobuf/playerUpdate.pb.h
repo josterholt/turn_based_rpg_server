@@ -313,19 +313,19 @@ class Point : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
 
   // accessors -------------------------------------------------------
 
-  // required int32 x = 1;
+  // required int64 x = 1;
   bool has_x() const;
   void clear_x();
   static const int kXFieldNumber = 1;
-  ::google::protobuf::int32 x() const;
-  void set_x(::google::protobuf::int32 value);
+  ::google::protobuf::int64 x() const;
+  void set_x(::google::protobuf::int64 value);
 
-  // required int32 y = 2;
+  // required int64 y = 2;
   bool has_y() const;
   void clear_y();
   static const int kYFieldNumber = 2;
-  ::google::protobuf::int32 y() const;
-  void set_y(::google::protobuf::int32 value);
+  ::google::protobuf::int64 y() const;
+  void set_y(::google::protobuf::int64 value);
 
   // @@protoc_insertion_point(class_scope:gamemessages.Point)
  private:
@@ -340,8 +340,8 @@ class Point : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable int _cached_size_;
-  ::google::protobuf::int32 x_;
-  ::google::protobuf::int32 y_;
+  ::google::protobuf::int64 x_;
+  ::google::protobuf::int64 y_;
   friend struct ::protobuf_playerUpdate_2eproto::TableStruct;
   friend void ::protobuf_playerUpdate_2eproto::InitDefaultsPointImpl();
 };
@@ -979,7 +979,7 @@ inline void Unit::set_facing(::google::protobuf::int32 value) {
 
 // Point
 
-// required int32 x = 1;
+// required int64 x = 1;
 inline bool Point::has_x() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -990,20 +990,20 @@ inline void Point::clear_has_x() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void Point::clear_x() {
-  x_ = 0;
+  x_ = GOOGLE_LONGLONG(0);
   clear_has_x();
 }
-inline ::google::protobuf::int32 Point::x() const {
+inline ::google::protobuf::int64 Point::x() const {
   // @@protoc_insertion_point(field_get:gamemessages.Point.x)
   return x_;
 }
-inline void Point::set_x(::google::protobuf::int32 value) {
+inline void Point::set_x(::google::protobuf::int64 value) {
   set_has_x();
   x_ = value;
   // @@protoc_insertion_point(field_set:gamemessages.Point.x)
 }
 
-// required int32 y = 2;
+// required int64 y = 2;
 inline bool Point::has_y() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -1014,14 +1014,14 @@ inline void Point::clear_has_y() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void Point::clear_y() {
-  y_ = 0;
+  y_ = GOOGLE_LONGLONG(0);
   clear_has_y();
 }
-inline ::google::protobuf::int32 Point::y() const {
+inline ::google::protobuf::int64 Point::y() const {
   // @@protoc_insertion_point(field_get:gamemessages.Point.y)
   return y_;
 }
-inline void Point::set_y(::google::protobuf::int32 value) {
+inline void Point::set_y(::google::protobuf::int64 value) {
   set_has_y();
   y_ = value;
   // @@protoc_insertion_point(field_set:gamemessages.Point.y)

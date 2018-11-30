@@ -16,7 +16,7 @@ point_t rotatePoint(float x, float y, float rotation);
 template<typename T>
 void iterate_array(T* arr, size_t size) {
 	for (int i = 0; i < size; ++i) {
-		std::cout << arr[i] << "\n";
+		std::cout << (int) arr[i] << "\n";
 	}
 }
 #endif

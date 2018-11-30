@@ -132,6 +132,7 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 				} else {
 					//std::cout << "Heartbeat" << "\n";
 					gamemessages::PositionUpdate message = pss->client->generatePositionUpdate();
+
 					gamemessages::ProtocolWrapper wrapper;
 					wrapper.set_protocolversion(1);
 					wrapper.set_messagetype(gamemessages::ProtocolWrapper::messageTypes::ProtocolWrapper_messageTypes_playerUpdate);
@@ -139,7 +140,8 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 
 					std::string message_str = wrapper.SerializeAsString();
 
-					if (message.players()[0].position().x() == 128) {
+					if (message.players()[0].position().x() == 127) {
+						std::cout << "Velocity: " << message.players()[0].velocity().x() << " " << message.players()[0].velocity().y() << "\n";
 						iterate_array(&message_str[0], message_str.size());
 					}
 
