@@ -354,6 +354,7 @@ gamemessages::PositionUpdate GameClient::generatePositionUpdate() {
 	
 	gamemessages::Unit *unit = proto_message.add_players();
 
+	unit->set_token(players[0]->token);
 	unit->mutable_position()->set_x(players[0]->positionX);
 	unit->mutable_position()->set_y(players[0]->positionY);
 	unit->mutable_velocity()->set_x(players[0]->velocityX);
@@ -362,7 +363,7 @@ gamemessages::PositionUpdate GameClient::generatePositionUpdate() {
 
 	for (auto mob_it = this->currentGameInstance->mobs.begin(); mob_it < this->currentGameInstance->mobs.end(); ++mob_it) {
 		gamemessages::Unit *m_unit = proto_message.add_mobs();
-		
+		m_unit->set_token((*mob_it)->token);
 		m_unit->mutable_position()->set_x((*mob_it)->positionX);
 		m_unit->mutable_position()->set_y((*mob_it)->positionY);
 		m_unit->mutable_velocity()->set_x((*mob_it)->velocityX);

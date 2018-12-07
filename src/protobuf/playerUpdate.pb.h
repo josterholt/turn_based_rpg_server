@@ -176,33 +176,50 @@ class Unit : public ::google::protobuf::Message /* @@protoc_insertion_point(clas
 
   // accessors -------------------------------------------------------
 
-  // required .gamemessages.Point position = 1;
+  // required string token = 1;
+  bool has_token() const;
+  void clear_token();
+  static const int kTokenFieldNumber = 1;
+  const ::std::string& token() const;
+  void set_token(const ::std::string& value);
+  #if LANG_CXX11
+  void set_token(::std::string&& value);
+  #endif
+  void set_token(const char* value);
+  void set_token(const char* value, size_t size);
+  ::std::string* mutable_token();
+  ::std::string* release_token();
+  void set_allocated_token(::std::string* token);
+
+  // required .gamemessages.Point position = 2;
   bool has_position() const;
   void clear_position();
-  static const int kPositionFieldNumber = 1;
+  static const int kPositionFieldNumber = 2;
   const ::gamemessages::Point& position() const;
   ::gamemessages::Point* release_position();
   ::gamemessages::Point* mutable_position();
   void set_allocated_position(::gamemessages::Point* position);
 
-  // required .gamemessages.Point velocity = 2;
+  // required .gamemessages.Point velocity = 3;
   bool has_velocity() const;
   void clear_velocity();
-  static const int kVelocityFieldNumber = 2;
+  static const int kVelocityFieldNumber = 3;
   const ::gamemessages::Point& velocity() const;
   ::gamemessages::Point* release_velocity();
   ::gamemessages::Point* mutable_velocity();
   void set_allocated_velocity(::gamemessages::Point* velocity);
 
-  // required int32 facing = 5;
+  // required int32 facing = 4;
   bool has_facing() const;
   void clear_facing();
-  static const int kFacingFieldNumber = 5;
+  static const int kFacingFieldNumber = 4;
   ::google::protobuf::int32 facing() const;
   void set_facing(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:gamemessages.Unit)
  private:
+  void set_has_token();
+  void clear_has_token();
   void set_has_position();
   void clear_has_position();
   void set_has_velocity();
@@ -216,6 +233,7 @@ class Unit : public ::google::protobuf::Message /* @@protoc_insertion_point(clas
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable int _cached_size_;
+  ::google::protobuf::internal::ArenaStringPtr token_;
   ::gamemessages::Point* position_;
   ::gamemessages::Point* velocity_;
   ::google::protobuf::int32 facing_;
@@ -843,15 +861,78 @@ class TestMessage : public ::google::protobuf::Message /* @@protoc_insertion_poi
 #endif  // __GNUC__
 // Unit
 
-// required .gamemessages.Point position = 1;
-inline bool Unit::has_position() const {
+// required string token = 1;
+inline bool Unit::has_token() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void Unit::set_has_position() {
+inline void Unit::set_has_token() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void Unit::clear_has_position() {
+inline void Unit::clear_has_token() {
   _has_bits_[0] &= ~0x00000001u;
+}
+inline void Unit::clear_token() {
+  token_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_token();
+}
+inline const ::std::string& Unit::token() const {
+  // @@protoc_insertion_point(field_get:gamemessages.Unit.token)
+  return token_.GetNoArena();
+}
+inline void Unit::set_token(const ::std::string& value) {
+  set_has_token();
+  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:gamemessages.Unit.token)
+}
+#if LANG_CXX11
+inline void Unit::set_token(::std::string&& value) {
+  set_has_token();
+  token_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:gamemessages.Unit.token)
+}
+#endif
+inline void Unit::set_token(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_token();
+  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:gamemessages.Unit.token)
+}
+inline void Unit::set_token(const char* value, size_t size) {
+  set_has_token();
+  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:gamemessages.Unit.token)
+}
+inline ::std::string* Unit::mutable_token() {
+  set_has_token();
+  // @@protoc_insertion_point(field_mutable:gamemessages.Unit.token)
+  return token_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* Unit::release_token() {
+  // @@protoc_insertion_point(field_release:gamemessages.Unit.token)
+  clear_has_token();
+  return token_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void Unit::set_allocated_token(::std::string* token) {
+  if (token != NULL) {
+    set_has_token();
+  } else {
+    clear_has_token();
+  }
+  token_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), token);
+  // @@protoc_insertion_point(field_set_allocated:gamemessages.Unit.token)
+}
+
+// required .gamemessages.Point position = 2;
+inline bool Unit::has_position() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void Unit::set_has_position() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void Unit::clear_has_position() {
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void Unit::clear_position() {
   if (position_ != NULL) position_->Clear();
@@ -897,15 +978,15 @@ inline void Unit::set_allocated_position(::gamemessages::Point* position) {
   // @@protoc_insertion_point(field_set_allocated:gamemessages.Unit.position)
 }
 
-// required .gamemessages.Point velocity = 2;
+// required .gamemessages.Point velocity = 3;
 inline bool Unit::has_velocity() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
 inline void Unit::set_has_velocity() {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
 }
 inline void Unit::clear_has_velocity() {
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void Unit::clear_velocity() {
   if (velocity_ != NULL) velocity_->Clear();
@@ -951,15 +1032,15 @@ inline void Unit::set_allocated_velocity(::gamemessages::Point* velocity) {
   // @@protoc_insertion_point(field_set_allocated:gamemessages.Unit.velocity)
 }
 
-// required int32 facing = 5;
+// required int32 facing = 4;
 inline bool Unit::has_facing() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void Unit::set_has_facing() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void Unit::clear_has_facing() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void Unit::clear_facing() {
   facing_ = 0;

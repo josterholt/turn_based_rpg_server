@@ -191,12 +191,14 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::gamemessages::Unit, token_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::gamemessages::Unit, position_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::gamemessages::Unit, velocity_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::gamemessages::Unit, facing_),
   0,
   1,
   2,
+  3,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::gamemessages::Point, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::gamemessages::Point, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -242,12 +244,12 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   0,
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, 8, sizeof(::gamemessages::Unit)},
-  { 11, 18, sizeof(::gamemessages::Point)},
-  { 20, 26, sizeof(::gamemessages::HitBox)},
-  { 27, 33, sizeof(::gamemessages::PlayerUpdate)},
-  { 34, 43, sizeof(::gamemessages::PositionUpdate)},
-  { 47, 53, sizeof(::gamemessages::TestMessage)},
+  { 0, 9, sizeof(::gamemessages::Unit)},
+  { 13, 20, sizeof(::gamemessages::Point)},
+  { 22, 28, sizeof(::gamemessages::HitBox)},
+  { 29, 35, sizeof(::gamemessages::PlayerUpdate)},
+  { 36, 45, sizeof(::gamemessages::PositionUpdate)},
+  { 49, 55, sizeof(::gamemessages::TestMessage)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -281,21 +283,22 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\022playerUpdate.proto\022\014gamemessages\"d\n\004Un"
-      "it\022%\n\010position\030\001 \002(\0132\023.gamemessages.Poin"
-      "t\022%\n\010velocity\030\002 \002(\0132\023.gamemessages.Point"
-      "\022\016\n\006facing\030\005 \002(\005\"\035\n\005Point\022\t\n\001x\030\001 \002(\003\022\t\n\001"
-      "y\030\002 \002(\003\"-\n\006HitBox\022#\n\006points\030\001 \003(\0132\023.game"
-      "messages.Point\"2\n\014PlayerUpdate\022\"\n\006player"
-      "\030\001 \002(\0132\022.gamemessages.Unit\"\253\001\n\016PositionU"
-      "pdate\022#\n\007players\030\001 \003(\0132\022.gamemessages.Un"
-      "it\022 \n\004mobs\030\002 \003(\0132\022.gamemessages.Unit\022&\n\010"
-      "hitboxes\030\003 \003(\0132\024.gamemessages.HitBox\022*\n\014"
-      "mob_hitboxes\030\004 \003(\0132\024.gamemessages.HitBox"
-      "\"\033\n\013TestMessage\022\014\n\004test\030\001 \002(\005"
+      "\n\022playerUpdate.proto\022\014gamemessages\"s\n\004Un"
+      "it\022\r\n\005token\030\001 \002(\t\022%\n\010position\030\002 \002(\0132\023.ga"
+      "memessages.Point\022%\n\010velocity\030\003 \002(\0132\023.gam"
+      "emessages.Point\022\016\n\006facing\030\004 \002(\005\"\035\n\005Point"
+      "\022\t\n\001x\030\001 \002(\003\022\t\n\001y\030\002 \002(\003\"-\n\006HitBox\022#\n\006poin"
+      "ts\030\001 \003(\0132\023.gamemessages.Point\"2\n\014PlayerU"
+      "pdate\022\"\n\006player\030\001 \002(\0132\022.gamemessages.Uni"
+      "t\"\253\001\n\016PositionUpdate\022#\n\007players\030\001 \003(\0132\022."
+      "gamemessages.Unit\022 \n\004mobs\030\002 \003(\0132\022.gameme"
+      "ssages.Unit\022&\n\010hitboxes\030\003 \003(\0132\024.gamemess"
+      "ages.HitBox\022*\n\014mob_hitboxes\030\004 \003(\0132\024.game"
+      "messages.HitBox\"\033\n\013TestMessage\022\014\n\004test\030\001"
+      " \002(\005"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 469);
+      descriptor, 484);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "playerUpdate.proto", &protobuf_RegisterTypes);
 }
@@ -322,6 +325,7 @@ void Unit::InitAsDefaultInstance() {
       ::gamemessages::Point::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int Unit::kTokenFieldNumber;
 const int Unit::kPositionFieldNumber;
 const int Unit::kVelocityFieldNumber;
 const int Unit::kFacingFieldNumber;
@@ -341,6 +345,10 @@ Unit::Unit(const Unit& from)
       _has_bits_(from._has_bits_),
       _cached_size_(0) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
+  token_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_token()) {
+    token_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.token_);
+  }
   if (from.has_position()) {
     position_ = new ::gamemessages::Point(*from.position_);
   } else {
@@ -357,6 +365,7 @@ Unit::Unit(const Unit& from)
 
 void Unit::SharedCtor() {
   _cached_size_ = 0;
+  token_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&position_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&facing_) -
       reinterpret_cast<char*>(&position_)) + sizeof(facing_));
@@ -368,6 +377,7 @@ Unit::~Unit() {
 }
 
 void Unit::SharedDtor() {
+  token_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete position_;
   if (this != internal_default_instance()) delete velocity_;
 }
@@ -402,12 +412,16 @@ void Unit::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 3u) {
+  if (cached_has_bits & 7u) {
     if (cached_has_bits & 0x00000001u) {
+      GOOGLE_DCHECK(!token_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
+      (*token_.UnsafeRawStringPointer())->clear();
+    }
+    if (cached_has_bits & 0x00000002u) {
       GOOGLE_DCHECK(position_ != NULL);
       position_->Clear();
     }
-    if (cached_has_bits & 0x00000002u) {
+    if (cached_has_bits & 0x00000004u) {
       GOOGLE_DCHECK(velocity_ != NULL);
       velocity_->Clear();
     }
@@ -427,10 +441,26 @@ bool Unit::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .gamemessages.Point position = 1;
+      // required string token = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_token()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->token().data(), static_cast<int>(this->token().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "gamemessages.Unit.token");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // required .gamemessages.Point position = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
                input, mutable_position()));
         } else {
@@ -439,10 +469,10 @@ bool Unit::MergePartialFromCodedStream(
         break;
       }
 
-      // required .gamemessages.Point velocity = 2;
-      case 2: {
+      // required .gamemessages.Point velocity = 3;
+      case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
                input, mutable_velocity()));
         } else {
@@ -451,10 +481,10 @@ bool Unit::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 facing = 5;
-      case 5: {
+      // required int32 facing = 4;
+      case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
           set_has_facing();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -492,21 +522,31 @@ void Unit::SerializeWithCachedSizes(
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // required .gamemessages.Point position = 1;
+  // required string token = 1;
   if (cached_has_bits & 0x00000001u) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, *this->position_, output);
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->token().data(), static_cast<int>(this->token().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "gamemessages.Unit.token");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->token(), output);
   }
 
-  // required .gamemessages.Point velocity = 2;
+  // required .gamemessages.Point position = 2;
   if (cached_has_bits & 0x00000002u) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, *this->velocity_, output);
+      2, *this->position_, output);
   }
 
-  // required int32 facing = 5;
+  // required .gamemessages.Point velocity = 3;
   if (cached_has_bits & 0x00000004u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->facing(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      3, *this->velocity_, output);
+  }
+
+  // required int32 facing = 4;
+  if (cached_has_bits & 0x00000008u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->facing(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -524,23 +564,34 @@ void Unit::SerializeWithCachedSizes(
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // required .gamemessages.Point position = 1;
+  // required string token = 1;
   if (cached_has_bits & 0x00000001u) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      InternalWriteMessageToArray(
-        1, *this->position_, deterministic, target);
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->token().data(), static_cast<int>(this->token().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "gamemessages.Unit.token");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->token(), target);
   }
 
-  // required .gamemessages.Point velocity = 2;
+  // required .gamemessages.Point position = 2;
   if (cached_has_bits & 0x00000002u) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        2, *this->velocity_, deterministic, target);
+        2, *this->position_, deterministic, target);
   }
 
-  // required int32 facing = 5;
+  // required .gamemessages.Point velocity = 3;
   if (cached_has_bits & 0x00000004u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->facing(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        3, *this->velocity_, deterministic, target);
+  }
+
+  // required int32 facing = 4;
+  if (cached_has_bits & 0x00000008u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->facing(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -555,22 +606,29 @@ size_t Unit::RequiredFieldsByteSizeFallback() const {
 // @@protoc_insertion_point(required_fields_byte_size_fallback_start:gamemessages.Unit)
   size_t total_size = 0;
 
+  if (has_token()) {
+    // required string token = 1;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->token());
+  }
+
   if (has_position()) {
-    // required .gamemessages.Point position = 1;
+    // required .gamemessages.Point position = 2;
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSize(
         *this->position_);
   }
 
   if (has_velocity()) {
-    // required .gamemessages.Point velocity = 2;
+    // required .gamemessages.Point velocity = 3;
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSize(
         *this->velocity_);
   }
 
   if (has_facing()) {
-    // required int32 facing = 5;
+    // required int32 facing = 4;
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->facing());
@@ -587,18 +645,23 @@ size_t Unit::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         _internal_metadata_.unknown_fields());
   }
-  if (((_has_bits_[0] & 0x00000007) ^ 0x00000007) == 0) {  // All required fields are present.
-    // required .gamemessages.Point position = 1;
+  if (((_has_bits_[0] & 0x0000000f) ^ 0x0000000f) == 0) {  // All required fields are present.
+    // required string token = 1;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->token());
+
+    // required .gamemessages.Point position = 2;
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSize(
         *this->position_);
 
-    // required .gamemessages.Point velocity = 2;
+    // required .gamemessages.Point velocity = 3;
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSize(
         *this->velocity_);
 
-    // required int32 facing = 5;
+    // required int32 facing = 4;
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->facing());
@@ -636,14 +699,18 @@ void Unit::MergeFrom(const Unit& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 7u) {
+  if (cached_has_bits & 15u) {
     if (cached_has_bits & 0x00000001u) {
-      mutable_position()->::gamemessages::Point::MergeFrom(from.position());
+      set_has_token();
+      token_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.token_);
     }
     if (cached_has_bits & 0x00000002u) {
-      mutable_velocity()->::gamemessages::Point::MergeFrom(from.velocity());
+      mutable_position()->::gamemessages::Point::MergeFrom(from.position());
     }
     if (cached_has_bits & 0x00000004u) {
+      mutable_velocity()->::gamemessages::Point::MergeFrom(from.velocity());
+    }
+    if (cached_has_bits & 0x00000008u) {
       facing_ = from.facing_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -665,7 +732,7 @@ void Unit::CopyFrom(const Unit& from) {
 }
 
 bool Unit::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
   if (has_position()) {
     if (!this->position_->IsInitialized()) return false;
   }
@@ -681,6 +748,7 @@ void Unit::Swap(Unit* other) {
 }
 void Unit::InternalSwap(Unit* other) {
   using std::swap;
+  token_.Swap(&other->token_);
   swap(position_, other->position_);
   swap(velocity_, other->velocity_);
   swap(facing_, other->facing_);
