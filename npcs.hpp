@@ -7,4 +7,4 @@ struct skeletondef {
 	int health = 20;
 } skeleton;
 
-std::vector<std::string> NPC_LIST = { "skeleton" };
+std::vector<std::string> NPC_LIST = { "skeleton", "goblin" };

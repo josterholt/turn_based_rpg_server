@@ -360,5 +360,16 @@ gamemessages::PositionUpdate GameClient::generatePositionUpdate() {
 	unit->mutable_velocity()->set_y(players[0]->velocityY);
 	unit->set_facing(players[0]->facing);
 
+	for (auto mob_it = this->currentGameInstance->mobs.begin(); mob_it < this->currentGameInstance->mobs.end(); ++mob_it) {
+		gamemessages::Unit *m_unit = proto_message.add_mobs();
+		
+		m_unit->mutable_position()->set_x((*mob_it)->positionX);
+		m_unit->mutable_position()->set_y((*mob_it)->positionY);
+		m_unit->mutable_velocity()->set_x((*mob_it)->velocityX);
+		m_unit->mutable_velocity()->set_y((*mob_it)->velocityY);
+		m_unit->set_facing((*mob_it)->facing);
+
+	}
+
 	return proto_message;
 }

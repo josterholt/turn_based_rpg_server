@@ -62,7 +62,7 @@ bool GameState::loadLevel(std::string level) {
 		this->tiles.push_back((unsigned char) decoded_string[i]);
 	}
 	*/
-	rapidjson::Value object_layer = doc["layers"][1].GetObject();
+	rapidjson::Value object_layer = doc["layers"][2].GetObject();
 	rapidjson::Value objects = object_layer["objects"].GetArray();
 	if (objects.Size() == 0) {
 		this->spawnPoint = std::make_pair(0, 0);
@@ -73,14 +73,14 @@ bool GameState::loadLevel(std::string level) {
 	}
 	
 	
-	/*
-	int mob_index = getLayerIndex(doc["layers"], "mobs");
+	//int mob_index = getLayerIndex(doc["layers"], "mobs");
+	int mob_index = 1;
 
 	rapidjson::Value mob_objects = doc["layers"][mob_index]["objects"].GetArray();
 	for (rapidjson::Value::ValueIterator it = mob_objects.Begin(); it != mob_objects.End(); ++it) {
 		std::string mob_name = (*it)["properties"]["type"].GetString();
 		if (std::find(NPC_LIST.begin(), NPC_LIST.end(), mob_name) != NPC_LIST.end()) {
-			if ("mob_name" == "skeleton") {
+			if (mob_name == "goblin") {
 				GameMob* mob = new GameMob();
 				mob->health = skeleton.health;
 				
@@ -93,7 +93,7 @@ bool GameState::loadLevel(std::string level) {
 			}
 		}		
 	}
-	*/
+
 	std::cout << "Level loaded\n";
 	std::cout << "Num mobs: " << this->mobs.size() << "\n";
 	return true;
