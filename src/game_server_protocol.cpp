@@ -132,52 +132,31 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 				} else {
 					//std::cout << "Heartbeat" << "\n";
 					gamemessages::PositionUpdate message = pss->client->generatePositionUpdate();
-
-					/*
-					if (message.players()[0].position().x() == 128) {
-						std::cout << "<=== OUTPUT ===>\n";
-						std::string message_output_str = message.SerializeAsString();
-
-						char *message_output = new char[message.ByteSize()];
-						message.SerializeToArray(message_output, message.ByteSize());
-						for (int i = 0; i < message.ByteSize(); ++i) {
-							std::cout << (int)message_output[i] << " vs " << (int) message_output_str[i] <<  "\n";
-						}
-						delete[] message_output;
-						std::cout << "<=== END OUTPUT ===>\n";
-					}
-					*/
-
-					char *message_output = new char[message.ByteSize()];
-					message.SerializeToArray(message_output, message.ByteSize());
-
 					
 
 					gamemessages::ProtocolWrapper wrapper;
 					wrapper.set_protocolversion(1);
 					wrapper.set_messagetype(gamemessages::ProtocolWrapper::messageTypes::ProtocolWrapper_messageTypes_playerUpdate);
-					//wrapper.set_data(message.SerializeAsString());
-					wrapper.set_data(message_output, message.ByteSize());
-					delete[] message_output;
-					
-					char *wrapper_output = new char[wrapper.ByteSize()];
-					wrapper.SerializeToArray(wrapper_output, wrapper.ByteSize());					
+					wrapper.set_data(message.SerializeAsString());
 
+					std::string message_str = wrapper.SerializeAsString();
 					size_t buffer_size = wrapper.ByteSize() + LWS_PRE;
-					char *output = new char[buffer_size];
-					memset(output, 0, buffer_size);
 
-					/*
-					for (int i = 0; i < wrapper.ByteSize(); ++i) {
-						output[i + LWS_PRE] = wrapper_output[i];
-					}
-					*/
-					strncpy(output + LWS_PRE, wrapper_output, wrapper.ByteSize());
-					//strcpy(output + LWS_PRE, wrapper_output);
-					delete[] wrapper_output;
+					char *message_output = new char[buffer_size];
+					memset(message_output, 0, buffer_size);
+					wrapper.SerializeToArray(message_output + LWS_PRE, wrapper.ByteSize());
 
-					n = lws_write(wsi, (unsigned char*)output + LWS_PRE, buffer_size - LWS_PRE, LWS_WRITE_BINARY);
-					delete[] output;
+
+					
+					//char *output = new char[buffer_size];
+					//memset(output, 0, buffer_size);
+
+					//strncpy(output + LWS_PRE, message_output, wrapper.ByteSize());
+
+					n = lws_write(wsi, (unsigned char*)message_output + LWS_PRE, buffer_size - LWS_PRE, (LWS_WRITE_BINARY));
+					delete[] message_output;
+					//delete[] output;
+					
 
 					if (n < 0) {
 						lwsl_err("ERROR %d writing to socket, hanging up\n", n);
