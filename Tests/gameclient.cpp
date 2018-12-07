@@ -211,8 +211,8 @@ namespace Tests
 			 */
 
 			gamemessages::PositionUpdate position_update = client->generatePositionUpdate();
-			Assert::AreEqual(spawn_x, position_update.players().Get(0).position().x(), L"update player position x assert");
-			Assert::AreEqual(spawn_y, position_update.players().Get(0).position().y(), L"update player position y assert");
+			Assert::IsTrue(spawn_x == position_update.players().Get(0).position().x(), L"update player position x assert");
+			Assert::IsTrue(spawn_y == position_update.players().Get(0).position().y(), L"update player position y assert");
 		}
 
 	};

@@ -132,6 +132,7 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 				} else {
 					//std::cout << "Heartbeat" << "\n";
 					gamemessages::PositionUpdate message = pss->client->generatePositionUpdate();
+					
 
 					gamemessages::ProtocolWrapper wrapper;
 					wrapper.set_protocolversion(1);
@@ -139,22 +140,23 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 					wrapper.set_data(message.SerializeAsString());
 
 					std::string message_str = wrapper.SerializeAsString();
+					size_t buffer_size = wrapper.ByteSize() + LWS_PRE;
 
-					if (message.players()[0].position().x() == 127) {
-						std::cout << "Velocity: " << message.players()[0].velocity().x() << " " << message.players()[0].velocity().y() << "\n";
-						iterate_array(&message_str[0], message_str.size());
-					}
+					char *message_output = new char[buffer_size];
+					memset(message_output, 0, buffer_size);
+					wrapper.SerializeToArray(message_output + LWS_PRE, wrapper.ByteSize());
 
 
+					
+					//char *output = new char[buffer_size];
+					//memset(output, 0, buffer_size);
 
-					size_t buffer_size = message_str.size() + LWS_PRE;
-					char *output = new char[buffer_size];
-					memset(output, 0, buffer_size);
+					//strncpy(output + LWS_PRE, message_output, wrapper.ByteSize());
 
-					strcpy(output + LWS_PRE, message_str.c_str());
-
-					n = lws_write(wsi, (unsigned char*)output + LWS_PRE, buffer_size - LWS_PRE, (lws_write_protocol)n);
-					delete[] output;
+					n = lws_write(wsi, (unsigned char*)message_output + LWS_PRE, buffer_size - LWS_PRE, (LWS_WRITE_BINARY));
+					delete[] message_output;
+					//delete[] output;
+					
 
 					if (n < 0) {
 						lwsl_err("ERROR %d writing to socket, hanging up\n", n);
