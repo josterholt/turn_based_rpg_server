@@ -1,8 +1,16 @@
 #include "gamemob.h"
 #include <math.h>
+#include "src/AStarPathFinding.h"
+#include <iostream>
+
+GameMob::GameMob(GameState* game_state) : _gameState(game_state) {}
 
 void GameMob::loadScript(std::vector<EventNode> &nodes) {
 	this->eventNodes = nodes;
+}
+
+void GameMob::setMap(GameMap game_map) {
+	this->_map = game_map;
 }
 
 /**
@@ -60,27 +68,64 @@ void GameMob::processScriptedState(double elapsed_time) {
 		this->velocityY = 0;
 	}
 	*/
-	
-	// Detect what direction character is facing based off of velocity
-	if (floorf(this->velocityX) > 0) {
-		this->facing = FacingDirection::RIGHT;
-	}
-	else if (floorf(this->velocityX) < 0) {
-		this->facing = FacingDirection::LEFT;
-	}
-	else if (floorf(this->velocityY) < 0) {
-		this->facing = FacingDirection::UP;
-	}
-	else if (floorf(this->velocityY) > 0) {
-		this->facing = FacingDirection::DOWN;
-	}
 }
 
 void GameMob::update(double elapsed_time) {
 	if (this->health > 0) {
+		/*
 		this->processScriptedState(elapsed_time);
 		this->positionX += this->velocityX;
 		this->positionY += this->velocityY;
+		*/
+
+		AStarPathFinding path_finding(this->_map.map_width, this->_map.map_height, this->_map.tile_size, this->_map.tiles);
+		path_finding.set_start_index(coords_to_index(this->_map.tile_size, this->positionX, this->positionY));
+
+		GamePlayer* player = this->_gameState->getPlayerPositions()[0];
+		path_finding.set_end_index(coords_to_index(this->_map.tile_size, player->positionX, player->positionY));
+
+		std::cout << "Seeking player at at " << coords_to_index(this->_map.tile_size, this->positionX, this->positionY) << " from " << coords_to_index(this->_map.tile_size, player->positionX, player->positionY) << "\n";
+
+		path_finding.search();
+		std::vector<int> path = path_finding.get_path();
+		int next_index = path.at(path.size() - 1);
+
+		std::cout << "next index is " << next_index << "\n";
+
+		Point next_coord = index_to_coords(this->_map.tile_size, next_index);
+		if (next_coord.x > this->positionX) {
+			this->velocityX = this->maxSpeed;
+		}
+		else if (next_coord.x < this->positionX) {
+			this->velocityX = -this->maxSpeed;
+		} else{
+			this->velocityX = 0;
+		}
+
+		if (next_coord.y > this->positionY) {
+			this->velocityY = this->maxSpeed;
+		}
+		else if (next_coord.y < this->positionY) {
+			this->velocityY = -this->maxSpeed;
+		}
+		else {
+			this->velocityY = 0;
+		}
+		
+
+		// Detect what direction character is facing based off of velocity
+		if (floorf(this->velocityX) > 0) {
+			this->facing = FacingDirection::RIGHT;
+		}
+		else if (floorf(this->velocityX) < 0) {
+			this->facing = FacingDirection::LEFT;
+		}
+		else if (floorf(this->velocityY) < 0) {
+			this->facing = FacingDirection::UP;
+		}
+		else if (floorf(this->velocityY) > 0) {
+			this->facing = FacingDirection::DOWN;
+		}
 	}
 }
 

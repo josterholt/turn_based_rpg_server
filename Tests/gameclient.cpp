@@ -150,23 +150,29 @@ namespace Tests
 			Assert::IsTrue(client->getGame()->getToken() != "", L"Game token is not empty");
 			Assert::IsTrue(GameManager::getGameCount() == 1, L"Game count is 1");
 
+			float player_current_x = client->getGame()->getPlayerPositions()[0]->positionX;
+			float player_current_y = client->getGame()->getPlayerPositions()[0]->positionY;
+
+			/**
+			 * Move player to position is isn't blocked but beyond max speed
+			 */
 			gamemessages::PlayerUpdate update_message;
 			gamemessages::Unit *unit = update_message.mutable_player();
 			gamemessages::Point *position = unit->mutable_position();
-			position->set_x(20);
-			position->set_y(16);
+			position->set_x(player_current_x + 1000);
+			position->set_y(player_current_y);
 
 			gamemessages::Point *velocity = unit->mutable_velocity();
-			velocity->set_x(1000);
+			velocity->set_x(64);
 			velocity->set_y(0);
 
 			client->updatePlayerState(update_message);
 
 			std::vector<GamePlayer *> players = client->getGame()->getPlayerPositions();
-			Assert::IsTrue(players[0]->positionX == 1000);
-			Assert::IsTrue(players[0]->positionY == 0);
-			Assert::IsTrue(players[0]->velocityX == 0);
-			Assert::IsTrue(players[0]->velocityY == 0);
+			Assert::IsTrue(players[0]->positionX == player_current_x, L"positionX was not updated");
+			Assert::IsTrue(players[0]->positionY == player_current_y, L"positionY was not updated");
+			Assert::IsTrue(players[0]->velocityX == 0, L"velocityX is 0");
+			Assert::IsTrue(players[0]->velocityY == 0, L"velocityY is 0");
 
 			delete client;
 		}

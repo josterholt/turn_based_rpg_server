@@ -9,8 +9,13 @@
 #include <array>
 #include "utils.h"
 #include "rapidjson/document.h"
+#include "shared_structures.hpp"
 
 class GamePlayer;
+class GameMob;
+struct EventNode;
+
+
 
 struct GameStatus {
 	char status[128];
@@ -28,7 +33,7 @@ struct GameStatus {
 
 class GameState {
 	bool loadLevel(std::string level);
-	std::vector<unsigned int> tiles;
+	std::vector<unsigned int>* tiles;
 	int tileWidth = 32;
 	int tileHeight = 32;
 	int tilesPerRow = 100;
@@ -69,6 +74,7 @@ public:
 	void updatePosition(int player_index, float x, float y, float velocity_x, float velocity_y, FacingDirection facing);
 	void attackTarget(int player_index, float player_x, float player_y, float hitbox_x, float hitbox_y, int player_facing);
 	bool canMove(GamePlayer* player, float x, float y) const;
+	std::vector<unsigned int>* getTiles();
 	int getTileIndex(float x, float y) const;
 	bool GameState::boxCheck(GamePlayer* player, float x, float y) const;
 	bool isWalkableTile(int tile_index) const;

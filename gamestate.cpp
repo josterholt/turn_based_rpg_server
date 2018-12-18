@@ -10,6 +10,8 @@
 #define PI 3.14159265
 
 GameState::GameState() : token(GameState::GenerateToken()) {
+	this->tiles = new std::vector<unsigned int>();
+
 	// Default scripted nodes
 	std::vector<EventNode> nodes;
 	nodes.push_back(EventNode(0, 2));
@@ -31,6 +33,7 @@ GameState::~GameState() {
 	for (GameMob* mob : this->mobs) {
 		delete mob;
 	}
+	delete this->tiles;
 }
 
 bool GameState::loadLevel(std::string level) {
@@ -49,19 +52,16 @@ bool GameState::loadLevel(std::string level) {
 	file.close();
 
 	std::cout << doc.GetParseError() << "\n";
+
+	int map_width = doc["width"].GetInt();
+	int map_height = doc["height"].GetInt();
 	
 	std::string decoded_string;
-	rapidjson::Value tiles = doc["layers"][0]["data"].GetArray();
-	for (rapidjson::Value::ValueIterator it = tiles.Begin(); it != tiles.End(); ++it) {
-		this->tiles.push_back(it->GetInt());
+	rapidjson::Value src_tiles = doc["layers"][0]["data"].GetArray();
+	for (rapidjson::Value::ValueIterator it = src_tiles.Begin(); it != src_tiles.End(); ++it) {
+		this->tiles->push_back(it->GetInt());
 	}
 
-	/*
-	//decoded_string = std::string(doc["layers"][0]["data"].GetString());
-	for (int i = 0; i < tiles.size(); i = i + 4) {
-		this->tiles.push_back((unsigned char) decoded_string[i]);
-	}
-	*/
 	rapidjson::Value object_layer = doc["layers"][2].GetObject();
 	rapidjson::Value objects = object_layer["objects"].GetArray();
 	if (objects.Size() == 0) {
@@ -81,7 +81,8 @@ bool GameState::loadLevel(std::string level) {
 		std::string mob_name = (*it)["properties"]["type"].GetString();
 		if (std::find(NPC_LIST.begin(), NPC_LIST.end(), mob_name) != NPC_LIST.end()) {
 			if (mob_name == "goblin") {
-				GameMob* mob = new GameMob();
+				GameMob* mob = new GameMob(this);
+				mob->setMap(GameMap(map_width, map_height, 16, this->tiles));
 				mob->health = skeleton.health;
 				
 				mob->width = skeleton.width;
@@ -233,6 +234,10 @@ bool GameState::boxCheck(GamePlayer* player, float x, float y) const {
 	return true;
 }
 
+std::vector<unsigned int>* GameState::getTiles() {
+	return this->tiles;
+}
+
 int GameState::getTileIndex(float x, float y) const {
 	int row, col;
 	col = floor(x / this->tileWidth);
@@ -246,11 +251,11 @@ bool GameState::isWalkableTile(int tile_index) const {
 		return false;
 	}
 
-	if (tile_index > this->tiles.size()) {
+	if (tile_index > this->tiles->size()) {
 		return false;
 	}
 
-	if (this->tiles[tile_index] > 0) {
+	if (this->tiles->at(tile_index) > 0) {
 		return true;
 	}
 	return false;
@@ -395,7 +400,7 @@ void GameState::update(double elapsed_time) {
 	}
 
 	if (alive_mob_count == 0) {
-		GameMob* mob = new GameMob();
+		GameMob* mob = new GameMob(this);
 		mob->health = 20;
 		// Get player position
 		int player_x = this->players[0]->positionX;

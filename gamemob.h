@@ -2,6 +2,10 @@
 #define _GAMEMOB_H_
 #include "gameunit.h"
 #include <vector>
+#include "shared_structures.hpp"
+#include "gamestate.h"
+
+class GameState;
 
 struct EventNode {
 	float velocityX = 0;
@@ -71,6 +75,9 @@ private:
 	std::string image;
 	std::string type;
 
+	// Map
+	struct GameMap _map;
+
 	// Leveling
 	int level = 1;
 	int experience = 0;
@@ -90,6 +97,7 @@ private:
 	float staminaToHealthMultiplier = 1.5;
 	float _agilityDodgePerPoint = 0.8;
 
+	GameState* _gameState;
 	// Positional / State
 	GameUnit target;
 	
@@ -109,7 +117,11 @@ private:
 	int gold;
 
 public:
+	GameMob(GameState* game_state);
 	bool isAttacking = false;
+
+	// Set map/tiles
+	void setMap(GameMap game_map);
 
 	void loadScript(std::vector<EventNode> &nodes);
 	void update(double elapsed_time);
