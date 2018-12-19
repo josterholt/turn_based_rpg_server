@@ -22,8 +22,8 @@ struct Point {
 	int y;
 };
 
-int coords_to_index(int tile_size, int x, int y);
-Point index_to_coords(int map_width, int index);
+int coords_to_index(int tiles_per_row, int tile_size, int x, int y);
+Point index_to_coords(int tiles_per_row, int tile_size, int index);
 
 struct Node {
 	Node(int _x, int _y, bool _blocked, int _distance, int _index) : x(_x), y(_y), blocked(_blocked), distance(_distance), index(_index) {}
@@ -55,8 +55,8 @@ class AStarPathFinding {
 	NodeList _open_list;
 	std::vector<int> _closed_list;
 
-	int _map_width = 0;
-	int _map_height = 0;
+	int _map_tile_width = 0;
+	int _map_tile_height = 0;
 	int _tile_size = 0;
 
 	int _start_index = 0;
@@ -66,11 +66,10 @@ class AStarPathFinding {
 	std::vector<int> blocked_nodes;
 
 	Node* get_node_by_index(int i);
-
 	int get_distance(int target_x, int target_y, int current_x, int current_y);
 public:
-	AStarPathFinding(int _map_width, int _map_height, int _tile_size, std::vector<int>* _tiles);
-	AStarPathFinding(int _map_width, int _map_height, int _tile_size, std::vector<unsigned int>* _tiles);
+	AStarPathFinding(int _map_tile_width, int _map_tile_height, int _tile_size, std::vector<int>* _tiles);
+	AStarPathFinding(int _map_tile_width, int _map_tile_height, int _tile_size, std::vector<unsigned int>* _tiles);
 	~AStarPathFinding();
 	void set_start_index(int i);
 	void set_end_index(int i);

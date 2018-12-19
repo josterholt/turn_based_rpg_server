@@ -84,7 +84,7 @@ bool GameState::loadLevel(std::string level) {
 				GameMob* mob = new GameMob(this);
 				mob->setMap(GameMap(map_width, map_height, 16, this->tiles));
 				mob->health = skeleton.health;
-				
+				mob->maxSpeed = 16;
 				mob->width = skeleton.width;
 				mob->height = skeleton.height;
 				mob->setPosition((*it)["x"].GetInt(), (*it)["y"].GetInt());

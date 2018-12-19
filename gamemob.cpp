@@ -79,39 +79,61 @@ void GameMob::update(double elapsed_time) {
 		*/
 
 		AStarPathFinding path_finding(this->_map.map_width, this->_map.map_height, this->_map.tile_size, this->_map.tiles);
-		path_finding.set_start_index(coords_to_index(this->_map.tile_size, this->positionX, this->positionY));
+		path_finding.set_start_index(coords_to_index(this->_map.map_width, this->_map.tile_size, this->positionX, this->positionY));
 
 		GamePlayer* player = this->_gameState->getPlayerPositions()[0];
-		path_finding.set_end_index(coords_to_index(this->_map.tile_size, player->positionX, player->positionY));
+		path_finding.set_end_index(coords_to_index(this->_map.map_width, this->_map.tile_size, player->positionX, player->positionY));
 
-		std::cout << "Seeking player at at " << coords_to_index(this->_map.tile_size, this->positionX, this->positionY) << " from " << coords_to_index(this->_map.tile_size, player->positionX, player->positionY) << "\n";
+		std::cout << "Seeking player at at " << coords_to_index(this->_map.map_width, this->_map.tile_size, player->positionX, player->positionY) << " from " << coords_to_index(this->_map.map_width, this->_map.tile_size, this->positionX, this->positionY) << "\n";
 
 		path_finding.search();
 		std::vector<int> path = path_finding.get_path();
-		int next_index = path.at(path.size() - 1);
+		if (path.size() > 0) {
+			int next_index = path.at(path.size() - 1);
 
-		std::cout << "next index is " << next_index << "\n";
+			std::cout << "next index is " << next_index << "\n";
 
-		Point next_coord = index_to_coords(this->_map.tile_size, next_index);
-		if (next_coord.x > this->positionX) {
-			this->velocityX = this->maxSpeed;
-		}
-		else if (next_coord.x < this->positionX) {
-			this->velocityX = -this->maxSpeed;
-		} else{
-			this->velocityX = 0;
+			Point next_coord = index_to_coords(this->_map.map_width, this->_map.tile_size, next_index);
+			if (next_coord.x > this->positionX) {
+				this->velocityX = this->maxSpeed;
+			}
+			else if (next_coord.x < this->positionX) {
+				this->velocityX = -this->maxSpeed;
+			}
+			else {
+				this->velocityX = 0;
+			}
+
+			if (next_coord.y > this->positionY) {
+				this->velocityY = this->maxSpeed;
+			}
+			else if (next_coord.y < this->positionY) {
+				this->velocityY = -this->maxSpeed;
+			}
+			else {
+				this->velocityY = 0;
+			}
+			std::cout << "Calculating... " << this->positionX << " - " << this->velocityX << " - " << elapsed_time << "\n";
+			this->positionX += (this->velocityX / 1000) * elapsed_time;
+			this->positionY += (this->velocityY / 1000) * elapsed_time;
 		}
 
-		if (next_coord.y > this->positionY) {
-			this->velocityY = this->maxSpeed;
+		if (this->positionX < 0) {
+			this->positionX = 0;
 		}
-		else if (next_coord.y < this->positionY) {
-			this->velocityY = -this->maxSpeed;
+
+		if (this->positionY < 0) {
+			this->positionY = 0;
 		}
-		else {
-			this->velocityY = 0;
+
+		Point map_coords = index_to_coords(this->_map.map_width, this->_map.tile_size, this->_map.map_width * this->_map.map_height);
+		if (this->positionX > map_coords.x) {
+			this->positionX = map_coords.x;
 		}
-		
+
+		if (this->positionY > map_coords.y) {
+			this->positionY = map_coords.y;
+		}
 
 		// Detect what direction character is facing based off of velocity
 		if (floorf(this->velocityX) > 0) {

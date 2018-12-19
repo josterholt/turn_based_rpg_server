@@ -1,4 +1,6 @@
 #include "AStarPathFinding.h"
+#include <math.h>
+#include <iostream>
 
 std::vector<Vec2i> directions = {
 	{1, 0},
@@ -8,14 +10,14 @@ std::vector<Vec2i> directions = {
 };
 
 AStarPathFinding::AStarPathFinding(int _map_width, int _map_height, int _tile_size, std::vector<int>* _tiles) {
-	this->_map_width = _map_width;
-	this->_map_height = _map_height;
+	this->_map_tile_width = _map_width;
+	this->_map_tile_height = _map_height;
 	this->_tile_size = _tile_size;
 
 	for (int i = 0; i < _tiles->size(); ++i) {
-		Point target = index_to_coords(this->_map_width, this->_end_index);
-		Point current_point = index_to_coords(this->_map_width, i);
-		Node* node = new Node(current_point.x, current_point.y, _tiles->at(i) == 0, this->get_distance(target.x, target.y, current_point.x, current_point.y), coords_to_index(this->_tile_size, current_point.x, current_point.y));
+		Point target = index_to_coords(this->_map_tile_width, this->_tile_size, this->_end_index);
+		Point current_point = index_to_coords(this->_map_tile_width, this->_tile_size, i);
+		Node* node = new Node(current_point.x, current_point.y, _tiles->at(i) != 0, this->get_distance(target.x, target.y, current_point.x, current_point.y), coords_to_index(this->_map_tile_width, this->_tile_size, current_point.x, current_point.y));
 		this->_grid.push_back(node);
 	}
 }
@@ -24,14 +26,13 @@ AStarPathFinding::AStarPathFinding(int _map_width, int _map_height, int _tile_si
  * @todo Need to clean this up so it's not duplicated
  */
 AStarPathFinding::AStarPathFinding(int _map_width, int _map_height, int _tile_size,  std::vector<unsigned int>* _tiles) {
-	this->_map_width = _map_width;
-	this->_map_height = _map_height;
+	this->_map_tile_width = _map_width;
+	this->_map_tile_height = _map_height;
 	this->_tile_size = _tile_size;
 
 	for (int i = 0; i < _tiles->size(); ++i) {
-		Point target = index_to_coords(this->_map_width, this->_end_index);
-		Point current_point = index_to_coords(this->_map_width, i);
-		Node* node = new Node(current_point.x, current_point.y, _tiles->at(i) == 0, this->get_distance(target.x, target.y, current_point.x, current_point.y), coords_to_index(this->_tile_size, current_point.x, current_point.y));
+		Point current_point = index_to_coords(this->_map_tile_width, this->_tile_size, i);
+		Node* node = new Node(current_point.x, current_point.y, _tiles->at(i) == 0, 0, coords_to_index(this->_map_tile_width, this->_tile_size, current_point.x, current_point.y));
 		this->_grid.push_back(node);
 	}
 }
@@ -48,6 +49,13 @@ void AStarPathFinding::set_start_index(int i) {
 
 void AStarPathFinding::set_end_index(int i) {
 	this->_end_index = i;
+
+	Point target = index_to_coords(this->_map_tile_width, this->_tile_size, this->_end_index);
+
+	for (std::vector<Node*>::iterator it = this->_grid.begin(); it != this->_grid.end(); ++it) {
+		Point current_point = index_to_coords(this->_map_tile_width, this->_tile_size, (*it)->index);
+		(*it)->distance = this->get_distance(target.x, target.y, current_point.x, current_point.y);
+	}
 }
 
 Node* AStarPathFinding::get_node_by_index(int i) {
@@ -81,15 +89,15 @@ void AStarPathFinding::search() {
 		this->_open_list.erase(current_it);
 
 		for (std::vector<Vec2i>::iterator dit = directions.begin(); dit != directions.end(); ++dit) {
-			if (_current->x + (*dit).x >= this->_map_width || _current->x + (*dit).x < 0) {
+			if (_current->x + (*dit).x >= this->_map_tile_width || _current->x + (*dit).x < 0) {
 				continue;
 			}
 
-			if (_current->y + (*dit).y >= this->_map_height || _current->y + (*dit).y < 0) {
+			if (_current->y + (*dit).y >= this->_map_tile_height || _current->y + (*dit).y < 0) {
 				continue;
 			}
 
-			int index = coords_to_index(this->_tile_size, this->_current->x + (*dit).x, this->_current->y + (*dit).y);
+			int index = coords_to_index(this->_map_tile_width, this->_tile_size, this->_current->x + (*dit).x * this->_tile_size, this->_current->y + (*dit).y * this->_tile_size);
 
 			// Skip if node is in closed list
 			std::vector<int>::iterator cit = std::find(this->_closed_list.begin(), this->_closed_list.end(), index);
@@ -98,7 +106,14 @@ void AStarPathFinding::search() {
 			}
 
 			// Update if on openset or new node
-			Node *node = this->_grid.at(index);
+			Node *node;
+			try {
+				node = this->_grid.at(index);
+			}
+			catch (const std::exception& e) {
+				std::cout << "Exception occurred";
+				return;
+			}
 
 			if (node->blocked) {
 				this->_closed_list.push_back(node->index);
@@ -131,20 +146,17 @@ std::vector<int> AStarPathFinding::get_path() {
 	return path_indices;
 }
 
-#include <math.h>
-int coords_to_index(int tile_size, int x, int y) {
-	int tiles_per_row = 100;
-
+int coords_to_index(int tiles_per_row, int tile_size, int x, int y) {
 	int index = floor(x / tile_size);
 	index += (floor(y / tile_size) * tiles_per_row);
 	return index;
 	//return (y * tile_size) + (x);
 }
 
-Point index_to_coords(int map_width, int index) {
+Point index_to_coords(int tiles_per_row, int tile_size, int index) {
 	Point p;
-	p.y = floor(index / map_width);
-	p.x = index - (p.y * map_width);
+	p.y = tile_size * floor(index / tiles_per_row);
+	p.x = tile_size * (index - (floor(index / tiles_per_row) * tiles_per_row));
 	return p;
 }
 
