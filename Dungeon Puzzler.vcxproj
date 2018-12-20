@@ -90,6 +90,7 @@
     <ClCompile Include="gamestate.cpp" />
     <ClCompile Include="gameunit.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\AStarPathFinding.cpp" />
     <ClCompile Include="src\game_server_protocol.cpp" />
     <ClCompile Include="src\mobs\goblin.cpp" />
     <ClCompile Include="src\protobuf\connect.pb.cc" />
@@ -109,6 +110,8 @@
     <ClInclude Include="gameunit.h" />
     <ClInclude Include="npcs.hpp" />
     <ClInclude Include="server.h" />
+    <ClInclude Include="shared_structures.hpp" />
+    <ClInclude Include="src\AStarPathFinding.h" />
     <ClInclude Include="src\mobs\goblin.h" />
     <ClInclude Include="src\protobuf\connect.pb.h" />
     <ClInclude Include="src\protobuf\playerUpdate.pb.h" />

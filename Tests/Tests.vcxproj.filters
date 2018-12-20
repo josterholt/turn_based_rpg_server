@@ -44,5 +44,8 @@
     <ClCompile Include="level1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="astarpathfinding.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

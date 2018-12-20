@@ -94,8 +94,10 @@ void GameMob::update(double elapsed_time) {
 
 		path_finding.search();
 		std::vector<int> path = path_finding.get_path();
-		if (path.size() > 0) {
-			int next_index = path.at(path.size() - 1);
+
+		// Path is going to contain the node we're already on
+		if (path.size() > 1) {
+			int next_index = path.at(path.size() - 2);
 
 			std::cout << "next index is " << next_index << "\n";
 
@@ -131,6 +133,7 @@ void GameMob::update(double elapsed_time) {
 		if (this->positionY < 0) {
 			this->positionY = 0;
 		}
+
 
 		Point map_coords = index_to_coords(this->_map.map_width, this->_map.tile_size, (this->_map.map_width * this->_map.map_height) - 1);
 		if (this->positionX > map_coords.x) {

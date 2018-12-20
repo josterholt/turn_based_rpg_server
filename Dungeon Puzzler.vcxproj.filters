@@ -20,6 +20,7 @@
     <ClCompile Include="src\protobuf\protocol.pb.cc">
       <Filter>protobuf</Filter>
     </ClCompile>
+    <ClCompile Include="src\AStarPathFinding.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="D:\libs\libwebsockets\win32port\win32helpers\getopt.h">
@@ -68,6 +69,10 @@
     <ClInclude Include="src\protobuf\protocol.pb.h">
       <Filter>headers\protobuf</Filter>
     </ClInclude>
+    <ClInclude Include="src\AStarPathFinding.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="shared_structures.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="headers">

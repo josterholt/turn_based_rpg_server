@@ -55,6 +55,9 @@ bool GameState::loadLevel(std::string level) {
 
 	int map_width = doc["width"].GetInt();
 	int map_height = doc["height"].GetInt();
+
+	int tile_width = doc["tilewidth"].GetInt();
+	int tile_height = doc["tileheight"].GetInt();
 	
 	std::string decoded_string;
 	rapidjson::Value src_tiles = doc["layers"][0]["data"].GetArray();
@@ -87,7 +90,13 @@ bool GameState::loadLevel(std::string level) {
 				mob->maxSpeed = 16;
 				mob->width = skeleton.width;
 				mob->height = skeleton.height;
-				mob->setPosition((*it)["x"].GetInt(), (*it)["y"].GetInt());
+
+				int tmp_x = (*it)["x"].GetInt();
+				int tmp_y = (*it)["y"].GetInt();
+				tmp_x = floor(tmp_x / tile_width) * tile_width;
+				tmp_y = floor(tmp_y / tile_height) * tile_height;
+
+				mob->setPosition(tmp_x, tmp_y);
 				mob->loadScript(this->eventNodes[0]);
 				this->mobs.push_back(mob);
 				//std::cout << (*it)["x"].GetInt() << ", " << (*it)["y"].GetInt() << "\n";
