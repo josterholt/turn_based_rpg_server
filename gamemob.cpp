@@ -81,10 +81,16 @@ void GameMob::update(double elapsed_time) {
 		AStarPathFinding path_finding(this->_map.map_width, this->_map.map_height, this->_map.tile_size, this->_map.tiles);
 		path_finding.set_start_index(coords_to_index(this->_map.map_width, this->_map.tile_size, this->positionX, this->positionY));
 
-		GamePlayer* player = this->_gameState->getPlayerPositions()[0];
-		path_finding.set_end_index(coords_to_index(this->_map.map_width, this->_map.tile_size, player->positionX, player->positionY));
+		if (this->_gameState->getPlayerPositions().size() > 0) {
+			GamePlayer* player = this->_gameState->getPlayerPositions()[0];
+			path_finding.set_end_index(coords_to_index(this->_map.map_width, this->_map.tile_size, player->positionX, player->positionY));
+			std::cout << "Seeking player at at " << coords_to_index(this->_map.map_width, this->_map.tile_size, player->positionX, player->positionY) << " from " << coords_to_index(this->_map.map_width, this->_map.tile_size, this->positionX, this->positionY) << "\n";
+		}
+		else {
+			path_finding.set_end_index(0);
+		}
 
-		std::cout << "Seeking player at at " << coords_to_index(this->_map.map_width, this->_map.tile_size, player->positionX, player->positionY) << " from " << coords_to_index(this->_map.map_width, this->_map.tile_size, this->positionX, this->positionY) << "\n";
+
 
 		path_finding.search();
 		std::vector<int> path = path_finding.get_path();
@@ -114,8 +120,8 @@ void GameMob::update(double elapsed_time) {
 				this->velocityY = 0;
 			}
 			std::cout << "Calculating... " << this->positionX << " - " << this->velocityX << " - " << elapsed_time << "\n";
-			this->positionX += (this->velocityX / 1000) * elapsed_time;
-			this->positionY += (this->velocityY / 1000) * elapsed_time;
+			this->positionX += this->velocityX; // (this->velocityX / 1000) * elapsed_time;
+			this->positionY += this->velocityY; // (this->velocityY / 1000) * elapsed_time;
 		}
 
 		if (this->positionX < 0) {
@@ -126,7 +132,7 @@ void GameMob::update(double elapsed_time) {
 			this->positionY = 0;
 		}
 
-		Point map_coords = index_to_coords(this->_map.map_width, this->_map.tile_size, this->_map.map_width * this->_map.map_height);
+		Point map_coords = index_to_coords(this->_map.map_width, this->_map.tile_size, (this->_map.map_width * this->_map.map_height) - 1);
 		if (this->positionX > map_coords.x) {
 			this->positionX = map_coords.x;
 		}
