@@ -77,6 +77,10 @@ private:
 
 	// Map
 	struct GameMap _map;
+	bool GameMob::_raycastTiles(GameMap map, GameUnit* source, GameUnit* target, int distance);
+
+	// Movement timing
+	float time_elapsed = 0;
 
 	// Leveling
 	int level = 1;
@@ -99,7 +103,7 @@ private:
 
 	GameState* _gameState;
 	// Positional / State
-	GameUnit target;
+	GameUnit* target = nullptr;
 	
 
 	// Ratings

@@ -17,7 +17,7 @@ AStarPathFinding::AStarPathFinding(int _map_width, int _map_height, int _tile_si
 	for (int i = 0; i < _tiles->size(); ++i) {
 		Point target = index_to_coords(this->_map_tile_width, this->_tile_size, this->_end_index);
 		Point current_point = index_to_coords(this->_map_tile_width, this->_tile_size, i);
-		Node* node = new Node(current_point.x, current_point.y, _tiles->at(i) != 0, this->get_distance(target.x, target.y, current_point.x, current_point.y), coords_to_index(this->_map_tile_width, this->_tile_size, current_point.x, current_point.y));
+		Node* node = new Node(current_point.x, current_point.y, _tiles->at(i) == 1, this->get_distance(target.x, target.y, current_point.x, current_point.y), coords_to_index(this->_map_tile_width, this->_tile_size, current_point.x, current_point.y));
 		this->_grid.push_back(node);
 	}
 }
@@ -32,7 +32,7 @@ AStarPathFinding::AStarPathFinding(int _map_width, int _map_height, int _tile_si
 
 	for (int i = 0; i < _tiles->size(); ++i) {
 		Point current_point = index_to_coords(this->_map_tile_width, this->_tile_size, i);
-		Node* node = new Node(current_point.x, current_point.y, _tiles->at(i) == 0, 0, coords_to_index(this->_map_tile_width, this->_tile_size, current_point.x, current_point.y));
+		Node* node = new Node(current_point.x, current_point.y, _tiles->at(i) == 1, 0, coords_to_index(this->_map_tile_width, this->_tile_size, current_point.x, current_point.y));
 		this->_grid.push_back(node);
 	}
 }
@@ -89,11 +89,11 @@ void AStarPathFinding::search() {
 		this->_open_list.erase(current_it);
 
 		for (std::vector<Vec2i>::iterator dit = directions.begin(); dit != directions.end(); ++dit) {
-			if (_current->x + (*dit).x >= this->_map_tile_width || _current->x + (*dit).x < 0) {
+			if (_current->x + (*dit).x >= this->_map_tile_width * this->_tile_size || _current->x + (*dit).x < 0) {
 				continue;
 			}
 
-			if (_current->y + (*dit).y >= this->_map_tile_height || _current->y + (*dit).y < 0) {
+			if (_current->y + (*dit).y >= this->_map_tile_height * this->_tile_size || _current->y + (*dit).y < 0) {
 				continue;
 			}
 
