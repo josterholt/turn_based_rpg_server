@@ -20,6 +20,7 @@
 #include <libwebsockets.h>
 #include <string.h>
 #include <signal.h>
+#include "src/logging/logging.hpp";
 #include "src/game_server_protocol.cpp";
 
 
@@ -93,6 +94,8 @@ void updateGameStates(bool update_loop) {
 
 int main(int argc, const char **argv)
 {
+	init_logging();
+
 	bool update_loop_active = true; // @todo does this need to be atomic?
 	std::thread update_loop(updateGameStates, update_loop_active);
 	update_loop.detach();
