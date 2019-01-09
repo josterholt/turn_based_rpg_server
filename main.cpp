@@ -20,7 +20,7 @@
 #include <libwebsockets.h>
 #include <string.h>
 #include <signal.h>
-#include "src/logging/logging.hpp";
+#include "src/logging/logging.h";
 #include "src/game_server_protocol.cpp";
 
 

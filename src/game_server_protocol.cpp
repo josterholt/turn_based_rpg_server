@@ -2,7 +2,7 @@
 #include <string.h>
 #include <chrono>
 #include <sstream>
-
+#include "logging/logging.h";
 #include "../gameclient.h"
 #include "../gamemanager.h"
 #include "../gameplayer.h"
@@ -102,8 +102,16 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 		vhd->context = lws_get_context(wsi);
 		vhd->protocol = lws_get_protocol(wsi);
 		vhd->vhost = lws_get_vhost(wsi);
-
+		break;
 	case LWS_CALLBACK_CLOSED:
+		std::cout << "Client closing\n";
+		{
+			char ip_str[13];
+			size_t ip_str_len = 13;
+			lws_get_peer_simple(wsi, ip_str, ip_str_len);
+			BOOST_LOG_TRIVIAL(info) << "Connection disconnected for " << ip_str;
+		}
+
 		lws_ll_fwd_remove(struct per_session_data__minimal, pss_list,
 			pss, vhd->pss_list);
 		break;
@@ -258,6 +266,14 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 		break;
 
 	case LWS_CALLBACK_ESTABLISHED:
+		{
+			char ip_str[13];
+			size_t ip_str_len = 13;
+			lws_get_peer_simple(wsi, ip_str, ip_str_len);
+			BOOST_LOG_TRIVIAL(info) << "Connection established for " << ip_str;
+		}
+
+
 		lws_ll_fwd_insert(pss, pss_list, vhd->pss_list);
 		pss->wsi = wsi;
 		pss->last = vhd->current;
@@ -286,6 +302,7 @@ callback_game_server(struct lws *wsi, enum lws_callback_reasons reason, void *us
 		break;
 	case LWS_CALLBACK_WSI_DESTROY:
 		if (pss != nullptr) {
+
 			if (pss->client != nullptr) {
 				pss->client->leaveGame();
 				delete pss->client;

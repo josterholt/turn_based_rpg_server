@@ -44,8 +44,10 @@ void GameManager::addGame(std::string key, GameState* gamestate) {
 
 void GameManager::update(double elapsed_time) {
 	//std::cout << "Games " << this->games.size() << "\n";
-	for (std::map<std::string, GameState*>::iterator it = this->games.begin(); it != this->games.end(); it++) {
-		it->second->update(elapsed_time);
+	if (this->games.size() > 0) {
+		for (std::map<std::string, GameState*>::iterator it = this->games.begin(); it != this->games.end(); it++) {
+			it->second->update(elapsed_time);
+		}
 	}
 }
 
