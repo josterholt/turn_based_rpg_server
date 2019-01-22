@@ -18,6 +18,8 @@ struct Vec2i
 };
 
 struct Point {
+	Point() {};
+	Point(int x, int y) : x(x), y(y) {};
 	int x;
 	int y;
 };

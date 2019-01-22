@@ -70,6 +70,13 @@ void GameMob::processScriptedState(double elapsed_time) {
 	*/
 }
 
+Point raycast(int x, int y, int d) {
+	float rad = atan2(y, x);
+	int new_y = sin(rad) * d;
+	int new_x = cos(rad) * d;
+	return Point(new_x, new_y);
+}
+
 bool GameMob::_raycastTiles(GameMap map, GameUnit* source, GameUnit* target, int distance) {
 	// Is within view distance (ignoring any visual blockers)
 	int x = target->positionX - source->positionX;
@@ -86,68 +93,29 @@ bool GameMob::_raycastTiles(GameMap map, GameUnit* source, GameUnit* target, int
 	int view_y;
 	int tile_view_distance = floor(distance / map.tile_size);
 
-	// Check up
-	for (int i = 0; i < tile_view_distance; ++i) {
-		int new_tile = start_tile - (i * map.map_width);
-		if (new_tile < 0) {
-			continue;
-		}
+	int current_distance = 0;
+	while (current_distance <= tile_view_distance) {
+		Point output = raycast(source->positionX - target->positionX, source->positionY - target->positionY, current_distance);
+		//Point output = raycast(map.tile_size, map.tile_size, current_distance);
+		int index = coords_to_index(map.map_width, map.tile_size, source->positionX + floor(output.x / map.tile_size), source->positionY + (output.y / map.tile_size));
 
-		if (map.tiles->at(new_tile) == 1) {
-			break;
-		}
+		std::cout << "### Checking index " << index << "\n";
 
-		if (new_tile == target_tile) {
-			return true;
-		}
-	}
+		// @todo Need to add right and bottom boundaries
+		if (index >= 0) {
+			if (map.tiles->at(index) == 1) {
+				std::cout << "### Index is blocked, falling out\n";
+				return false;
+			}
 
-	// Check down
-	for (int i = 0; i < tile_view_distance; ++i) {
-		int new_tile = start_tile + (i * map.map_width);
-		if (new_tile > map.map_height) {
-			continue;
-		}
+			if (index == target_tile) {
+				std::cout << "### Found target\n";
+				return true;
+			}
 
-		if (map.tiles->at(new_tile) == 1) {
-			break;
 		}
-
-		if (new_tile == target_tile) {
-			return true;
-		}
-	}
-
-	// Check left
-	for (int i = 0; i < tile_view_distance; ++i) {
-		int new_tile = start_tile - i;
-		if (new_tile < 0) {
-			continue;
-		}
-
-		if (map.tiles->at(new_tile) == 1) {
-			break;
-		}
-
-		if (new_tile == target_tile) {
-			return true;
-		}
-	}
-
-	// Check right
-	for (int i = 0; i < tile_view_distance; ++i) {
-		int new_tile = start_tile + i;
-		if (new_tile > map.map_width) {
-			continue;
-		}
-
-		if (map.tiles->at(new_tile) == 1) {
-			break;
-		}
-
-		if (new_tile == target_tile) {
-			return true;
-		}
+		std::cout << "### Continuing to next check\n";
+		current_distance += map.tile_size;
 	}
 }
 
@@ -165,7 +133,7 @@ void GameMob::update(double elapsed_time) {
 			AStarPathFinding path_finding(this->_map.map_width, this->_map.map_height, this->_map.tile_size, this->_map.tiles);
 			path_finding.set_start_index(coords_to_index(this->_map.map_width, this->_map.tile_size, this->positionX, this->positionY));
 
-			if (this->_gameState->getPlayerPositions().size() > 0 && this->_raycastTiles(this->_map, this, this->_gameState->getPlayerPositions()[0], 64)) {
+			if (this->_gameState->getPlayerPositions().size() > 0 && this->_raycastTiles(this->_map, this, this->_gameState->getPlayerPositions()[0], 80)) {
 				this->target = this->_gameState->getPlayerPositions()[0];
 			}
 
