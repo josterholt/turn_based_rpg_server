@@ -104,7 +104,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>C:\vcpkg\packages\protobuf_x64-windows\include;C:\libs\rapidjson\include;C:\libs\boost_1_68_0;C:\Users\Justin\MiscCode\Game\combat_system\web-server;$(VCInstallDir)UnitTest\include;C:\Users\Justin\MiscCode\Game\combat_system\web-server\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\vcpkg\packages\protobuf_x64-windows\include;C:\libs\rapidjson\include;C:\libs\boost_1_67_0;C:\Users\Justin\MiscCode\Game\combat_system\web-server;$(VCInstallDir)UnitTest\include;C:\Users\Justin\MiscCode\Game\combat_system\web-server\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;_ENABLE_ATOMIC_ALIGNMENT_FIX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
