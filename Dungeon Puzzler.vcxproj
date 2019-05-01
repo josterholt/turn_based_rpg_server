@@ -74,12 +74,12 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\vcpkg\installed\x64-windows\include;C:\OpenSSL\include;C:\libs\boost_1_68_0;C:\vcpkg\packages\libwebsockets_x64-windows\include;C:\libs\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\vcpkg\installed\x64-windows\include;C:\OpenSSL\include;C:\libs\boost_1_67_0;C:\vcpkg\packages\libwebsockets_x64-windows\include;C:\libs\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_CONSOLE;LWS_WITH_PLUGINS;_ENABLE_ATOMIC_ALIGNMENT_FIX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\vcpkg\installed\x64-windows\debug\lib;C:\OpenSSL\lib;C:\libs\boost_1_68_0\stage\lib;C:\libs\libwebsockets2.3\build\lib\Debug;C:\libs\rapidjson\include;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;zlib_internal.lib;C:\libs\libuv\Debug\lib\libuv.lib;ws2_32.lib;libboost_thread-vc141-mt-gd-x64-1_68.lib;websockets.lib;libeay32.lib;ssleay32.lib;libprotobufd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\vcpkg\installed\x64-windows\debug\lib;C:\OpenSSL\lib;C:\libs\boost_1_67_0\stage\lib;C:\libs\libwebsockets2.3\build\lib\Debug;C:\libs\rapidjson\include;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;zlib_internal.lib;C:\libs\libuv\Debug\lib\libuv.lib;ws2_32.lib;libboost_thread-vc141-mt-gd-x64-1_67.lib;websockets.lib;libeay32.lib;ssleay32.lib;libprotobufd.lib;lua535/lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -108,6 +108,11 @@
     <ClInclude Include="gameplayer.h" />
     <ClInclude Include="gamestate.h" />
     <ClInclude Include="gameunit.h" />
+    <ClInclude Include="lua535\include\lauxlib.h" />
+    <ClInclude Include="lua535\include\lua.h" />
+    <ClInclude Include="lua535\include\lua.hpp" />
+    <ClInclude Include="lua535\include\luaconf.h" />
+    <ClInclude Include="lua535\include\lualib.h" />
     <ClInclude Include="npcs.hpp" />
     <ClInclude Include="server.h" />
     <ClInclude Include="shared_structures.hpp" />
@@ -124,6 +129,15 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <FileType>Text</FileType>
     </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="lua535\lua53.dll">
+      <DeploymentContent>true</DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="lua535\lua53.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

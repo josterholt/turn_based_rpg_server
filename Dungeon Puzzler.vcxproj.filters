@@ -73,6 +73,21 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="shared_structures.hpp" />
+    <ClInclude Include="lua535\include\lauxlib.h">
+      <Filter>lua535\include</Filter>
+    </ClInclude>
+    <ClInclude Include="lua535\include\lua.h">
+      <Filter>lua535\include</Filter>
+    </ClInclude>
+    <ClInclude Include="lua535\include\lua.hpp">
+      <Filter>lua535\include</Filter>
+    </ClInclude>
+    <ClInclude Include="lua535\include\luaconf.h">
+      <Filter>lua535\include</Filter>
+    </ClInclude>
+    <ClInclude Include="lua535\include\lualib.h">
+      <Filter>lua535\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="headers">
@@ -90,10 +105,24 @@
     <Filter Include="json">
       <UniqueIdentifier>{2536f259-c120-4635-af2c-40ccf2cf9c50}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lua535">
+      <UniqueIdentifier>{d7cd37ef-8957-4812-9739-3b81244801da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lua535\include">
+      <UniqueIdentifier>{2d6cddcb-806b-4198-a680-4a9a6ba7dbff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\src\assets\tiled_map\level1.json">
       <Filter>json</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="lua535\lua53.dll">
+      <Filter>lua535</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="lua535\lua53.lib">
+      <Filter>lua535</Filter>
+    </Library>
   </ItemGroup>
 </Project>

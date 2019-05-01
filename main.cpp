@@ -91,8 +91,72 @@ void updateGameStates(bool update_loop) {
 	std::cout << "Exiting update loop\n";
 }
 
+#include <boost/log/core.hpp>
+#include <boost/log/trivial.hpp>
+#include <boost/log/sinks/text_file_backend.hpp>
+#include <boost/log/utility/setup/file.hpp>
+#include <boost/log/utility/setup/common_attributes.hpp>
+#include <boost/log/sources/severity_logger.hpp>
+#include <boost/log/sources/record_ostream.hpp>
+namespace logging = boost::log;
+namespace src = boost::log::sources;
+namespace sinks = boost::log::sinks;
+namespace keywords = boost::log::keywords;
+
+extern "C"
+{
+#include "lua535/include/lua.h";
+#include "lua535/include/lauxlib.h";
+#include "lua535/include/lualib.h";
+}
+
+#ifdef _WIN32
+#pragma comment(lib, "lua535/lua53.dll")
+#endif
+
 int main(int argc, const char **argv)
 {
+	std::string cmd = "a = 7 + 11";
+
+	lua_State *L = luaL_newstate();
+	luaL_openlibs(L);
+	int r = luaL_dostring(L, cmd.c_str());
+
+	if (r == LUA_OK)
+	{
+		lua_getglobal(L, "a");
+		if (lua_isnumber(L, -1))
+		{
+			float a_in_cpp = (float)lua_tonumber(L, -1);
+			std::cout << a_in_cpp << std::endl;
+		}
+	}
+	else
+	{
+		std::string error_msg = lua_tostring(L, -1);
+		std::cout << error_msg << std::endl;
+	}
+	// Initialize logging
+	logging::add_file_log(
+		keywords::file_name = "server_%N.log",
+		keywords::rotation_size = 10 * 1024 * 1024, // 10MiB
+		keywords::time_based_rotation = sinks::file::rotation_at_time_point(0, 0, 0),
+		keywords::format = "[%TimeStamp%]: %Message%",
+		keywords::auto_flush = true
+	);
+	
+	/*
+	logging::core::get()->set_filter(
+		logging::trivial::severity >= logging::trivial::info
+	);
+	*/
+	logging::add_common_attributes();
+
+	using namespace logging::trivial;
+	src::severity_logger<severity_level> lg;
+	BOOST_LOG_SEV(lg, trace) << "A trace severity message";
+
+	// Setup server
 	bool update_loop_active = true; // @todo does this need to be atomic?
 	std::thread update_loop(updateGameStates, update_loop_active);
 	update_loop.detach();
@@ -129,10 +193,10 @@ int main(int argc, const char **argv)
 	info.protocols = protocols;
 	info.vhost_name = "localhost";
 
-	//info.ssl_cert_filepath = "C:\\Users\\shrod\\OneDrive\\Documents\\ssl_certs\\gameserver.crt";
-	//info.ssl_private_key_filepath = "C:\\Users\\shrod\\OneDrive\\Documents\\ssl_certs\\gameserver.key";
-	info.ssl_cert_filepath = "C:\\Users\\Justin\\Documents\\ssl_certs\\gameserver.crt";
-	info.ssl_private_key_filepath = "C:\\Users\\Justin\\Documents\\ssl_certs\\gameserver.key";
+	info.ssl_cert_filepath = "C:\\Users\\shrod\\OneDrive\\Documents\\ssl_certs\\gameserver.crt";
+	info.ssl_private_key_filepath = "C:\\Users\\shrod\\OneDrive\\Documents\\ssl_certs\\gameserver.key";
+	//info.ssl_cert_filepath = "C:\\Users\\Justin\\Documents\\ssl_certs\\gameserver.crt";
+	//info.ssl_private_key_filepath = "C:\\Users\\Justin\\Documents\\ssl_certs\\gameserver.key";
 
 
 	info.pvo = &pvo;
