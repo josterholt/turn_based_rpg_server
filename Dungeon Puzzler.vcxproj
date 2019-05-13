@@ -139,6 +139,11 @@
   <ItemGroup>
     <Library Include="lua535\lua53.lib" />
   </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="lua_scripts\test.lua">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

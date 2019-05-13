@@ -111,6 +111,9 @@
     <Filter Include="lua535\include">
       <UniqueIdentifier>{2d6cddcb-806b-4198-a680-4a9a6ba7dbff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lua_scripts">
+      <UniqueIdentifier>{6fd9cb22-7bee-4d33-a674-e6d72b09fe83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\src\assets\tiled_map\level1.json">
@@ -118,6 +121,9 @@
     </CopyFileToFolders>
     <CopyFileToFolders Include="lua535\lua53.dll">
       <Filter>lua535</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="lua_scripts\test.lua">
+      <Filter>lua_scripts</Filter>
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>

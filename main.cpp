@@ -114,14 +114,44 @@ extern "C"
 #pragma comment(lib, "lua535/lua53.dll")
 #endif
 
+bool CheckLua(lua_State *L, int r)
+{
+	if (r != LUA_OK)
+	{
+		std::string errormsg = lua_tostring(L, -1);
+		std::cout << errormsg << std::endl;
+		return false;
+	}
+	return true;
+}
+
+std::string lua_get_string(lua_State *l_state, std::string key) {
+	std::string return_value;
+
+	lua_pushstring(l_state, "Title");
+	lua_gettable(l_state, -2);
+	return_value = lua_tostring(l_state, -1);
+	lua_pop(l_state, 1);
+	return return_value;
+
+}
+
 int main(int argc, const char **argv)
 {
 	std::string cmd = "a = 7 + 11";
 
 	lua_State *L = luaL_newstate();
 	luaL_openlibs(L);
-	int r = luaL_dostring(L, cmd.c_str());
+	if(CheckLua(L, luaL_dofile(L, "test.lua")))
+	{
+		lua_getglobal(L, "player");
+		if (lua_istable(L, -1))
+		{
+			std::cout << lua_get_string(L, "title") << "\n";
+		}
+	}
 
+	/*
 	if (r == LUA_OK)
 	{
 		lua_getglobal(L, "a");
@@ -136,6 +166,8 @@ int main(int argc, const char **argv)
 		std::string error_msg = lua_tostring(L, -1);
 		std::cout << error_msg << std::endl;
 	}
+	*/
+
 	// Initialize logging
 	logging::add_file_log(
 		keywords::file_name = "server_%N.log",
