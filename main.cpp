@@ -128,12 +128,18 @@ bool CheckLua(lua_State *L, int r)
 std::string lua_get_string(lua_State *l_state, std::string key) {
 	std::string return_value;
 
-	lua_pushstring(l_state, "Title");
+	lua_pushstring(l_state, key.c_str());
 	lua_gettable(l_state, -2);
 	return_value = lua_tostring(l_state, -1);
 	lua_pop(l_state, 1);
 	return return_value;
 
+}
+
+void l_pushtablestring(lua_State* L, char* key, char* value) {
+	lua_pushstring(L, key);
+	lua_pushstring(L, value);
+	lua_settable(L, -3);
 }
 
 int main(int argc, const char **argv)
@@ -142,12 +148,26 @@ int main(int argc, const char **argv)
 
 	lua_State *L = luaL_newstate();
 	luaL_openlibs(L);
+
+	lua_newtable(L);
+	l_pushtablestring(L, "fname", "john");
+	lua_setglobal(L, "test_table");
+
+
+	lua_getglobal(L, "test_table");
+	if (lua_istable(L, -1)) {
+		std::cout << lua_get_string(L, "fname") << "\n";
+	}
+
+	std::string test_str;
 	if(CheckLua(L, luaL_dofile(L, "test.lua")))
 	{
 		lua_getglobal(L, "player");
 		if (lua_istable(L, -1))
 		{
-			std::cout << lua_get_string(L, "title") << "\n";
+			//std::cout << typeid(test_str).name() << "\n";
+			//std::cout << lua_get_string(L, "title") << "\n";
+
 		}
 	}
 
@@ -225,18 +245,17 @@ int main(int argc, const char **argv)
 	info.protocols = protocols;
 	info.vhost_name = "localhost";
 
-	info.ssl_cert_filepath = "C:\\Users\\shrod\\OneDrive\\Documents\\ssl_certs\\gameserver.crt";
-	info.ssl_private_key_filepath = "C:\\Users\\shrod\\OneDrive\\Documents\\ssl_certs\\gameserver.key";
-	//info.ssl_cert_filepath = "C:\\Users\\Justin\\Documents\\ssl_certs\\gameserver.crt";
-	//info.ssl_private_key_filepath = "C:\\Users\\Justin\\Documents\\ssl_certs\\gameserver.key";
+	//info.ssl_cert_filepath = "C:\\Users\\shrod\\OneDrive\\Documents\\ssl_certs\\gameserver.crt";
+	//info.ssl_private_key_filepath = "C:\\Users\\shrod\\OneDrive\\Documents\\ssl_certs\\gameserver.key";
+	info.ssl_cert_filepath = "C:\\Users\\Justin\\Documents\\ssl_certs\\gameserver.crt";
+	info.ssl_private_key_filepath = "C:\\Users\\Justin\\Documents\\ssl_certs\\gameserver.key";
 
 
 	info.pvo = &pvo;
 	if (!lws_cmdline_option(argc, argv, "-n"))
 		info.extensions = extensions;
 	info.pt_serv_buf_size = 32 * 1024;
-	info.options = LWS_SERVER_OPTION_DO_SSL_GLOBAL_INIT | LWS_SERVER_OPTION_VALIDATE_UTF8 | LWS_SERVER_OPTION_DISABLE_IPV6;
-	//info.options = LWS_SERVER_OPTION_VALIDATE_UTF8 | LWS_SERVER_OPTION_DISABLE_IPV6;
+	info.options = LWS_SERVER_OPTION_VALIDATE_UTF8 | LWS_SERVER_OPTION_DISABLE_IPV6;
 
 	context = lws_create_context(&info);
 	if (!context) {
