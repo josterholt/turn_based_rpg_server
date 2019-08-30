@@ -57,7 +57,7 @@ public:
 
 	boost::shared_mutex positionMutex;
 
-	static const std::string GameState::GenerateToken() {
+	static const std::string GenerateToken() {
 		char s[25];
 		gen_random(s, 24);
 		s[24] = '\0';
@@ -66,7 +66,7 @@ public:
 
 	void addPlayer(GamePlayer* player);
 	void addMOB(GameMob* mob);
-	void GameState::moveToSpawn(GamePlayer* player);
+	void moveToSpawn(GamePlayer* player);
 	GameStatus getStateUpdates() const;
 	std::vector<GamePlayer*> getPlayerPositions() const;
 	const std::string& getToken() const;
@@ -76,7 +76,7 @@ public:
 	bool canMove(GamePlayer* player, float x, float y) const;
 	std::vector<unsigned int>* getTiles();
 	int getTileIndex(float x, float y) const;
-	bool GameState::boxCheck(GamePlayer* player, float x, float y) const;
+	bool boxCheck(GamePlayer* player, float x, float y) const;
 	bool isWalkableTile(int tile_index) const;
 	std::pair<float, float> spawnPoint;
 	void update(double elapsed_item);

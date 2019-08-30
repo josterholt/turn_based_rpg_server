@@ -49,8 +49,8 @@ public:
 	void leaveGame();
 	GameState* getGame() const; // Return game
 
-	bool GameClient::updatePlayerState(gamemessages::PlayerUpdate update_message);
-	bool GameClient::attackTarget(rapidjson::Value &doc);
+	bool updatePlayerState(gamemessages::PlayerUpdate update_message);
+	bool attackTarget(rapidjson::Value &doc);
 
 	
 	gamemessages::PositionUpdate generatePositionUpdate();

@@ -69,7 +69,7 @@ public:
 	GameUnit();
 	GameUnit(std::string name, int x, int y, int width, int height);
 	int getMaxHealth() const;
-	int GameUnit::getStamina() const;
+	int getStamina() const;
 
 	bool setTarget(GameUnit *target);
 	GameUnit* getTarget() const;

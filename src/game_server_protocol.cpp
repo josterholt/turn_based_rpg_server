@@ -16,9 +16,9 @@
 
 #include <thread>
 
-#include "protobuf\connect.pb.h"
-#include "protobuf\playerUpdate.pb.h"
-#include "protobuf\protocol.pb.h"
+#include "protobuf/connect.pb.h"
+#include "protobuf/playerUpdate.pb.h"
+#include "protobuf/protocol.pb.h"
 
 #define MAX_ECHO_PAYLOAD 1024
 
