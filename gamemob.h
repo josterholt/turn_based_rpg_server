@@ -77,7 +77,7 @@ private:
 
 	// Map
 	struct GameMap _map;
-	bool GameMob::_raycastTiles(GameMap map, GameUnit* source, GameUnit* target, int distance);
+	bool _raycastTiles(GameMap map, GameUnit* source, GameUnit* target, int distance);
 
 	// Movement timing
 	float time_elapsed = 0;
