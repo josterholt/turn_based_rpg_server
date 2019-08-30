@@ -53,16 +53,25 @@ if (WIN32)
 else()
     # Unix.
         message("### UNIX")
-    if (NOT LWS_WITHOUT_DAEMONIZE)
-        list(APPEND SOURCES
-                lib/daemonize.c)
-    endif()
+    #if (NOT LWS_WITHOUT_DAEMONIZE)
+    #    list(APPEND SOURCES
+    #            lib/daemonize.c)
+    #endif()
 endif()
 
-list(APPEND HDR_PRIVATE
+if (WIN32)
+    list(APPEND HDR_PRIVATE
         server.h
         D:/libs/libuv/include/uv.h
         D:/libs/libwebsockets/lib/libwebsockets.h)
+else()
+    list(APPEND HDR_PRIVATE
+        server.h
+        /usr/include/uv.h
+        /usr/include/libwebsockets.h
+    )
+endif()
+
 #list(APPEND SOURCES
 #        D:/libs/libwebsockets/lib/libuv.c
 #        D:/libs/libwebsockets/lib/lejp.c
@@ -79,34 +88,39 @@ set_property(TARGET DungeonPuzzler
         PROPERTY COMPILE_DEFINITIONS
         INSTALL_DATADIR="${CMAKE_INSTALL_PREFIX}/share"
         )
-include_directories("D:/libs/libuv/include")
-include_directories("D:/MinGW/include")
-include_directories("D:/libs/libwebsockets/lib")
-include_directories("D:/libs/libwebsockets/win32port/win32helpers")
-include_directories("C:/Program Files (x86)/OpenSSL-Win32/include")
-include_directories("D:/libs/libwebsockets/win32port/zlib")
-include_directories("D:/libs/libwebsockets/build")
+if (WIN32)
+    include_directories("D:/libs/libuv/include")
+    include_directories("D:/MinGW/include")
+    include_directories("D:/libs/libwebsockets/lib")
+    include_directories("D:/libs/libwebsockets/win32port/win32helpers")
+    include_directories("C:/Program Files (x86)/OpenSSL-Win32/include")
+    include_directories("D:/libs/libwebsockets/win32port/zlib")
+    include_directories("D:/libs/libwebsockets/build")
 
-include_directories("D:/libs/libuv/include")
+    include_directories("D:/libs/libuv/include")
 
 
-target_link_libraries(DungeonPuzzler D:/libs/libwebsockets/build/lib/libwebsockets_static.a)
-target_link_libraries(DungeonPuzzler "D:/libs/libwebsockets/build/lib/libzlib_internal.a")
+    target_link_libraries(DungeonPuzzler D:/libs/libwebsockets/build/lib/libwebsockets_static.a)
+    target_link_libraries(DungeonPuzzler "D:/libs/libwebsockets/build/lib/libzlib_internal.a")
 
-target_link_libraries(DungeonPuzzler D:/MinGW/lib/libws2_32.a)
-target_link_libraries(DungeonPuzzler "C:/Program Files (x86)/OpenSSL-Win32/lib/MinGW/libssl-1_1.a")
-target_link_libraries(DungeonPuzzler "C:/Program Files (x86)/OpenSSL-Win32/lib/MinGW/libcrypto-1_1.a")
+    target_link_libraries(DungeonPuzzler D:/MinGW/lib/libws2_32.a)
+    target_link_libraries(DungeonPuzzler "C:/Program Files (x86)/OpenSSL-Win32/lib/MinGW/libssl-1_1.a")
+    target_link_libraries(DungeonPuzzler "C:/Program Files (x86)/OpenSSL-Win32/lib/MinGW/libcrypto-1_1.a")
 
-target_link_libraries(DungeonPuzzler "D:/libs/libuv/build/Debug/liblibuv.a")
+    target_link_libraries(DungeonPuzzler "D:/libs/libuv/build/Debug/liblibuv.a")
+else()
+    include_directories("/usr/include")
+    include_directories(" /usr/local/include")
+endif()
 
 ###
 ###
 ###
-add_library(win32port STATIC ${SOURCES} ${HDR_PRIVATE})
-
-target_link_libraries(DungeonPuzzler win32port)
-add_dependencies(DungeonPuzzler win32port)
-
+if (WIN32)
+    add_library(win32port STATIC ${SOURCES} ${HDR_PRIVATE})
+    target_link_libraries(DungeonPuzzler win32port)
+    add_dependencies(DungeonPuzzler win32port)
+endif()
 ##
 ## End of Add Helper files
 ##

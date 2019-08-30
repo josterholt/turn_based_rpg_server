@@ -7,7 +7,6 @@
 
 #include <google/protobuf/stubs/common.h>
 #include <google/protobuf/stubs/port.h>
-#include <google/protobuf/stubs/once.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/wire_format_lite_inl.h>
 #include <google/protobuf/descriptor.h>
@@ -19,6 +18,7 @@
 #include "third_party/protobuf/version.h"
 #endif
 // @@protoc_insertion_point(includes)
+
 namespace gamemessages {
 class ProtocolWrapperDefaultTypeInternal {
  public:
@@ -27,14 +27,9 @@ class ProtocolWrapperDefaultTypeInternal {
 } _ProtocolWrapper_default_instance_;
 }  // namespace gamemessages
 namespace protobuf_protocol_2eproto {
-void InitDefaultsProtocolWrapperImpl() {
+static void InitDefaultsProtocolWrapper() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
-  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
-#else
-  ::google::protobuf::internal::InitProtobufDefaults();
-#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
   {
     void* ptr = &::gamemessages::_ProtocolWrapper_default_instance_;
     new (ptr) ::gamemessages::ProtocolWrapper();
@@ -43,9 +38,11 @@ void InitDefaultsProtocolWrapperImpl() {
   ::gamemessages::ProtocolWrapper::InitAsDefaultInstance();
 }
 
-void InitDefaultsProtocolWrapper() {
-  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
-  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsProtocolWrapperImpl);
+::google::protobuf::internal::SCCInfo<0> scc_info_ProtocolWrapper =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsProtocolWrapper}, {}};
+
+void InitDefaults() {
+  ::google::protobuf::internal::InitSCC(&scc_info_ProtocolWrapper.base);
 }
 
 ::google::protobuf::Metadata file_level_metadata[1];
@@ -74,15 +71,14 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
 
 void protobuf_AssignDescriptors() {
   AddDescriptors();
-  ::google::protobuf::MessageFactory* factory = NULL;
   AssignDescriptors(
-      "protocol.proto", schemas, file_default_instances, TableStruct::offsets, factory,
+      "protocol.proto", schemas, file_default_instances, TableStruct::offsets,
       file_level_metadata, file_level_enum_descriptors, NULL);
 }
 
 void protobuf_AssignDescriptorsOnce() {
-  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
-  ::google::protobuf::GoogleOnceInit(&once, &protobuf_AssignDescriptors);
+  static ::google::protobuf::internal::once_flag once;
+  ::google::protobuf::internal::call_once(once, protobuf_AssignDescriptors);
 }
 
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
@@ -106,8 +102,8 @@ void AddDescriptorsImpl() {
 }
 
 void AddDescriptors() {
-  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
-  ::google::protobuf::GoogleOnceInit(&once, &AddDescriptorsImpl);
+  static ::google::protobuf::internal::once_flag once;
+  ::google::protobuf::internal::call_once(once, AddDescriptorsImpl);
 }
 // Force AddDescriptors() to be called at dynamic initialization time.
 struct StaticDescriptorInitializer {
@@ -151,17 +147,15 @@ const int ProtocolWrapper::kDataFieldNumber;
 
 ProtocolWrapper::ProtocolWrapper()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
-    ::protobuf_protocol_2eproto::InitDefaultsProtocolWrapper();
-  }
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_protocol_2eproto::scc_info_ProtocolWrapper.base);
   SharedCtor();
   // @@protoc_insertion_point(constructor:gamemessages.ProtocolWrapper)
 }
 ProtocolWrapper::ProtocolWrapper(const ProtocolWrapper& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
-      _has_bits_(from._has_bits_),
-      _cached_size_(0) {
+      _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (from.has_data()) {
@@ -174,7 +168,6 @@ ProtocolWrapper::ProtocolWrapper(const ProtocolWrapper& from)
 }
 
 void ProtocolWrapper::SharedCtor() {
-  _cached_size_ = 0;
   data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   messagetype_ = 0;
   protocolversion_ = 1;
@@ -190,9 +183,7 @@ void ProtocolWrapper::SharedDtor() {
 }
 
 void ProtocolWrapper::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  _cached_size_.Set(size);
 }
 const ::google::protobuf::Descriptor* ProtocolWrapper::descriptor() {
   ::protobuf_protocol_2eproto::protobuf_AssignDescriptorsOnce();
@@ -200,17 +191,10 @@ const ::google::protobuf::Descriptor* ProtocolWrapper::descriptor() {
 }
 
 const ProtocolWrapper& ProtocolWrapper::default_instance() {
-  ::protobuf_protocol_2eproto::InitDefaultsProtocolWrapper();
+  ::google::protobuf::internal::InitSCC(&protobuf_protocol_2eproto::scc_info_ProtocolWrapper.base);
   return *internal_default_instance();
 }
 
-ProtocolWrapper* ProtocolWrapper::New(::google::protobuf::Arena* arena) const {
-  ProtocolWrapper* n = new ProtocolWrapper;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
-}
 
 void ProtocolWrapper::Clear() {
 // @@protoc_insertion_point(message_clear_start:gamemessages.ProtocolWrapper)
@@ -220,8 +204,7 @@ void ProtocolWrapper::Clear() {
 
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x00000001u) {
-    GOOGLE_DCHECK(!data_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
-    (*data_.UnsafeRawStringPointer())->clear();
+    data_.ClearNonDefaultToEmptyNoArena();
   }
   if (cached_has_bits & 6u) {
     messagetype_ = 0;
@@ -237,7 +220,7 @@ bool ProtocolWrapper::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:gamemessages.ProtocolWrapper)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
@@ -420,9 +403,7 @@ size_t ProtocolWrapper::ByteSizeLong() const {
     total_size += RequiredFieldsByteSizeFallback();
   }
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = cached_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  SetCachedSize(cached_size);
   return total_size;
 }
 
@@ -489,12 +470,12 @@ void ProtocolWrapper::Swap(ProtocolWrapper* other) {
 }
 void ProtocolWrapper::InternalSwap(ProtocolWrapper* other) {
   using std::swap;
-  data_.Swap(&other->data_);
+  data_.Swap(&other->data_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   swap(messagetype_, other->messagetype_);
   swap(protocolversion_, other->protocolversion_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata ProtocolWrapper::GetMetadata() const {
@@ -505,5 +486,12 @@ void ProtocolWrapper::InternalSwap(ProtocolWrapper* other) {
 
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace gamemessages
+namespace google {
+namespace protobuf {
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::gamemessages::ProtocolWrapper* Arena::CreateMaybeMessage< ::gamemessages::ProtocolWrapper >(Arena* arena) {
+  return Arena::CreateInternal< ::gamemessages::ProtocolWrapper >(arena);
+}
+}  // namespace protobuf
+}  // namespace google
 
 // @@protoc_insertion_point(global_scope)

@@ -7,7 +7,6 @@
 
 #include <google/protobuf/stubs/common.h>
 #include <google/protobuf/stubs/port.h>
-#include <google/protobuf/stubs/once.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/wire_format_lite_inl.h>
 #include <google/protobuf/descriptor.h>
@@ -19,6 +18,12 @@
 #include "third_party/protobuf/version.h"
 #endif
 // @@protoc_insertion_point(includes)
+
+namespace protobuf_playerUpdate_2eproto {
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_playerUpdate_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_Point;
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_playerUpdate_2eproto ::google::protobuf::internal::SCCInfo<1> scc_info_HitBox;
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_playerUpdate_2eproto ::google::protobuf::internal::SCCInfo<1> scc_info_Unit;
+}  // namespace protobuf_playerUpdate_2eproto
 namespace gamemessages {
 class UnitDefaultTypeInternal {
  public:
@@ -52,15 +57,9 @@ class TestMessageDefaultTypeInternal {
 } _TestMessage_default_instance_;
 }  // namespace gamemessages
 namespace protobuf_playerUpdate_2eproto {
-void InitDefaultsUnitImpl() {
+static void InitDefaultsUnit() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
-  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
-#else
-  ::google::protobuf::internal::InitProtobufDefaults();
-#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
-  protobuf_playerUpdate_2eproto::InitDefaultsPoint();
   {
     void* ptr = &::gamemessages::_Unit_default_instance_;
     new (ptr) ::gamemessages::Unit();
@@ -69,19 +68,13 @@ void InitDefaultsUnitImpl() {
   ::gamemessages::Unit::InitAsDefaultInstance();
 }
 
-void InitDefaultsUnit() {
-  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
-  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsUnitImpl);
-}
+::google::protobuf::internal::SCCInfo<1> scc_info_Unit =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsUnit}, {
+      &protobuf_playerUpdate_2eproto::scc_info_Point.base,}};
 
-void InitDefaultsPointImpl() {
+static void InitDefaultsPoint() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
-  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
-#else
-  ::google::protobuf::internal::InitProtobufDefaults();
-#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
   {
     void* ptr = &::gamemessages::_Point_default_instance_;
     new (ptr) ::gamemessages::Point();
@@ -90,20 +83,12 @@ void InitDefaultsPointImpl() {
   ::gamemessages::Point::InitAsDefaultInstance();
 }
 
-void InitDefaultsPoint() {
-  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
-  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsPointImpl);
-}
+::google::protobuf::internal::SCCInfo<0> scc_info_Point =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsPoint}, {}};
 
-void InitDefaultsHitBoxImpl() {
+static void InitDefaultsHitBox() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
-  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
-#else
-  ::google::protobuf::internal::InitProtobufDefaults();
-#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
-  protobuf_playerUpdate_2eproto::InitDefaultsPoint();
   {
     void* ptr = &::gamemessages::_HitBox_default_instance_;
     new (ptr) ::gamemessages::HitBox();
@@ -112,20 +97,13 @@ void InitDefaultsHitBoxImpl() {
   ::gamemessages::HitBox::InitAsDefaultInstance();
 }
 
-void InitDefaultsHitBox() {
-  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
-  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsHitBoxImpl);
-}
+::google::protobuf::internal::SCCInfo<1> scc_info_HitBox =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsHitBox}, {
+      &protobuf_playerUpdate_2eproto::scc_info_Point.base,}};
 
-void InitDefaultsPlayerUpdateImpl() {
+static void InitDefaultsPlayerUpdate() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
-  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
-#else
-  ::google::protobuf::internal::InitProtobufDefaults();
-#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
-  protobuf_playerUpdate_2eproto::InitDefaultsUnit();
   {
     void* ptr = &::gamemessages::_PlayerUpdate_default_instance_;
     new (ptr) ::gamemessages::PlayerUpdate();
@@ -134,21 +112,13 @@ void InitDefaultsPlayerUpdateImpl() {
   ::gamemessages::PlayerUpdate::InitAsDefaultInstance();
 }
 
-void InitDefaultsPlayerUpdate() {
-  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
-  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsPlayerUpdateImpl);
-}
+::google::protobuf::internal::SCCInfo<1> scc_info_PlayerUpdate =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsPlayerUpdate}, {
+      &protobuf_playerUpdate_2eproto::scc_info_Unit.base,}};
 
-void InitDefaultsPositionUpdateImpl() {
+static void InitDefaultsPositionUpdate() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
-  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
-#else
-  ::google::protobuf::internal::InitProtobufDefaults();
-#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
-  protobuf_playerUpdate_2eproto::InitDefaultsUnit();
-  protobuf_playerUpdate_2eproto::InitDefaultsHitBox();
   {
     void* ptr = &::gamemessages::_PositionUpdate_default_instance_;
     new (ptr) ::gamemessages::PositionUpdate();
@@ -157,19 +127,14 @@ void InitDefaultsPositionUpdateImpl() {
   ::gamemessages::PositionUpdate::InitAsDefaultInstance();
 }
 
-void InitDefaultsPositionUpdate() {
-  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
-  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsPositionUpdateImpl);
-}
+::google::protobuf::internal::SCCInfo<2> scc_info_PositionUpdate =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 2, InitDefaultsPositionUpdate}, {
+      &protobuf_playerUpdate_2eproto::scc_info_Unit.base,
+      &protobuf_playerUpdate_2eproto::scc_info_HitBox.base,}};
 
-void InitDefaultsTestMessageImpl() {
+static void InitDefaultsTestMessage() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
-  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
-#else
-  ::google::protobuf::internal::InitProtobufDefaults();
-#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
   {
     void* ptr = &::gamemessages::_TestMessage_default_instance_;
     new (ptr) ::gamemessages::TestMessage();
@@ -178,9 +143,16 @@ void InitDefaultsTestMessageImpl() {
   ::gamemessages::TestMessage::InitAsDefaultInstance();
 }
 
-void InitDefaultsTestMessage() {
-  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
-  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsTestMessageImpl);
+::google::protobuf::internal::SCCInfo<0> scc_info_TestMessage =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsTestMessage}, {}};
+
+void InitDefaults() {
+  ::google::protobuf::internal::InitSCC(&scc_info_Unit.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_Point.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_HitBox.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_PlayerUpdate.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_PositionUpdate.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_TestMessage.base);
 }
 
 ::google::protobuf::Metadata file_level_metadata[6];
@@ -263,15 +235,14 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
 
 void protobuf_AssignDescriptors() {
   AddDescriptors();
-  ::google::protobuf::MessageFactory* factory = NULL;
   AssignDescriptors(
-      "playerUpdate.proto", schemas, file_default_instances, TableStruct::offsets, factory,
+      "playerUpdate.proto", schemas, file_default_instances, TableStruct::offsets,
       file_level_metadata, NULL, NULL);
 }
 
 void protobuf_AssignDescriptorsOnce() {
-  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
-  ::google::protobuf::GoogleOnceInit(&once, &protobuf_AssignDescriptors);
+  static ::google::protobuf::internal::once_flag once;
+  ::google::protobuf::internal::call_once(once, protobuf_AssignDescriptors);
 }
 
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
@@ -304,8 +275,8 @@ void AddDescriptorsImpl() {
 }
 
 void AddDescriptors() {
-  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
-  ::google::protobuf::GoogleOnceInit(&once, &AddDescriptorsImpl);
+  static ::google::protobuf::internal::once_flag once;
+  ::google::protobuf::internal::call_once(once, AddDescriptorsImpl);
 }
 // Force AddDescriptors() to be called at dynamic initialization time.
 struct StaticDescriptorInitializer {
@@ -333,17 +304,15 @@ const int Unit::kFacingFieldNumber;
 
 Unit::Unit()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
-    ::protobuf_playerUpdate_2eproto::InitDefaultsUnit();
-  }
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_playerUpdate_2eproto::scc_info_Unit.base);
   SharedCtor();
   // @@protoc_insertion_point(constructor:gamemessages.Unit)
 }
 Unit::Unit(const Unit& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
-      _has_bits_(from._has_bits_),
-      _cached_size_(0) {
+      _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   token_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (from.has_token()) {
@@ -364,7 +333,6 @@ Unit::Unit(const Unit& from)
 }
 
 void Unit::SharedCtor() {
-  _cached_size_ = 0;
   token_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&position_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&facing_) -
@@ -383,9 +351,7 @@ void Unit::SharedDtor() {
 }
 
 void Unit::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  _cached_size_.Set(size);
 }
 const ::google::protobuf::Descriptor* Unit::descriptor() {
   ::protobuf_playerUpdate_2eproto::protobuf_AssignDescriptorsOnce();
@@ -393,17 +359,10 @@ const ::google::protobuf::Descriptor* Unit::descriptor() {
 }
 
 const Unit& Unit::default_instance() {
-  ::protobuf_playerUpdate_2eproto::InitDefaultsUnit();
+  ::google::protobuf::internal::InitSCC(&protobuf_playerUpdate_2eproto::scc_info_Unit.base);
   return *internal_default_instance();
 }
 
-Unit* Unit::New(::google::protobuf::Arena* arena) const {
-  Unit* n = new Unit;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
-}
 
 void Unit::Clear() {
 // @@protoc_insertion_point(message_clear_start:gamemessages.Unit)
@@ -414,8 +373,7 @@ void Unit::Clear() {
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 7u) {
     if (cached_has_bits & 0x00000001u) {
-      GOOGLE_DCHECK(!token_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
-      (*token_.UnsafeRawStringPointer())->clear();
+      token_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000002u) {
       GOOGLE_DCHECK(position_ != NULL);
@@ -437,7 +395,7 @@ bool Unit::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:gamemessages.Unit)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
@@ -535,13 +493,13 @@ void Unit::SerializeWithCachedSizes(
   // required .gamemessages.Point position = 2;
   if (cached_has_bits & 0x00000002u) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, *this->position_, output);
+      2, this->_internal_position(), output);
   }
 
   // required .gamemessages.Point velocity = 3;
   if (cached_has_bits & 0x00000004u) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      3, *this->velocity_, output);
+      3, this->_internal_velocity(), output);
   }
 
   // required int32 facing = 4;
@@ -579,14 +537,14 @@ void Unit::SerializeWithCachedSizes(
   if (cached_has_bits & 0x00000002u) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        2, *this->position_, deterministic, target);
+        2, this->_internal_position(), deterministic, target);
   }
 
   // required .gamemessages.Point velocity = 3;
   if (cached_has_bits & 0x00000004u) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        3, *this->velocity_, deterministic, target);
+        3, this->_internal_velocity(), deterministic, target);
   }
 
   // required int32 facing = 4;
@@ -617,14 +575,14 @@ size_t Unit::RequiredFieldsByteSizeFallback() const {
     // required .gamemessages.Point position = 2;
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSize(
-        *this->position_);
+        *position_);
   }
 
   if (has_velocity()) {
     // required .gamemessages.Point velocity = 3;
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSize(
-        *this->velocity_);
+        *velocity_);
   }
 
   if (has_facing()) {
@@ -654,12 +612,12 @@ size_t Unit::ByteSizeLong() const {
     // required .gamemessages.Point position = 2;
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSize(
-        *this->position_);
+        *position_);
 
     // required .gamemessages.Point velocity = 3;
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSize(
-        *this->velocity_);
+        *velocity_);
 
     // required int32 facing = 4;
     total_size += 1 +
@@ -670,9 +628,7 @@ size_t Unit::ByteSizeLong() const {
     total_size += RequiredFieldsByteSizeFallback();
   }
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = cached_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  SetCachedSize(cached_size);
   return total_size;
 }
 
@@ -748,13 +704,13 @@ void Unit::Swap(Unit* other) {
 }
 void Unit::InternalSwap(Unit* other) {
   using std::swap;
-  token_.Swap(&other->token_);
+  token_.Swap(&other->token_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   swap(position_, other->position_);
   swap(velocity_, other->velocity_);
   swap(facing_, other->facing_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata Unit::GetMetadata() const {
@@ -774,17 +730,15 @@ const int Point::kYFieldNumber;
 
 Point::Point()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
-    ::protobuf_playerUpdate_2eproto::InitDefaultsPoint();
-  }
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_playerUpdate_2eproto::scc_info_Point.base);
   SharedCtor();
   // @@protoc_insertion_point(constructor:gamemessages.Point)
 }
 Point::Point(const Point& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
-      _has_bits_(from._has_bits_),
-      _cached_size_(0) {
+      _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::memcpy(&x_, &from.x_,
     static_cast<size_t>(reinterpret_cast<char*>(&y_) -
@@ -793,7 +747,6 @@ Point::Point(const Point& from)
 }
 
 void Point::SharedCtor() {
-  _cached_size_ = 0;
   ::memset(&x_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&y_) -
       reinterpret_cast<char*>(&x_)) + sizeof(y_));
@@ -808,9 +761,7 @@ void Point::SharedDtor() {
 }
 
 void Point::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  _cached_size_.Set(size);
 }
 const ::google::protobuf::Descriptor* Point::descriptor() {
   ::protobuf_playerUpdate_2eproto::protobuf_AssignDescriptorsOnce();
@@ -818,17 +769,10 @@ const ::google::protobuf::Descriptor* Point::descriptor() {
 }
 
 const Point& Point::default_instance() {
-  ::protobuf_playerUpdate_2eproto::InitDefaultsPoint();
+  ::google::protobuf::internal::InitSCC(&protobuf_playerUpdate_2eproto::scc_info_Point.base);
   return *internal_default_instance();
 }
 
-Point* Point::New(::google::protobuf::Arena* arena) const {
-  Point* n = new Point;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
-}
 
 void Point::Clear() {
 // @@protoc_insertion_point(message_clear_start:gamemessages.Point)
@@ -852,7 +796,7 @@ bool Point::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:gamemessages.Point)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
@@ -998,9 +942,7 @@ size_t Point::ByteSizeLong() const {
     total_size += RequiredFieldsByteSizeFallback();
   }
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = cached_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  SetCachedSize(cached_size);
   return total_size;
 }
 
@@ -1067,7 +1009,6 @@ void Point::InternalSwap(Point* other) {
   swap(y_, other->y_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata Point::GetMetadata() const {
@@ -1086,9 +1027,8 @@ const int HitBox::kPointsFieldNumber;
 
 HitBox::HitBox()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
-    ::protobuf_playerUpdate_2eproto::InitDefaultsHitBox();
-  }
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_playerUpdate_2eproto::scc_info_HitBox.base);
   SharedCtor();
   // @@protoc_insertion_point(constructor:gamemessages.HitBox)
 }
@@ -1096,14 +1036,12 @@ HitBox::HitBox(const HitBox& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
-      _cached_size_(0),
       points_(from.points_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:gamemessages.HitBox)
 }
 
 void HitBox::SharedCtor() {
-  _cached_size_ = 0;
 }
 
 HitBox::~HitBox() {
@@ -1115,9 +1053,7 @@ void HitBox::SharedDtor() {
 }
 
 void HitBox::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  _cached_size_.Set(size);
 }
 const ::google::protobuf::Descriptor* HitBox::descriptor() {
   ::protobuf_playerUpdate_2eproto::protobuf_AssignDescriptorsOnce();
@@ -1125,17 +1061,10 @@ const ::google::protobuf::Descriptor* HitBox::descriptor() {
 }
 
 const HitBox& HitBox::default_instance() {
-  ::protobuf_playerUpdate_2eproto::InitDefaultsHitBox();
+  ::google::protobuf::internal::InitSCC(&protobuf_playerUpdate_2eproto::scc_info_HitBox.base);
   return *internal_default_instance();
 }
 
-HitBox* HitBox::New(::google::protobuf::Arena* arena) const {
-  HitBox* n = new HitBox;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
-}
 
 void HitBox::Clear() {
 // @@protoc_insertion_point(message_clear_start:gamemessages.HitBox)
@@ -1154,7 +1083,7 @@ bool HitBox::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:gamemessages.HitBox)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
@@ -1162,7 +1091,8 @@ bool HitBox::MergePartialFromCodedStream(
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(input, add_points()));
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+                input, add_points()));
         } else {
           goto handle_unusual;
         }
@@ -1199,7 +1129,9 @@ void HitBox::SerializeWithCachedSizes(
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->points_size()); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, this->points(static_cast<int>(i)), output);
+      1,
+      this->points(static_cast<int>(i)),
+      output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -1253,9 +1185,7 @@ size_t HitBox::ByteSizeLong() const {
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = cached_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  SetCachedSize(cached_size);
   return total_size;
 }
 
@@ -1309,10 +1239,9 @@ void HitBox::Swap(HitBox* other) {
 }
 void HitBox::InternalSwap(HitBox* other) {
   using std::swap;
-  points_.InternalSwap(&other->points_);
+  CastToBase(&points_)->InternalSwap(CastToBase(&other->points_));
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata HitBox::GetMetadata() const {
@@ -1333,17 +1262,15 @@ const int PlayerUpdate::kPlayerFieldNumber;
 
 PlayerUpdate::PlayerUpdate()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
-    ::protobuf_playerUpdate_2eproto::InitDefaultsPlayerUpdate();
-  }
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_playerUpdate_2eproto::scc_info_PlayerUpdate.base);
   SharedCtor();
   // @@protoc_insertion_point(constructor:gamemessages.PlayerUpdate)
 }
 PlayerUpdate::PlayerUpdate(const PlayerUpdate& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
-      _has_bits_(from._has_bits_),
-      _cached_size_(0) {
+      _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   if (from.has_player()) {
     player_ = new ::gamemessages::Unit(*from.player_);
@@ -1354,7 +1281,6 @@ PlayerUpdate::PlayerUpdate(const PlayerUpdate& from)
 }
 
 void PlayerUpdate::SharedCtor() {
-  _cached_size_ = 0;
   player_ = NULL;
 }
 
@@ -1368,9 +1294,7 @@ void PlayerUpdate::SharedDtor() {
 }
 
 void PlayerUpdate::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  _cached_size_.Set(size);
 }
 const ::google::protobuf::Descriptor* PlayerUpdate::descriptor() {
   ::protobuf_playerUpdate_2eproto::protobuf_AssignDescriptorsOnce();
@@ -1378,17 +1302,10 @@ const ::google::protobuf::Descriptor* PlayerUpdate::descriptor() {
 }
 
 const PlayerUpdate& PlayerUpdate::default_instance() {
-  ::protobuf_playerUpdate_2eproto::InitDefaultsPlayerUpdate();
+  ::google::protobuf::internal::InitSCC(&protobuf_playerUpdate_2eproto::scc_info_PlayerUpdate.base);
   return *internal_default_instance();
 }
 
-PlayerUpdate* PlayerUpdate::New(::google::protobuf::Arena* arena) const {
-  PlayerUpdate* n = new PlayerUpdate;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
-}
 
 void PlayerUpdate::Clear() {
 // @@protoc_insertion_point(message_clear_start:gamemessages.PlayerUpdate)
@@ -1411,7 +1328,7 @@ bool PlayerUpdate::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:gamemessages.PlayerUpdate)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
@@ -1457,7 +1374,7 @@ void PlayerUpdate::SerializeWithCachedSizes(
   // required .gamemessages.Unit player = 1;
   if (cached_has_bits & 0x00000001u) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, *this->player_, output);
+      1, this->_internal_player(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -1479,7 +1396,7 @@ void PlayerUpdate::SerializeWithCachedSizes(
   if (cached_has_bits & 0x00000001u) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        1, *this->player_, deterministic, target);
+        1, this->_internal_player(), deterministic, target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -1503,12 +1420,10 @@ size_t PlayerUpdate::ByteSizeLong() const {
   if (has_player()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSize(
-        *this->player_);
+        *player_);
   }
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = cached_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  SetCachedSize(cached_size);
   return total_size;
 }
 
@@ -1570,7 +1485,6 @@ void PlayerUpdate::InternalSwap(PlayerUpdate* other) {
   swap(player_, other->player_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata PlayerUpdate::GetMetadata() const {
@@ -1592,9 +1506,8 @@ const int PositionUpdate::kMobHitboxesFieldNumber;
 
 PositionUpdate::PositionUpdate()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
-    ::protobuf_playerUpdate_2eproto::InitDefaultsPositionUpdate();
-  }
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_playerUpdate_2eproto::scc_info_PositionUpdate.base);
   SharedCtor();
   // @@protoc_insertion_point(constructor:gamemessages.PositionUpdate)
 }
@@ -1602,7 +1515,6 @@ PositionUpdate::PositionUpdate(const PositionUpdate& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
-      _cached_size_(0),
       players_(from.players_),
       mobs_(from.mobs_),
       hitboxes_(from.hitboxes_),
@@ -1612,7 +1524,6 @@ PositionUpdate::PositionUpdate(const PositionUpdate& from)
 }
 
 void PositionUpdate::SharedCtor() {
-  _cached_size_ = 0;
 }
 
 PositionUpdate::~PositionUpdate() {
@@ -1624,9 +1535,7 @@ void PositionUpdate::SharedDtor() {
 }
 
 void PositionUpdate::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  _cached_size_.Set(size);
 }
 const ::google::protobuf::Descriptor* PositionUpdate::descriptor() {
   ::protobuf_playerUpdate_2eproto::protobuf_AssignDescriptorsOnce();
@@ -1634,17 +1543,10 @@ const ::google::protobuf::Descriptor* PositionUpdate::descriptor() {
 }
 
 const PositionUpdate& PositionUpdate::default_instance() {
-  ::protobuf_playerUpdate_2eproto::InitDefaultsPositionUpdate();
+  ::google::protobuf::internal::InitSCC(&protobuf_playerUpdate_2eproto::scc_info_PositionUpdate.base);
   return *internal_default_instance();
 }
 
-PositionUpdate* PositionUpdate::New(::google::protobuf::Arena* arena) const {
-  PositionUpdate* n = new PositionUpdate;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
-}
 
 void PositionUpdate::Clear() {
 // @@protoc_insertion_point(message_clear_start:gamemessages.PositionUpdate)
@@ -1666,7 +1568,7 @@ bool PositionUpdate::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:gamemessages.PositionUpdate)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
@@ -1674,7 +1576,8 @@ bool PositionUpdate::MergePartialFromCodedStream(
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(input, add_players()));
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+                input, add_players()));
         } else {
           goto handle_unusual;
         }
@@ -1685,7 +1588,8 @@ bool PositionUpdate::MergePartialFromCodedStream(
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(input, add_mobs()));
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+                input, add_mobs()));
         } else {
           goto handle_unusual;
         }
@@ -1696,7 +1600,8 @@ bool PositionUpdate::MergePartialFromCodedStream(
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(input, add_hitboxes()));
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+                input, add_hitboxes()));
         } else {
           goto handle_unusual;
         }
@@ -1707,7 +1612,8 @@ bool PositionUpdate::MergePartialFromCodedStream(
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(34u /* 34 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(input, add_mob_hitboxes()));
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+                input, add_mob_hitboxes()));
         } else {
           goto handle_unusual;
         }
@@ -1744,28 +1650,36 @@ void PositionUpdate::SerializeWithCachedSizes(
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->players_size()); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, this->players(static_cast<int>(i)), output);
+      1,
+      this->players(static_cast<int>(i)),
+      output);
   }
 
   // repeated .gamemessages.Unit mobs = 2;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->mobs_size()); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->mobs(static_cast<int>(i)), output);
+      2,
+      this->mobs(static_cast<int>(i)),
+      output);
   }
 
   // repeated .gamemessages.HitBox hitboxes = 3;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->hitboxes_size()); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      3, this->hitboxes(static_cast<int>(i)), output);
+      3,
+      this->hitboxes(static_cast<int>(i)),
+      output);
   }
 
   // repeated .gamemessages.HitBox mob_hitboxes = 4;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->mob_hitboxes_size()); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      4, this->mob_hitboxes(static_cast<int>(i)), output);
+      4,
+      this->mob_hitboxes(static_cast<int>(i)),
+      output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -1876,9 +1790,7 @@ size_t PositionUpdate::ByteSizeLong() const {
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = cached_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  SetCachedSize(cached_size);
   return total_size;
 }
 
@@ -1938,13 +1850,12 @@ void PositionUpdate::Swap(PositionUpdate* other) {
 }
 void PositionUpdate::InternalSwap(PositionUpdate* other) {
   using std::swap;
-  players_.InternalSwap(&other->players_);
-  mobs_.InternalSwap(&other->mobs_);
-  hitboxes_.InternalSwap(&other->hitboxes_);
-  mob_hitboxes_.InternalSwap(&other->mob_hitboxes_);
+  CastToBase(&players_)->InternalSwap(CastToBase(&other->players_));
+  CastToBase(&mobs_)->InternalSwap(CastToBase(&other->mobs_));
+  CastToBase(&hitboxes_)->InternalSwap(CastToBase(&other->hitboxes_));
+  CastToBase(&mob_hitboxes_)->InternalSwap(CastToBase(&other->mob_hitboxes_));
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata PositionUpdate::GetMetadata() const {
@@ -1963,24 +1874,21 @@ const int TestMessage::kTestFieldNumber;
 
 TestMessage::TestMessage()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
-    ::protobuf_playerUpdate_2eproto::InitDefaultsTestMessage();
-  }
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_playerUpdate_2eproto::scc_info_TestMessage.base);
   SharedCtor();
   // @@protoc_insertion_point(constructor:gamemessages.TestMessage)
 }
 TestMessage::TestMessage(const TestMessage& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
-      _has_bits_(from._has_bits_),
-      _cached_size_(0) {
+      _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   test_ = from.test_;
   // @@protoc_insertion_point(copy_constructor:gamemessages.TestMessage)
 }
 
 void TestMessage::SharedCtor() {
-  _cached_size_ = 0;
   test_ = 0;
 }
 
@@ -1993,9 +1901,7 @@ void TestMessage::SharedDtor() {
 }
 
 void TestMessage::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  _cached_size_.Set(size);
 }
 const ::google::protobuf::Descriptor* TestMessage::descriptor() {
   ::protobuf_playerUpdate_2eproto::protobuf_AssignDescriptorsOnce();
@@ -2003,17 +1909,10 @@ const ::google::protobuf::Descriptor* TestMessage::descriptor() {
 }
 
 const TestMessage& TestMessage::default_instance() {
-  ::protobuf_playerUpdate_2eproto::InitDefaultsTestMessage();
+  ::google::protobuf::internal::InitSCC(&protobuf_playerUpdate_2eproto::scc_info_TestMessage.base);
   return *internal_default_instance();
 }
 
-TestMessage* TestMessage::New(::google::protobuf::Arena* arena) const {
-  TestMessage* n = new TestMessage;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
-}
 
 void TestMessage::Clear() {
 // @@protoc_insertion_point(message_clear_start:gamemessages.TestMessage)
@@ -2032,7 +1931,7 @@ bool TestMessage::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:gamemessages.TestMessage)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
@@ -2126,9 +2025,7 @@ size_t TestMessage::ByteSizeLong() const {
         this->test());
   }
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = cached_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  SetCachedSize(cached_size);
   return total_size;
 }
 
@@ -2187,7 +2084,6 @@ void TestMessage::InternalSwap(TestMessage* other) {
   swap(test_, other->test_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata TestMessage::GetMetadata() const {
@@ -2198,5 +2094,27 @@ void TestMessage::InternalSwap(TestMessage* other) {
 
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace gamemessages
+namespace google {
+namespace protobuf {
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::gamemessages::Unit* Arena::CreateMaybeMessage< ::gamemessages::Unit >(Arena* arena) {
+  return Arena::CreateInternal< ::gamemessages::Unit >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::gamemessages::Point* Arena::CreateMaybeMessage< ::gamemessages::Point >(Arena* arena) {
+  return Arena::CreateInternal< ::gamemessages::Point >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::gamemessages::HitBox* Arena::CreateMaybeMessage< ::gamemessages::HitBox >(Arena* arena) {
+  return Arena::CreateInternal< ::gamemessages::HitBox >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::gamemessages::PlayerUpdate* Arena::CreateMaybeMessage< ::gamemessages::PlayerUpdate >(Arena* arena) {
+  return Arena::CreateInternal< ::gamemessages::PlayerUpdate >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::gamemessages::PositionUpdate* Arena::CreateMaybeMessage< ::gamemessages::PositionUpdate >(Arena* arena) {
+  return Arena::CreateInternal< ::gamemessages::PositionUpdate >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::gamemessages::TestMessage* Arena::CreateMaybeMessage< ::gamemessages::TestMessage >(Arena* arena) {
+  return Arena::CreateInternal< ::gamemessages::TestMessage >(arena);
+}
+}  // namespace protobuf
+}  // namespace google
 
 // @@protoc_insertion_point(global_scope)
