@@ -16,6 +16,12 @@ set(CPACK_SOURCE_GENERATOR "TGZ")
 set(CPACK_SOURCE_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}")
 set(VERSION "${CPACK_PACKAGE_VERSION}")
 
+set(BOOST_ROOT "/usr/include/boost169")
+set(BOOST_INCLUDEDIR "/usr/include/boost169/boost")
+set(BOOST_LIBRARYDIR "/usr/lib64/boost169")
+set(BOOST_MIN_VERSION "1.69.0")
+set(BOOST_NO_BOOST_CMAKE ON)
+
 set(LWS_LIBRARY_VERSION ${CPACK_PACKAGE_VERSION})
 set(LWS_LIBRARY_VERSION_MAJOR ${CPACK_PACKAGE_VERSION_MAJOR})
 set(LWS_LIBRARY_VERSION_MINOR ${CPACK_PACKAGE_VERSION_MINOR})
@@ -67,10 +73,52 @@ if (WIN32)
 else()
     list(APPEND HDR_PRIVATE
         server.h
+        /usr/include/libwebsockets.h
+        /usr/include/lws_config.h
         /usr/include/uv.h
         /usr/include/libwebsockets.h
+        /usr/local/include/google/protobuf/message.h
     )
 endif()
+
+list(APPEND HDR_DUNGEON
+	eventmanager.h
+	gameclient.h
+	gamemanager.h
+	gamemob.h
+	gameplayer.h
+	gamestate.h
+	gameunit.h
+	server.h
+	utils.h
+        lua535/include/lauxlib.h
+        lua535/include/luaconf.h
+        lua535/include/lua.h
+        lua535/include/lualib.h
+        src/AStarPathFinding.h
+        src/mobs/goblin.h
+	src/protobuf/connect.pb.h
+	src/protobuf/playerUpdate.pb.h
+	src/protobuf/protocol.pb.h
+)
+
+list(APPEND SRC_DUNGEON
+	gameclient.cpp
+	gamemanager.cpp
+	gamemob.cpp
+	gameplayer.cpp
+	gamestate.cpp
+	gameunit.cpp
+	npcs.hpp
+	utils.cpp
+	src/game_server_protocol.cpp
+        lua535/include/lua.hpp
+	src/AStarPathFinding.cpp
+	src/mobs/goblin.cpp
+	src/protobuf/connect.pb.cc
+	src/protobuf/playerUpdate.pb.cc
+	src/protobuf/protocol.pb.cc
+)
 
 #list(APPEND SOURCES
 #        D:/libs/libwebsockets/lib/libuv.c
@@ -79,7 +127,8 @@ endif()
 
 message("Sources: ${SOURCES}")
 
-set(SOURCE_FILES main.cpp ${SOURCES} ${HDR_PRIVATE} test-server-http.c.cpp)
+set(SOURCE_FILES main.cpp ${SOURCES} ${HDR_PRIVATE} ${HDR_DUNGEON} ${SRC_DUNGEON})
+#set(SOURCE_FILES main.cpp ${SOURCES} ${HDR_PRIVATE} test-server-http.c.cpp)
 #set(SOURCE_FILES main.cpp ${SOURCES} ${HDR_PRIVATE})
 add_executable(DungeonPuzzler ${SOURCE_FILES})
 
@@ -110,7 +159,22 @@ if (WIN32)
     target_link_libraries(DungeonPuzzler "D:/libs/libuv/build/Debug/liblibuv.a")
 else()
     include_directories("/usr/include")
-    include_directories(" /usr/local/include")
+    include_directories("/usr/local/include")
+    include_directories("/usr/include/boost169")
+
+    #target_link_libraries(DungeonPuzzler /usr/lib64/boost169/libboost_log.so)
+    #target_link_libraries(DungeonPuzzler /usr/lib64/boost169/libboost_thread.so)
+    find_package(Boost COMPONENTS thread REQUIRED)
+    target_link_libraries(DungeonPuzzler Boost::thread)
+    
+    find_package(Boost COMPONENTS log REQUIRED)
+    target_link_libraries(DungeonPuzzler Boost::log)
+    ADD_DEFINITIONS(-DBOOST_LOG_DYN_LINK)
+
+    target_link_libraries(DungeonPuzzler /usr/local/lib/libprotobuf.so)
+    target_link_libraries(DungeonPuzzler /usr/lib64/libwebsockets.so)
+    target_link_libraries(DungeonPuzzler /usr/local/lib/liblua.a)
+    target_link_libraries(DungeonPuzzler /usr/lib64/libdl.so)
 endif()
 
 ###

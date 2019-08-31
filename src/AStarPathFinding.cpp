@@ -1,6 +1,7 @@
 #include "AStarPathFinding.h"
 #include <math.h>
 #include <iostream>
+#include <algorithm>
 
 std::vector<Vec2i> directions = {
 	{1, 0},

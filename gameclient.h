@@ -8,8 +8,8 @@
 #include "gamestate.h"
 #include "gamemanager.h"
 #include "gameplayer.h"
-#include "src\protobuf\playerUpdate.pb.h"
-#include "src\protobuf\connect.pb.h"
+#include "src/protobuf/playerUpdate.pb.h"
+#include "src/protobuf/connect.pb.h"
 
 #include <time.h>
 

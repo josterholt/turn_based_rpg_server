@@ -74,6 +74,6 @@ public:
 	void set_start_index(int i);
 	void set_end_index(int i);
 	void search();
-	std::vector<int> AStarPathFinding::get_path();
+	std::vector<int> get_path();
 };
 #endif

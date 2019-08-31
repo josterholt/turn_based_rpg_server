@@ -243,7 +243,7 @@ int main(int argc, const char **argv)
 	memset(&info, 0, sizeof info); /* otherwise uninitialized garbage */
 	info.port = port;
 	info.protocols = protocols;
-	info.vhost_name = "localhost";
+	info.vhost_name = "192.168.1.95";
 
 	//info.ssl_cert_filepath = "C:\\Users\\shrod\\OneDrive\\Documents\\ssl_certs\\gameserver.crt";
 	//info.ssl_private_key_filepath = "C:\\Users\\shrod\\OneDrive\\Documents\\ssl_certs\\gameserver.key";
