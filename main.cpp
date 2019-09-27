@@ -21,6 +21,7 @@
 #include <string.h>
 #include <signal.h>
 #include "src/game_server_protocol.cpp";
+#include <vector>
 
 
 struct lws_context *context;
@@ -103,12 +104,17 @@ namespace src = boost::log::sources;
 namespace sinks = boost::log::sinks;
 namespace keywords = boost::log::keywords;
 
+
+
 extern "C"
 {
 #include "lua535/include/lua.h";
 #include "lua535/include/lauxlib.h";
 #include "lua535/include/lualib.h";
 }
+
+#define SOL_ALL_SAFETIES_ON  1
+#include <sol/sol.hpp>
 
 #ifdef _WIN32
 #pragma comment(lib, "lua535/lua53.dll")
@@ -142,8 +148,35 @@ void l_pushtablestring(lua_State* L, char* key, char* value) {
 	lua_settable(L, -3);
 }
 
+struct Cat {
+	std::string color;
+
+	Cat(std::string c) {
+		color = c;
+	}
+};
+
+
 int main(int argc, const char **argv)
 {
+
+	sol::state lua;
+	lua.open_libraries(sol::lib::base, sol::lib::package);
+	lua.script("print('bark bark bark!')");
+	std::cout << std::endl;
+	
+	std::vector<Cat> cats;
+	cats.push_back(Cat{ "Orange" });
+	
+	//sol::usertype<std::vector<Cat>> = lua.new_usertype<std::vector<Cat>>("std::vector<Cat>", std::vector<Cat>);
+	
+	lua.new_usertype<Cat>("Cat", "color", &Cat::color);
+	lua.set("cats", &cats);
+
+
+	lua.script("print('testing')");
+	lua.script("print(cats[1].color)");
+
 	std::string cmd = "a = 7 + 11";
 
 	lua_State *L = luaL_newstate();
