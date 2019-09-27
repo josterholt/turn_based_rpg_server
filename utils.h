@@ -3,6 +3,7 @@
 #include <string>
 #include <array>
 #include <vector>
+#include <iostream>
 typedef std::array<float, 2> point_t;
 typedef std::vector<point_t> xy_points_t;
 

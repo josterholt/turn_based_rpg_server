@@ -74,8 +74,9 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\vcpkg\installed\x64-windows\include;C:\OpenSSL\include;C:\libs\boost_1_70_0;C:\vcpkg\packages\libwebsockets_x64-windows\include;C:\libs\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Justin\MiscCode\Game\combat_system\web-server\lua535\include;C:\vcpkg\installed\x64-windows\include;C:\OpenSSL\include;C:\libs\boost_1_70_0;C:\vcpkg\packages\libwebsockets_x64-windows\include;C:\libs\rapidjson\include;C:\libs\LuaBridge\Source;C:\libs\sol2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_CONSOLE;LWS_WITH_PLUGINS;_ENABLE_ATOMIC_ALIGNMENT_FIX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\vcpkg\installed\x64-windows\debug\lib;C:\OpenSSL\lib;C:\libs\boost_1_70_0\stage\lib;C:\libs\libwebsockets2.3\build\lib\Debug;C:\libs\rapidjson\include;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
